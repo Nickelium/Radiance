@@ -1,10 +1,9 @@
 #pragma once
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 #include "Core.h"
 #include "Singleton.h"
-
-#include <memory>
 
 namespace Radiance
 {

@@ -5,12 +5,12 @@ class SandboxApplication : public Radiance::Application
 public:
 	SandboxApplication()
 	{
-		printf("Creating Sandbox");
+		RAD_INFO("Creating Sandbox Application");
 	}
 
 	virtual ~SandboxApplication()
 	{
-
+		RAD_INFO("Destroying Sandbox Application");
 	}
 };
 

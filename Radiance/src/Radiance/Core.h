@@ -9,3 +9,5 @@
 //#else
 //	#error Radiance currently only support Windows
 //#endif
+
+#define BIT(X) (1 << X)
