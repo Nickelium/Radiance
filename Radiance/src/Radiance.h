@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 
+#include "Radiance/Logger.h"
 #include "Radiance/Application.h"
 
 // EntryPoint

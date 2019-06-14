@@ -3,7 +3,7 @@
 
 namespace Radiance
 {
-	class RAD_API Application
+	class Application
 	{
 	public:
 		Application();
