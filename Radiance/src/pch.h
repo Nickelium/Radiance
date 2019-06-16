@@ -18,3 +18,6 @@
 #include <map>
 #include <unordered_map>
 #include <unordered_set>
+
+#include "Radiance/Core.h"
+#include "Radiance/Logger.h"

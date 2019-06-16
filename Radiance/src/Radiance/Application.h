@@ -1,5 +1,6 @@
 #pragma once
-#include "Core.h"
+
+#include "Window.h"
 
 namespace Radiance
 {
@@ -10,6 +11,9 @@ namespace Radiance
 		virtual ~Application();
 		
 		void Run();
+	private:
+		Window* m_Window;
+		bool m_Running;
 	};
 }
 
