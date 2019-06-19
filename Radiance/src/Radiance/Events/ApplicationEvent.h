@@ -2,28 +2,30 @@
 
 #include "Event.h"
 
+#include <sstream>
+
 namespace Radiance
 {
 	class WindowResizeEvent : public Event
 	{
 	public:
-		WindowResizeEvent(unsigned int _width, unsigned int _height)
+		WindowResizeEvent(int _width, int _height)
 			: m_Width(_width), m_Height(_height) {}
 
-		inline unsigned int GetWidth() const { return m_Width; }
-		inline unsigned int GetHeight() const { return m_Height; }
+		inline int GetWidth() const { return m_Width; }
+		inline int GetHeight() const { return m_Height; }
 
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
+			ss << "WindowResizeEvent: [" << m_Width << ", " << m_Height << "]";
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(WindowResize)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	private:
-		unsigned int m_Width, m_Height;
+		int m_Width, m_Height;
 	};
 
 	class WindowCloseEvent : public Event

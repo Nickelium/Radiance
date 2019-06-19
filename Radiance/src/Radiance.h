@@ -8,6 +8,6 @@
 #include "Radiance/Core.h"
 #include "Radiance/Logger.h"
 #include "Radiance/Application.h"
-
+#include "Radiance/Layer.h"
 // EntryPoint
 #include "Radiance/EntryPoint.h"

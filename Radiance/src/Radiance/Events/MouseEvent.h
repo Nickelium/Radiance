@@ -2,9 +2,8 @@
 
 #include "Event.h"
 
-namespace Hazel 
+namespace Radiance 
 {
-
 	class MouseMovedEvent : public Event
 	{
 	public:

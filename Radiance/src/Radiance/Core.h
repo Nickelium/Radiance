@@ -18,5 +18,7 @@
 #define RAD_CORE_ASSERT(x, ...)
 #endif
 
+//#define BIND_FN(Func) [&](auto& _param){ return Func(_param);}
+#define BIND_FN(Func) std::bind(&Application::Func, this, std::placeholders::_1)
 
 #define BIT(X) (1 << X)
