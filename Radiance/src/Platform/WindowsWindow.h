@@ -4,6 +4,7 @@
 //#include "Radiance/Renderer/GraphicsContext.h"
 
 struct GLFWwindow;
+
 namespace Radiance
 {
 	class WindowsWindow : public Window
