@@ -4,16 +4,16 @@
 
 namespace Radiance
 {
-	class Application;
+	class Window;
 	class WindowsInput : public Input 
 	{
 	public:
-		WindowsInput(Application& _application);
+		WindowsInput(Window* _window);
 	protected:
 		virtual bool IsKeyPressedImpl(int _keyCode) override;
 		virtual std::pair<float, float> GetMousePositionImpl() override;
 
-		Application& m_Application;
+		Window* m_Window;
 
 	};
 }

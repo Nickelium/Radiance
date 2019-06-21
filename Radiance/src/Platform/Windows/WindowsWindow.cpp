@@ -4,6 +4,7 @@
 #include "Radiance/Events/ApplicationEvent.h"
 #include "Radiance/Events/MouseEvent.h"
 #include "Radiance/Events/KeyEvent.h"
+#include "WindowsInput.h"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
@@ -28,6 +29,7 @@ namespace Radiance
 	WindowsWindow::WindowsWindow(const WindowDesc& _desc)
 	{
 		Init(_desc);
+		Input::s_Instance = std::make_unique<WindowsInput>(this);
 	}
 
 	WindowsWindow::~WindowsWindow()
