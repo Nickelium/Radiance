@@ -10,6 +10,11 @@
 //	#error Radiance currently only support Windows
 //#endif
 
+
+#ifdef RAD_DEBUG
+	#define RAD_ENABLE_ASSERTS
+#endif
+
 #ifdef RAD_ENABLE_ASSERTS
 #define RAD_ASSERT(x, ...) { if(!(x)) { RAD_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #define RAD_CORE_ASSERT(x, ...) { if(!(x)) { RAD_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
@@ -19,6 +24,6 @@
 #endif
 
 //#define BIND_FN(Func) [&](auto& _param){ return Func(_param);}
-#define BIND_FN(Func) std::bind(&Application::Func, this, std::placeholders::_1)
+#define BIND_FN(Func) std::bind(&Func, this, std::placeholders::_1)
 
 #define BIT(X) (1 << X)

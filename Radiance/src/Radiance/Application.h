@@ -19,6 +19,8 @@ namespace Radiance
 
 		void PushLayer(Layer* _layer);
 		void PushOverlay(Layer* _layer);
+
+		Window* GetWindow();
 	private:
 		Window* m_Window;
 		bool m_Running;

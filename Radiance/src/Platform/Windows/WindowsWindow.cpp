@@ -114,6 +114,15 @@ namespace Radiance
 			}
 		});
 
+		glfwSetCharCallback(m_Window,
+			[](GLFWwindow* _window, unsigned int _ch)
+		{
+			auto pUserPtr = glfwGetWindowUserPointer(_window);
+			auto& data = *reinterpret_cast<WindowData*>(pUserPtr);
+			KeyTypedEvent event(_ch);
+			data.EventCallback(event);
+		});
+
 		glfwSetMouseButtonCallback(m_Window,
 			[](GLFWwindow* _window, int _button, int _action, int /*_mod*/)
 		{
@@ -160,6 +169,8 @@ namespace Radiance
 	void WindowsWindow::Destroy()
 	{
 		glfwDestroyWindow(m_Window);
+		glfwTerminate();
+		s_GLFWInitialized = false;
 	}
 
 	void WindowsWindow::Update()

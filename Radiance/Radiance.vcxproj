@@ -20,11 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Platform\WindowsWindow.h" />
+    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Radiance\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Radiance\Events\Event.h" />
     <ClInclude Include="src\Radiance\Events\KeyEvent.h" />
     <ClInclude Include="src\Radiance\Events\MouseEvent.h" />
+    <ClInclude Include="src\Radiance\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Radiance\Input.h" />
     <ClInclude Include="src\Radiance\Layer.h" />
     <ClInclude Include="src\Radiance\LayerStack.h" />
     <ClInclude Include="src\Radiance\Logger.h" />
@@ -42,11 +46,22 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Platform\WindowsWindow.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Radiance\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Radiance\Layer.cpp" />
     <ClCompile Include="src\Radiance\LayerStack.cpp" />
     <ClCompile Include="src\Radiance\Logger.cpp" />
     <ClCompile Include="src\Radiance\Application.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vendor\Glad\Glad.vcxproj">
+      <Project>{4bf0452c-4c28-471a-866b-9c6d4c269834}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\vendor\ImGui\ImGui.vcxproj">
+      <Project>{2a5a1a5b-3978-450f-8525-585811c22a18}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -122,8 +137,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>RAD_ENABLE_ASSERTS;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\x86\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RAD_DEBUG;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -139,8 +154,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>RAD_ENABLE_ASSERTS;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\x64\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RAD_DEBUG;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -157,8 +172,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>RAD_ENABLE_ASSERTS;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\x86\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -179,8 +194,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>RAD_ENABLE_ASSERTS;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\x64\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>

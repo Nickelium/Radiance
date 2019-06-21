@@ -18,7 +18,7 @@ namespace Radiance
 	{
 		RAD_CORE_INFO("Creating Engine Application");
 		m_Window = Window::Create();
-		m_Window->SetEventCallback(BIND_FN(OnEvent));
+		m_Window->SetEventCallback(BIND_FN(Application::OnEvent));
 	}
 
 	Application::~Application()
@@ -44,7 +44,7 @@ namespace Radiance
 	{
 		EventDispatcher dispatcher(_event);
 	
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(OnWindowClose));
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(Application::OnWindowClose));
 	
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
@@ -64,11 +64,18 @@ namespace Radiance
 	void Application::PushLayer(Layer* _layer)
 	{
 		m_LayerStack.PushLayer(_layer);
+		_layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* _layer)
 	{
 		m_LayerStack.PushOverlay(_layer);
+		_layer->OnAttach();
+	}
+
+	Window* Application::GetWindow()
+	{
+		return m_Window; 
 	}
 
 }
