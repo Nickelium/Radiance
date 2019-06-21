@@ -10,10 +10,11 @@ namespace Radiance
 		inline static float GetMouseX() { return GetMousePosition().first; }
 		inline static float GetMouseY() { return GetMousePosition().second; }
 		inline static std::pair<float, float> GetMousePosition() { s_Instance->GetMousePositionImpl(); }
+
+		static std::unique_ptr<Input> s_Instance;
 	protected:
 		virtual bool IsKeyPressedImpl(int _keyCode) = 0;
 		virtual std::pair<float, float> GetMousePositionImpl() = 0;
 	private: 
-		static Input* s_Instance;
 	};
 }
