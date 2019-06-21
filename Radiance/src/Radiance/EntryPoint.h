@@ -2,6 +2,8 @@
 
 #ifdef RAD_PLATFORM_WINDOWS
 
+#include <vld.h>
+
 int main(int argc, char** argv)
 {
 	RAD_CORE_INFO("Booting Engine");

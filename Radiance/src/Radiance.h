@@ -9,5 +9,6 @@
 #include "Radiance/Logger.h"
 #include "Radiance/Application.h"
 #include "Radiance/Layer.h"
+#include "Radiance/ImGui/ImGuiLayer.h"
 // EntryPoint
 #include "Radiance/EntryPoint.h"

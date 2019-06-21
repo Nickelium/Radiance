@@ -9,7 +9,7 @@ public:
 
 	virtual void OnUpdate()
 	{
-		RAD_TRACE("{0}", "ExampleLayer : Update");
+		//RAD_TRACE("{0}", "ExampleLayer : Update");
 	}
 
 	virtual void OnEvent(Radiance::Event& _event)
@@ -25,6 +25,7 @@ public:
 	{
 		RAD_INFO("Creating Sandbox Application");
 		PushLayer(new ExampleLayer);
+		PushOverlay(new Radiance::ImGuiLayer(*this));
 	}
 
 	virtual ~SandboxApplication()

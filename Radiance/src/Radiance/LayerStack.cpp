@@ -32,7 +32,7 @@ namespace Radiance
 
 	void LayerStack::PushOverlay(Layer* _overlay)
 	{
-		m_Layers.push_back(_overlay);
+		//m_Layers.push_back(_overlay);
 		m_Layers.emplace_back(_overlay);
 	}
 
