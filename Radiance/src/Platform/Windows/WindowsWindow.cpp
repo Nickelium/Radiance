@@ -7,9 +7,8 @@
 #include "WindowsInput.h"
 
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
-//#include "Platform/OpenGL/OpenGLContext.h"
+#include "Platform/OpenGL/GLContext.h"
 
 namespace Radiance
 {
@@ -57,10 +56,11 @@ namespace Radiance
 		}
 
 		m_Window = glfwCreateWindow((int)_desc.Width, (int)_desc.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		RAD_CORE_ASSERT(status, "Failed to initialize Glad");
-		RAD_CORE_TRACE("{0}", "Glad Initialized");
+		RAD_CORE_ASSERT(m_Window, "Window is nullptr");
+
+		m_Context = new GLContext(m_Window);
+		m_Context->Init();
+		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 	
@@ -170,15 +170,15 @@ namespace Radiance
 
 	void WindowsWindow::Destroy()
 	{
-		glfwDestroyWindow(m_Window);
-		glfwTerminate();
-		s_GLFWInitialized = false;
+		glfwDestroyWindow(m_Window); 
+		//glfwTerminate(); //Cause glfw error
+		//s_GLFWInitialized = false;
 	}
 
 	void WindowsWindow::Update()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool _enabled)

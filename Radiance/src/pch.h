@@ -5,6 +5,8 @@
 //#include <Windows.h>
 #endif
 
+#include <stdint.h>
+
 // STL Includes
 #include <iostream>
 #include <memory>

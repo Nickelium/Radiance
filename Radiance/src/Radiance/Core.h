@@ -27,3 +27,6 @@
 #define BIND_FN(Func) std::bind(&Func, this, std::placeholders::_1)
 
 #define BIT(X) (1 << X)
+
+#include <stdint.h>
+using ID = uint32_t;

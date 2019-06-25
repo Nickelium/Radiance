@@ -20,7 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\OpenGL\GLRenderAPI.h" />
+    <ClInclude Include="src\Platform\OpenGL\GLRenderDevice.h" />
+    <ClInclude Include="src\Platform\OpenGL\GLVertexArray.h" />
+    <ClInclude Include="src\Platform\OpenGL\GLBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\GLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\GLShader.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Radiance\Events\ApplicationEvent.h" />
@@ -38,6 +43,14 @@
     <ClInclude Include="src\Radiance\Application.h" />
     <ClInclude Include="src\Radiance\Core.h" />
     <ClInclude Include="src\Radiance\MouseButtonCodes.h" />
+    <ClInclude Include="src\Radiance\Renderer\Buffer.h" />
+    <ClInclude Include="src\Radiance\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Radiance\Renderer\RenderAPI.h" />
+    <ClInclude Include="src\Radiance\Renderer\RenderCommand.h" />
+    <ClInclude Include="src\Radiance\Renderer\RenderDevice.h" />
+    <ClInclude Include="src\Radiance\Renderer\Renderer.h" />
+    <ClInclude Include="src\Radiance\Renderer\Shader.h" />
+    <ClInclude Include="src\Radiance\Renderer\VertexArray.h" />
     <ClInclude Include="src\Radiance\Singleton.h" />
     <ClInclude Include="src\Radiance\Window.h" />
   </ItemGroup>
@@ -48,14 +61,25 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\GLRenderAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\GLRenderDevice.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\GLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\GLBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\GLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Radiance\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Radiance\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Radiance\Layer.cpp" />
     <ClCompile Include="src\Radiance\LayerStack.cpp" />
     <ClCompile Include="src\Radiance\Logger.cpp" />
     <ClCompile Include="src\Radiance\Application.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\RenderAPI.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\RenderDevice.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\GLShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\vendor\Glad\Glad.vcxproj">

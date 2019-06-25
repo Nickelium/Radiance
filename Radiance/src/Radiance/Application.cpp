@@ -1,16 +1,6 @@
 #include "pch.h"
 #include "Application.h"
 
-/**
- * Doesn't contains gl includes due to GLFW_INCLUDE_NONE
- */
-//#include <GLFW/glfw3.h>
-
-/**
- * Glad still contains gl includes
- */
-#include <glad/glad.h>
-
 namespace Radiance
 {
 	Application::Application()
@@ -19,22 +9,32 @@ namespace Radiance
 		RAD_CORE_INFO("Creating Engine Application");
 		m_Window = Window::Create();
 		m_Window->SetEventCallback(BIND_FN(Application::OnEvent));
+		m_RenderDevice = RenderDevice::Create();
+		m_ImGuiLayer = new ImGuiLayer(this);
+		PushOverlay(m_ImGuiLayer);
 	}
 
 	Application::~Application()
 	{
 		RAD_CORE_INFO("Destroying Engine Application");
+
 		delete m_Window;
+		delete m_RenderDevice;
 	}
 
 	void Application::Run()
 	{
 		while (m_Running)
 		{
-			glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			Render();
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+				layer->OnImGuiRender();
+			m_ImGuiLayer->End();
 
 			m_Window->Update();
 		}
