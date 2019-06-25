@@ -10,8 +10,8 @@ namespace Radiance
 		virtual ~GLRenderDevice() = default;
 
 		virtual VertexArray* CreateVertexArray() const override;
-		virtual VertexBuffer* CreateVertexBuffer(float* _vertices, uint32_t _nbBytes) const override;
-		virtual IndexBuffer* CreateIndexBuffer(uint32_t* _indices, uint32_t _nbBytes) const override;
+		virtual VertexBuffer* CreateVertexBuffer(std::vector<float> _vertices) const override;
+		virtual IndexBuffer* CreateIndexBuffer(std::vector<uint32_t> _indices) const override;
 		virtual Shader* CreateShader(const std::string& _vertexSource, const std::string& _fragmentSource) const override;
 
 	};

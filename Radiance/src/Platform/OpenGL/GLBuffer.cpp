@@ -6,13 +6,14 @@
 namespace Radiance
 {
 	#pragma region VERTEXBUFFER
-	GLVertexBuffer::GLVertexBuffer(float* _vertices, uint32_t _nbBytes)
+	GLVertexBuffer::GLVertexBuffer(std::vector<float> _vertices)
 	{
-		//Alternative
-		//glCreateBuffers(1, &m_RendererID);
+		//Alternative but cause crashes due to OpenGL 4.5 or so ?
+		//glCreateBuffers(1, &m_ID);
 		glGenBuffers(1, &m_ID);
 		Bind();
-		glBufferData(GL_ARRAY_BUFFER, _nbBytes, _vertices, GL_STATIC_DRAW);
+		uint32_t nbBytes = sizeof(float) * (uint32_t)_vertices.size();
+		glBufferData(GL_ARRAY_BUFFER, nbBytes, _vertices.data(), GL_STATIC_DRAW);
 	}
 
 	GLVertexBuffer::~GLVertexBuffer()
@@ -32,12 +33,12 @@ namespace Radiance
 	#pragma endregion
 
 	#pragma  region INDEXBUFFER
-	GLIndexBuffer::GLIndexBuffer(uint32_t* _indices, uint32_t _count)
-		: m_Count(_count)
+	GLIndexBuffer::GLIndexBuffer(std::vector<uint32_t> _indices)
+		: m_Count((uint32_t)_indices.size())
 	{
 		glGenBuffers(1, &m_ID);
 		Bind();
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(uint32_t), _indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(uint32_t), _indices.data(), GL_STATIC_DRAW);
 	}
 
 	GLIndexBuffer::~GLIndexBuffer()
