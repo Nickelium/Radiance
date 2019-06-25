@@ -194,7 +194,10 @@ class SandboxApplication : public Radiance::Application
 public:
 
 	Radiance::VertexArray* m_VertexArray;
+	Radiance::VertexArray* m_VertexArray2;
 	Radiance::Shader* m_Shader;
+	Radiance::Shader* m_Shader2;
+
 
 	SandboxApplication()
 	{
@@ -204,13 +207,13 @@ public:
 
 		m_VertexArray = m_RenderDevice->CreateVertexArray();
 
-		float vertices[] =
+		std::vector<float> vertices =
 		{
 			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
 			+0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
 			0.0f, +0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
 		};
-		VertexBuffer* vertexBuffer = m_RenderDevice->CreateVertexBuffer(vertices, sizeof(vertices));
+		VertexBuffer* vertexBuffer = m_RenderDevice->CreateVertexBuffer(vertices);
 		BufferLayout layout =
 		{
 			{DataType::Float3, "a_Position"},
@@ -219,12 +222,35 @@ public:
 		vertexBuffer->SetLayout(layout);
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-		unsigned int indices[3] =
+		std::vector<unsigned int> indices =
 		{
 			0, 1, 2
 		};
-		IndexBuffer* indexBuffer = m_RenderDevice->CreateIndexBuffer(indices, 3);
+		IndexBuffer* indexBuffer = m_RenderDevice->CreateIndexBuffer(indices);
 		m_VertexArray->SetIndexBuffer(indexBuffer);
+
+		m_VertexArray2 = m_RenderDevice->CreateVertexArray();
+		std::vector<float> vertices2 =
+		{
+			-0.75f, -0.75f, +0.75f,
+			+0.75f, -0.75f, +0.75f,
+			+0.75f, +0.75f, +0.75f, 
+			-0.75f, +0.75f, +0.75f
+		};
+		vertexBuffer = m_RenderDevice->CreateVertexBuffer(vertices2);
+		vertexBuffer->SetLayout
+		({
+			{DataType::Float3,"a_Pos"}
+		});
+		m_VertexArray2->AddVertexBuffer(vertexBuffer);
+
+		std::vector<uint32_t> indices2 =
+		{
+			0, 1, 2,
+			2, 3, 0
+		};
+		indexBuffer = m_RenderDevice->CreateIndexBuffer(indices2);
+		m_VertexArray2->SetIndexBuffer(indexBuffer);
 
 		std::string vertexShader =
 			R"(
@@ -260,6 +286,37 @@ public:
 			}
 		)";
 		m_Shader = m_RenderDevice->CreateShader(vertexShader, fragmentShader);
+
+		std::string vertexShader2 =
+			R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+				
+			out vec3 v_Position;
+
+			void main()
+			{
+				gl_Position = vec4(a_Position, 1.0f);
+				v_Position = a_Position;
+			}
+		)";
+
+		std::string fragmentShader2 =
+			R"(
+			#version 330 core
+			
+			in vec3 v_Position;
+
+			layout(location = 0) out vec4 o_Color;
+
+			void main()
+			{
+				//o_Color = v_Color;
+				o_Color = vec4((v_Position * 0.5f + 0.5f).rg, 0.0f, 1.0f);
+			}
+		)";
+		m_Shader2 = m_RenderDevice->CreateShader(vertexShader2, fragmentShader2);
 	}
 
 	virtual void Render()
@@ -273,6 +330,10 @@ public:
 			m_Shader->Bind();
 			Renderer::Submit(m_VertexArray);
 			m_Shader->UnBind();
+
+			m_Shader2->Bind();
+			Renderer::Submit(m_VertexArray2);
+			m_Shader2->UnBind();
 		}
 		Renderer::End();
 	}
@@ -281,8 +342,12 @@ public:
 	{
 		delete m_VertexArray;
 		delete m_Shader;
+
+		delete m_VertexArray2;
+		delete m_Shader2;
 		RAD_INFO("Destroying Sandbox Application");
 	}
+private:
 };
 
 

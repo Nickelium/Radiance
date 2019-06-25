@@ -8,7 +8,7 @@ namespace Radiance
 	class GLVertexBuffer : public VertexBuffer
 	{
 	public:
-		GLVertexBuffer(float* _vertices, uint32_t _nbBytes);
+		GLVertexBuffer(std::vector<float> _vertices);
 		virtual ~GLVertexBuffer();
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
@@ -25,7 +25,7 @@ namespace Radiance
 	class GLIndexBuffer : public IndexBuffer
 	{
 	public:
-		GLIndexBuffer(uint32_t* _indices, uint32_t _count);
+		GLIndexBuffer(std::vector<uint32_t> _indices);
 		virtual ~GLIndexBuffer();
 		virtual void Bind() const override;
 		virtual void UnBind() const override;

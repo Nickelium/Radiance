@@ -12,14 +12,14 @@ namespace Radiance
 		return new GLVertexArray;
 	}
 
-	VertexBuffer* GLRenderDevice::CreateVertexBuffer(float* _vertices, uint32_t _nbBytes) const
+	VertexBuffer* GLRenderDevice::CreateVertexBuffer(std::vector<float> _vertices) const
 	{
-		return new GLVertexBuffer(_vertices, _nbBytes);
+		return new GLVertexBuffer(_vertices);
 	}
 
-	IndexBuffer* GLRenderDevice::CreateIndexBuffer(uint32_t* _indices, uint32_t _nbBytes) const
+	IndexBuffer* GLRenderDevice::CreateIndexBuffer(std::vector<uint32_t> _indices) const
 	{
-		return new GLIndexBuffer(_indices, _nbBytes);
+		return new GLIndexBuffer(_indices);
 	}
 
 	Shader* GLRenderDevice::CreateShader(const std::string& _vertexSource, const std::string& _fragmentSource) const

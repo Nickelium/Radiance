@@ -12,8 +12,8 @@ namespace Radiance
 		virtual ~RenderDevice() = default;
 
 		virtual VertexArray* CreateVertexArray() const = 0;
-		virtual VertexBuffer* CreateVertexBuffer(float* _vertices, uint32_t _nbBytes) const = 0;
-		virtual IndexBuffer* CreateIndexBuffer(uint32_t* _indices, uint32_t _nbBytes) const = 0;
+		virtual VertexBuffer* CreateVertexBuffer(std::vector<float> _vertices) const = 0;
+		virtual IndexBuffer* CreateIndexBuffer(std::vector<uint32_t> _indices) const = 0;
 
 		virtual Shader* CreateShader(const std::string& _vertexSource, const std::string& _fragmentSource) const = 0;
 
