@@ -10,8 +10,9 @@ namespace Radiance
 	class LayerStack
 	{
 	public:
-		using LayerIt = std::vector<Layer*>::iterator;
-		using LayerCIt = std::vector<Layer*>::const_iterator;
+		using Layers = std::vector<Layer*>;
+		using LayerIt = Layers::iterator;
+		using LayerCIt = Layers::const_iterator;
 		
 		LayerStack();
 		~LayerStack();
@@ -23,11 +24,11 @@ namespace Radiance
 
 		inline LayerIt begin() { return m_Layers.begin(); }
 		inline LayerIt end() { return m_Layers.end(); }
-		inline LayerCIt cbegin() { return m_Layers.cbegin(); }
-		inline LayerCIt cend() { return m_Layers.cend(); }
+		inline LayerCIt begin() const { return m_Layers.cbegin(); }
+		inline LayerCIt end() const { return m_Layers.cend(); }
 
 	private:
 		std::vector<Layer*> m_Layers;
-		LayerCIt m_LayerInsert;
+		size_t m_LayerInsertIndex = 0;
 	};
 }

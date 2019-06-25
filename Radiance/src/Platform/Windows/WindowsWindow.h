@@ -7,6 +7,7 @@ struct GLFWwindow;
 
 namespace Radiance
 {
+	class GraphicsContext;
 	class WindowsWindow : public Window
 	{
 	public:
@@ -29,7 +30,7 @@ namespace Radiance
 		virtual void Destroy();
 	private:
 		GLFWwindow* m_Window;
-		//GraphicsContext* m_Context;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{

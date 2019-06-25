@@ -15,5 +15,11 @@
 #include "Radiance/KeyCodes.h"
 #include "Radiance/MouseButtonCodes.h"
 
+#include "Radiance/Renderer/Shader.h"
+#include "Radiance/Renderer/Buffer.h"
+#include "Radiance/Renderer/VertexArray.h"
+#include "Radiance/Renderer/Buffer.h"
+#include "Radiance/Renderer/Renderer.h"
+
 // EntryPoint
 #include "Radiance/EntryPoint.h"
