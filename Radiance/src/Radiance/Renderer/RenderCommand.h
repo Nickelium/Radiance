@@ -20,6 +20,6 @@ namespace Radiance
 			s_RenderAPI->DrawIndexed(_vertexArray);
 		}
 	private:
-		static RenderAPI* s_RenderAPI;
+		static std::unique_ptr<RenderAPI> s_RenderAPI;
 	};
 }
