@@ -5,6 +5,5 @@
 
 namespace Radiance
 {
-	RenderAPI* RenderCommand::s_RenderAPI = new GLRenderAPI;
 
 }

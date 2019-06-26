@@ -6,6 +6,12 @@
 /**
  * Represent abstraction of OpenGL and D3D11
  */
+
+/**
+ * RenderAPI is a virtual (interface) to utilize runtime polymorphism between the different implementations
+   But in the end these represent wrappers around raw implementation calls, which are actually static function calls.
+   Therefore RenderCommand is called statically.
+ */
 namespace Radiance
 {
 	class RenderAPI

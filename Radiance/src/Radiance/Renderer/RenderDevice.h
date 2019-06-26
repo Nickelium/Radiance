@@ -1,5 +1,8 @@
 #pragma once
-
+/**
+ * Responsible through resources creation (Abstract factory)
+   Each API as an implementation of the RenderDevice
+ */
 namespace Radiance
 {
 	class VertexArray;

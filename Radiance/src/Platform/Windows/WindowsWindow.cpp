@@ -171,7 +171,9 @@ namespace Radiance
 	void WindowsWindow::Destroy()
 	{
 		glfwDestroyWindow(m_Window); 
-		//glfwTerminate(); //Cause glfw error
+		glfwTerminate(); //Cause glfw error
+		//TEMP
+		delete m_Context;
 		//s_GLFWInitialized = false;
 	}
 

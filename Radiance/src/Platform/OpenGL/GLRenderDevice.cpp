@@ -5,8 +5,15 @@
 #include "GLBuffer.h"
 #include "GLShader.h"
 
+#include "Radiance/Renderer/RenderCommand.h"
+#include "GLRenderAPI.h"
+
 namespace Radiance
 {
+	std::unique_ptr<RenderAPI> RenderCommand::s_RenderAPI = 
+		std::make_unique<GLRenderAPI>();
+	//RenderAPI* RenderCommand::s_RenderAPI = new GLRenderAPI;
+		
 	VertexArray* GLRenderDevice::CreateVertexArray() const
 	{
 		return new GLVertexArray;
