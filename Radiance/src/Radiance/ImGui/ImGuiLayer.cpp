@@ -16,8 +16,7 @@
 namespace Radiance
 {
 	ImGuiLayer::ImGuiLayer(Application* _application)
-		: Layer("ImGuiLayer"),
-		m_Application(_application)
+		: Layer(_application, "ImGuiLayer")
 	{
 	}
 

@@ -85,6 +85,7 @@ namespace Radiance
 
 		// Link our program
 		glLinkProgram(program);
+		glValidateProgram(program);
 
 		// Note the different functions here: glGetProgram* instead of glGetShader*.
 		GLint isLinked = 0;
@@ -111,8 +112,12 @@ namespace Radiance
 		}
 
 		// Always detach shaders after a successful link.
+		// Might not want to detach shader to keep shader source to enable debug through nsight etc .. 
 		glDetachShader(program, vertexShader);
 		glDetachShader(program, fragmentShader);
+
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
 	}
 
 	GLShader::~GLShader()

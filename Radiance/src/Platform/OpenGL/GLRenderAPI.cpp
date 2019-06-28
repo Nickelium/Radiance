@@ -5,6 +5,7 @@
 
 namespace Radiance
 {
+
 	void GLRenderAPI::SetClearColor(const glm::vec4& _color)
 	{
 		glEnable(GL_DEPTH_TEST); //TODO testing only

@@ -4,14 +4,15 @@
 
 namespace Radiance
 {
+	class Application;
 	/**
 	 * Should be subclassed
 	 */
 	class Layer
 	{
 	public:
-		Layer(const std::string& _name = "Layer");
-		virtual ~Layer() {};
+		Layer(Application* _application, const std::string& _name = "Layer");
+		virtual ~Layer() = default;
 
 		virtual void OnAttach() {};
 		virtual void OnDetach() {};
@@ -23,5 +24,6 @@ namespace Radiance
 		inline const std::string& GetName() { return m_Name; }
 	protected:
 		std::string m_Name;
+		Application* m_Application;
 	};
 }

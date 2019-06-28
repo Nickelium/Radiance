@@ -23,7 +23,6 @@ namespace Radiance
 		void End();
 		
 	private:
-		Application* m_Application;
 		float m_Time = 0.0f;
 
 	};
