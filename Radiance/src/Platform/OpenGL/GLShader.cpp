@@ -135,4 +135,77 @@ namespace Radiance
 		glUseProgram(0);
 	}
 
+	void GLShader::SetUniformFloat(const std::string& _name, float _val)
+	{
+		Location location = GetLocation(_name);
+		RAD_CORE_ASSERT(location != s_InvalidLocation, "Invalid Uniform Location");
+
+		//Bind();
+		//glUniform1f(location, _val);
+		
+		/*glProgram doesn't require binding the shader, and according to 
+		https://stackoverflow.com/questions/51648238/what-the-difference-between-glprogramuniform-and-gluniform
+		can be efficienter than glUniform but require GL4.1+
+		*/
+		glProgramUniform1f(m_ID, location, _val);
+	}
+
+	void GLShader::SetUniformFloats(const std::string& _name, const std::vector<float>& _val)
+	{
+		Location location = GetLocation(_name);
+		RAD_CORE_ASSERT(location != s_InvalidLocation, "Invalid Uniform Location");
+		glProgramUniform1fv(m_ID, location, (int)_val.size(), _val.data());
+	}
+
+	void GLShader::SetUniformInt(const std::string& _name, int _value)
+	{
+		Location location = GetLocation(_name);
+		RAD_CORE_ASSERT(location != s_InvalidLocation, "Invalid Uniform Location");
+		glProgramUniform1i(m_ID, location, _value);
+	}
+
+	void GLShader::SetUniformInts(const std::string& _name, const std::vector<int>& _val)
+	{
+		Location location = GetLocation(_name);
+		RAD_CORE_ASSERT(location != s_InvalidLocation, "Invalid Uniform Location");
+		glProgramUniform1iv(m_ID, location, (int)_val.size(), _val.data());
+	}
+
+	void GLShader::SetUniformFloat2(const std::string& _name, const glm::vec2& _val)
+	{
+		Location location = GetLocation(_name);
+		RAD_CORE_ASSERT(location != s_InvalidLocation, "Invalid Uniform Location");
+		glProgramUniform2f(m_ID, location, _val.x, _val.y);
+	}
+
+	void GLShader::SetUniformFloat3(const std::string& _name, const glm::vec3& _val)
+	{
+		Location location = GetLocation(_name);
+		RAD_CORE_ASSERT(location != s_InvalidLocation, "Invalid Uniform Location");
+		glProgramUniform3f(m_ID, location, _val.x, _val.y, _val.z);
+	}
+
+	void GLShader::SetUniformFloat4(const std::string& _name, const glm::vec4& _val)
+	{
+		Location location = GetLocation(_name);
+		RAD_CORE_ASSERT(location != s_InvalidLocation, "Invalid Uniform Location");
+		glProgramUniform4f(m_ID, location, _val.x, _val.y, _val.z, _val.w);
+	}
+
+	void GLShader::SetUniformMat(const std::string& _name, const glm::mat4& _val)
+	{
+		Location location = GetLocation(_name);
+		RAD_CORE_ASSERT(location != s_InvalidLocation, "Invalid Uniform Location");
+		glProgramUniformMatrix4fv(m_ID, location, 1, false, &_val[0][0]);
+	}
+
+	GLShader::Location GLShader::GetLocation(const std::string& _name)
+	{
+		auto result = m_MapLocation.find(_name);
+		int location = -1;
+		if (result != m_MapLocation.end())
+			return location = result->second;
+		return m_MapLocation[_name] = glGetUniformLocation(m_ID, _name.c_str());
+	}
+
 }

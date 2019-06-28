@@ -22,5 +22,9 @@
 #include <unordered_map>
 #include <unordered_set>
 
+// Vendors
+#include <imgui.h>
+#include <glm/glm.hpp>
+
 #include "Radiance/Core.h"
 #include "Radiance/Logger.h"
