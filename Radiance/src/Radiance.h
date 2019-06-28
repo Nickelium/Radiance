@@ -23,5 +23,9 @@
 
 #include "Radiance/Utility/Utility.h"
 
+// Vendor
+#include <glm/glm.hpp>
+#include <imgui.h>
+
 // EntryPoint
 #include "Radiance/EntryPoint.h"

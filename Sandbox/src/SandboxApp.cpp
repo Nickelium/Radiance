@@ -1,13 +1,5 @@
 #include <Radiance.h>
 
-#include <glm/vec3.hpp> // glm::vec3
-#include <glm/vec4.hpp> // glm::vec4
-#include <glm/mat4x4.hpp> // glm::mat4
-#include <glm/ext/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale
-#include <glm/ext/matrix_clip_space.hpp> // glm::perspective
-#include <glm/ext/scalar_constants.hpp> // glm::pi
-
-#include <imgui.h>
 #include <GLFW/glfw3.h>
 
 class ExampleLayer : public Radiance::Layer
@@ -145,7 +137,7 @@ public:
 	{
 		//RAD_TRACE("{0}", "ExampleLayer : Update");
 		if (Radiance::Input::IsKeyPressed(RAD_KEY_A))
-			RAD_INFO("KEy A is pressed : {0}", RAD_KEY_A);
+			RAD_TRACE("KEy A is pressed : {0}", RAD_KEY_A); //cause warning if() ;
 	}
 
 	virtual void OnEvent(Radiance::Event& _event) override
@@ -260,6 +252,8 @@ public:
 		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
 			
 		m_Shader2 = m_RenderDevice->CreateShader(vertexShader2, fragmentShader2);
+
+		m_Shader2->SetUniformFloat("u_Float", 0.5f);
 	}
 
 	virtual void Render()

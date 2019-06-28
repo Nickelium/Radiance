@@ -37,6 +37,7 @@ namespace Radiance
 #define RAD_FATAL(...)		 ::Radiance::Logger::GetInstance().GetClientLogger()->critical(__VA_ARGS__) 
 
 #else
+
 #define RAD_CORE_TRACE(...)
 #define RAD_CORE_INFO(...)
 #define RAD_CORE_WARN(...)
@@ -45,8 +46,9 @@ namespace Radiance
 
 // Client log macros
 #define RAD_TRACE(...)	
-#define RAD_INFO(...)	
+#define RAD_INFO(...)
 #define RAD_WARN(...)	
 #define RAD_ERROR(...)	
 #define RAD_FATAL(...)	
+
 #endif
