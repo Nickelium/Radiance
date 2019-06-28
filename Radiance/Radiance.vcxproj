@@ -52,6 +52,7 @@
     <ClInclude Include="src\Radiance\Renderer\Shader.h" />
     <ClInclude Include="src\Radiance\Renderer\VertexArray.h" />
     <ClInclude Include="src\Radiance\Singleton.h" />
+    <ClInclude Include="src\Radiance\Utility\Utility.h" />
     <ClInclude Include="src\Radiance\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +81,7 @@
     <ClCompile Include="src\Radiance\Renderer\RenderDevice.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLShader.cpp" />
+    <ClCompile Include="src\Radiance\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\vendor\Glad\Glad.vcxproj">

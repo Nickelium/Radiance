@@ -136,8 +136,8 @@ private:
 	};
 
 public:
-	ExampleLayer()
-		: Layer("Example")
+	ExampleLayer(Radiance::Application* _application)
+		: Layer(_application, "Example")
 	{
 	}
 
@@ -203,7 +203,7 @@ public:
 	{
 		using namespace Radiance;
 		RAD_INFO("Creating Sandbox Application");
-		PushLayer(new ExampleLayer);
+		PushLayer(new ExampleLayer(this));
 
 		m_VertexArray = m_RenderDevice->CreateVertexArray();
 
@@ -252,70 +252,13 @@ public:
 		indexBuffer = m_RenderDevice->CreateIndexBuffer(indices2);
 		m_VertexArray2->SetIndexBuffer(indexBuffer);
 
-		std::string vertexShader =
-			R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-				
-			out vec4 v_Color;
-			out vec3 v_Position;
-
-			void main()
-			{
-				gl_Position = vec4(a_Position, 1.0f);
-				v_Color = a_Color;
-				v_Position = a_Position;
-			}
-		)";
-
-		std::string fragmentShader =
-			R"(
-			#version 330 core
-			
-			in vec4 v_Color;
-			in vec3 v_Position;
-
-			layout(location = 0) out vec4 o_Color;
-
-			void main()
-			{
-				o_Color = v_Color;
-				//o_Color = vec4((v_Position * 0.5f + 0.5f).rg, 0.0f, 1.0f);
-			}
-		)";
+		std::string vertexShader = ReadFile("res/shaders/Basic.vs");
+		std::string fragmentShader = ReadFile("res/shaders/Basic.fs");
 		m_Shader = m_RenderDevice->CreateShader(vertexShader, fragmentShader);
 
-		std::string vertexShader2 =
-			R"(
-			#version 330 core
+		std::string vertexShader2 = ReadFile("res/shaders/Basic2.vs");
+		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
 			
-			layout(location = 0) in vec3 a_Position;
-				
-			out vec3 v_Position;
-
-			void main()
-			{
-				gl_Position = vec4(a_Position, 1.0f);
-				v_Position = a_Position;
-			}
-		)";
-
-		std::string fragmentShader2 =
-			R"(
-			#version 330 core
-			
-			in vec3 v_Position;
-
-			layout(location = 0) out vec4 o_Color;
-
-			void main()
-			{
-				//o_Color = v_Color;
-				o_Color = vec4((v_Position * 0.5f + 0.5f).rg, 0.0f, 1.0f);
-			}
-		)";
 		m_Shader2 = m_RenderDevice->CreateShader(vertexShader2, fragmentShader2);
 	}
 
@@ -336,6 +279,14 @@ public:
 			m_Shader2->UnBind();
 		}
 		Renderer::End();
+	}
+
+	virtual void OnEvent(Radiance::Event& _event)
+	{
+		using namespace Radiance;
+		EventDispatcher dispatcher(_event);
+		//dispatcher.Dispatch<KeyReleasedEvent>(BIND_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<KeyReleasedEvent>(BIND_FN(Application::OnWindowClose));
 	}
 
 	virtual ~SandboxApplication()

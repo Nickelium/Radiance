@@ -55,6 +55,10 @@ namespace Radiance
 			s_GLFWInitialized = true;
 		}
 
+		#if defined(DEBUG) || defined(_DEBUG)
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+		#endif
+
 		m_Window = glfwCreateWindow((int)_desc.Width, (int)_desc.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		RAD_CORE_ASSERT(m_Window, "Window is nullptr");
 

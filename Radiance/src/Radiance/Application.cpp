@@ -8,7 +8,7 @@ namespace Radiance
 	{
 		RAD_CORE_INFO("Creating Engine Application");
 		m_Window = Window::Create();
-		m_Window->SetEventCallback(BIND_FN(Application::OnEvent));
+		m_Window->SetEventCallback(BIND_FN(Application::RootOnEvent));
 		m_RenderDevice = RenderDevice::Create();
 		m_ImGuiLayer = new ImGuiLayer(this);
 		PushOverlay(m_ImGuiLayer);
@@ -40,11 +40,13 @@ namespace Radiance
 		}
 	}
 
-	void Application::OnEvent(Event& _event)
+	void Application::RootOnEvent(Event& _event)
 	{
 		EventDispatcher dispatcher(_event);
 	
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(Application::OnWindowClose));
+
+		OnEvent(_event);
 	
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
@@ -55,7 +57,7 @@ namespace Radiance
 		}
 	}
 
-	bool Application::OnWindowClose(WindowCloseEvent& /*_event*/)
+	bool Application::OnWindowClose(Event& /*_event*/)
 	{
 		m_Running = false;
 		return true;

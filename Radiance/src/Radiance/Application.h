@@ -9,7 +9,7 @@
 
 namespace Radiance
 {
-	class Application
+	class Application 
 	{
 	public:
 		Application();
@@ -17,9 +17,11 @@ namespace Radiance
 		virtual void Render() = 0;
 		
 		void Run();
+
+		virtual void OnEvent(Event& /*_event*/) {};
 		
-		void OnEvent(Event& _event);
-		bool OnWindowClose(WindowCloseEvent& _event);
+		void RootOnEvent(Event& _event);
+		bool OnWindowClose(Event& _event);
 
 		void PushLayer(Layer* _layer);
 		void PushOverlay(Layer* _layer);

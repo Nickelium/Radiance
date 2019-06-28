@@ -21,5 +21,7 @@
 #include "Radiance/Renderer/Buffer.h"
 #include "Radiance/Renderer/Renderer.h"
 
+#include "Radiance/Utility/Utility.h"
+
 // EntryPoint
 #include "Radiance/EntryPoint.h"
