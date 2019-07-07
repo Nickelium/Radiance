@@ -3,7 +3,12 @@
 
 namespace Radiance
 {
-	Layer::Layer(Application* _application, const std::string& _name /*= "Layer"*/)
-		: m_Name(_name), m_Application(_application)
+	Layer::Layer(Application* _application, Scene* _scene)
+		: m_Application(_application), m_Scene(_scene)
 	{}
+
+	Layer::~Layer()
+	{
+		delete m_Scene;
+	}
 }

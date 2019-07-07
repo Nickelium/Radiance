@@ -1,5 +1,5 @@
 #pragma once
-#include "Radiance/Renderer/VertexArray.h"
+#include "Radiance/Renderer/API/VertexArray.h"
 
 namespace Radiance
 {
@@ -19,7 +19,7 @@ namespace Radiance
 		virtual const IndexBuffer* GetIndexBuffer() const override;
 
 	private:
-		ID m_ID;
+		Handle m_Handle;
 		VertexBuffers m_VertexBuffers;
 		IndexBuffer* m_IndexBuffer;
 	};

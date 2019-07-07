@@ -8,13 +8,32 @@ namespace Radiance
 
 	void GLRenderAPI::SetClearColor(const glm::vec4& _color)
 	{
-		glEnable(GL_DEPTH_TEST); //TODO testing only
 		glClearColor(_color.r, _color.g, _color.b, _color.a );
 	}
 
 	void GLRenderAPI::Clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	}
+
+	void GLRenderAPI::EnableDepth(bool _enable)
+	{
+		if (_enable)
+			glEnable(GL_DEPTH_TEST);
+		else
+			glDisable(GL_DEPTH_TEST);
+	}
+
+	void GLRenderAPI::EnableBlend(bool _enable)
+	{
+		if (_enable)
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBlendEquation(GL_FUNC_ADD);
+		}
+		else
+			glDisable(GL_BLEND);
 	}
 
 	void GLRenderAPI::DrawIndexed(VertexArray* _vertexArray)

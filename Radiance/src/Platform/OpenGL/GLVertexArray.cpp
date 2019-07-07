@@ -27,7 +27,7 @@ namespace Radiance
 
 	GLVertexArray::GLVertexArray()
 	{
-		glGenVertexArrays(1, &m_ID);
+		glGenVertexArrays(1, &m_Handle);
 	}
 
 	GLVertexArray::~GLVertexArray()
@@ -35,12 +35,12 @@ namespace Radiance
 		for (auto& vertexBuffer : m_VertexBuffers)
 			delete vertexBuffer;
 		delete m_IndexBuffer;
-		glDeleteVertexArrays(1, &m_ID);
+		glDeleteVertexArrays(1, &m_Handle);
 	}
 
 	void GLVertexArray::Bind() const
 	{
-		glBindVertexArray(m_ID);
+		glBindVertexArray(m_Handle);
 	}
 
 	void GLVertexArray::UnBind() const

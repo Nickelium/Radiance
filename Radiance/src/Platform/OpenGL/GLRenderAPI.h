@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Radiance/Renderer/RenderAPI.h"
+#include "Radiance/Renderer/API/RenderAPI.h"
 
 namespace Radiance
 {
@@ -9,6 +9,8 @@ namespace Radiance
 	public:
 		virtual void SetClearColor(const glm::vec4& _color) override;
 		virtual void Clear() override;
+		virtual void EnableDepth(bool _enable) override;
+		virtual void EnableBlend(bool _enable) override;
 		virtual void DrawIndexed(VertexArray* _vertexArray) override;
 
 	private:

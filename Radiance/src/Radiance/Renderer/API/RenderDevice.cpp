@@ -2,7 +2,7 @@
 #include "RenderDevice.h"
 
 #include "Platform/OpenGL/GLRenderDevice.h"
-#include "Renderer.h"
+#include "Radiance/Renderer/Renderer.h"
 
 namespace Radiance
 {

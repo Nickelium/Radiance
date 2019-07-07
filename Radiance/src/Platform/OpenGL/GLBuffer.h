@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Radiance/Renderer/Buffer.h"
+#include "Radiance/Renderer/API/Buffer.h"
 
 namespace Radiance
 {
@@ -17,7 +17,7 @@ namespace Radiance
 		inline virtual const BufferLayout& GetLayout() const override { return m_Layout; }
 
 	private:
-		ID m_ID;
+		Handle m_Handle;
 
 		BufferLayout m_Layout;
 	};
@@ -32,7 +32,7 @@ namespace Radiance
 
 		inline virtual uint32_t GetCount() const override { return m_Count; }
 	private:
-		ID m_ID;
+		Handle m_Handle;
 
 		uint32_t m_Count;
 	};

@@ -15,6 +15,17 @@ namespace Radiance
 		{
 			s_RenderAPI->Clear();
 		}
+		
+		inline static void EnableDepth(bool _enable)
+		{
+			s_RenderAPI->EnableDepth(_enable);
+		}
+
+		inline static void EnableBlend(bool _enable)
+		{
+			s_RenderAPI->EnableBlend(_enable);
+		}
+
 		inline static void DrawIndexed(VertexArray* _vertexArray)
 		{
 			s_RenderAPI->DrawIndexed(_vertexArray);

@@ -26,6 +26,8 @@ namespace Radiance
 
 		virtual void SetClearColor(const glm::vec4& _color) = 0;
 		virtual void Clear() = 0;
+		virtual void EnableDepth(bool _enable) = 0;
+		virtual void EnableBlend(bool _enable) = 0;
 
 		virtual void DrawIndexed(VertexArray* _vertexArray) = 0;
 	

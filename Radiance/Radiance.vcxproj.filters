@@ -75,24 +75,6 @@
     <ClInclude Include="src\Radiance\MouseButtonCodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\GraphicsContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\Buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\RenderAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\VertexArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\GLVertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,19 +87,67 @@
     <ClInclude Include="src\Platform\OpenGL\GLBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\RenderCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\GLRenderAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\RenderDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\GLRenderDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Radiance\Utility\Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\GLTexture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Components\Actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Components\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Components\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Components\MeshComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\API\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\API\GraphicsContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\API\RenderAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\API\RenderCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\API\RenderDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\API\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\API\Texture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\API\VertexArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Camera\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Camera\Orthographic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -149,12 +179,6 @@
     <ClCompile Include="src\Radiance\ImGui\ImGuiBuild.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\Buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\GLVertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -167,22 +191,49 @@
     <ClCompile Include="src\Platform\OpenGL\GLBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\RenderAPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\RenderCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\GLRenderAPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\RenderDevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\GLRenderDevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Radiance\Utility\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\GLTexture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Components\Actor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Components\TransformComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Components\MeshComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\API\Buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\API\RenderAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\API\RenderCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\API\RenderDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Camera\Orthographic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

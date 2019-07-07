@@ -16,7 +16,7 @@
 namespace Radiance
 {
 	ImGuiLayer::ImGuiLayer(Application* _application)
-		: Layer(_application, "ImGuiLayer")
+		: Layer(_application)
 	{
 	}
 
@@ -45,6 +45,7 @@ namespace Radiance
 
 		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 		ImGuiStyle& style = ImGui::GetStyle();
+		style.Alpha = 0.95f;
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
 			style.WindowRounding = 0.0f;
@@ -91,7 +92,7 @@ namespace Radiance
 		}
 	}
 
-	void ImGuiLayer::OnImGuiRender()
+	void ImGuiLayer::RenderGUI()
 	{
 		//Test
 		static bool show = true;
