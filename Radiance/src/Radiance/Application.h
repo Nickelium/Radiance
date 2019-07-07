@@ -5,7 +5,7 @@
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
 
-#include "Renderer/RenderDevice.h"
+#include "Renderer/API/RenderDevice.h"
 
 namespace Radiance
 {
@@ -14,19 +14,23 @@ namespace Radiance
 	public:
 		Application();
 		virtual ~Application();
-		virtual void Render() = 0;
 		
 		void Run();
+
+		void Update();
+		void Render();
 
 		virtual void OnEvent(Event& /*_event*/) {};
 		
 		void RootOnEvent(Event& _event);
 		bool OnWindowClose(Event& _event);
+		void CloseWindow();
 
 		void PushLayer(Layer* _layer);
 		void PushOverlay(Layer* _layer);
 
-		Window* GetWindow();
+		inline Window* GetWindow() const { return m_Window; }
+		inline RenderDevice* GetRenderDevice() const { return m_RenderDevice; }
 	protected: 
 		RenderDevice* m_RenderDevice;
 

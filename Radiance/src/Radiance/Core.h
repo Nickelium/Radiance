@@ -29,4 +29,6 @@
 #define BIT(X) (1 << X)
 
 #include <stdint.h>
-using ID = uint32_t;
+using Handle = uint32_t;
+
+using Handle = uint32_t;

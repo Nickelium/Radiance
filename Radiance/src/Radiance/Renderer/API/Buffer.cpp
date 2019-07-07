@@ -2,7 +2,7 @@
 #include "Buffer.h"
 
 #include "Platform/OpenGL/GLBuffer.h"
-#include "Renderer.h"
+#include "Radiance/Renderer/Renderer.h"
 
 namespace Radiance
 {

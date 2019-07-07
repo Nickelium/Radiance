@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Events/Event.h"
+#include "Renderer/Scene.h"
 
 namespace Radiance
 {
@@ -11,19 +12,20 @@ namespace Radiance
 	class Layer
 	{
 	public:
-		Layer(Application* _application, const std::string& _name = "Layer");
-		virtual ~Layer() = default;
+		Layer(Application* _application, Scene* _scene = nullptr);
+		virtual ~Layer();
 
-		virtual void OnAttach() {};
-		virtual void OnDetach() {};
-		virtual void OnUpdate() {};
-		virtual void OnImGuiRender() {};
+		virtual void OnAttach() {}
+		virtual void OnDetach() {}
 
-		virtual void OnEvent(Event& /*_event*/) {};
+		virtual void Update() {}
+		virtual void Render() {}
+		virtual void RenderGUI() {}
 
-		inline const std::string& GetName() { return m_Name; }
+		virtual void OnEvent(Event& /*_event*/) {}
+
 	protected:
-		std::string m_Name;
 		Application* m_Application;
+		Scene* m_Scene;
 	};
 }

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Application.h"
 
+#include "Renderer/API/RenderCommand.h"
+
 namespace Radiance
 {
 	Application::Application()
@@ -12,6 +14,9 @@ namespace Radiance
 		m_RenderDevice = RenderDevice::Create();
 		m_ImGuiLayer = new ImGuiLayer(this);
 		PushOverlay(m_ImGuiLayer);
+
+		RenderCommand::EnableDepth(true);
+		RenderCommand::EnableBlend(true);
 	}
 
 	Application::~Application()
@@ -26,18 +31,26 @@ namespace Radiance
 	{
 		while (m_Running)
 		{
+			Update();
 			Render();
-
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
-
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
-			m_ImGuiLayer->End();
-
 			m_Window->Update();
 		}
+	}
+
+	void Application::Update()
+	{
+
+	}
+
+	void Application::Render()
+	{
+		for (Layer* layer : m_LayerStack)
+			layer->Render();
+
+		m_ImGuiLayer->Begin();
+		for (Layer* layer : m_LayerStack)
+			layer->RenderGUI();
+		m_ImGuiLayer->End();
 	}
 
 	void Application::RootOnEvent(Event& _event)
@@ -59,25 +72,22 @@ namespace Radiance
 
 	bool Application::OnWindowClose(Event& /*_event*/)
 	{
-		m_Running = false;
+		CloseWindow();
 		return true;
+	}
+
+	void Application::CloseWindow()
+	{
+		m_Running = false;
 	}
 
 	void Application::PushLayer(Layer* _layer)
 	{
 		m_LayerStack.PushLayer(_layer);
-		_layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* _layer)
 	{
 		m_LayerStack.PushOverlay(_layer);
-		_layer->OnAttach();
 	}
-
-	Window* Application::GetWindow()
-	{
-		return m_Window; 
-	}
-
 }

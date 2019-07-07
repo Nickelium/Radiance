@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Radiance/Window.h"
-//#include "Radiance/Renderer/GraphicsContext.h"
+//#include "Radiance/Renderer/API/GraphicsContext.h"
 
 struct GLFWwindow;
 

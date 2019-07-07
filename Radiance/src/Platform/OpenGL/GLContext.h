@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Radiance/Renderer/GraphicsContext.h"
+#include "Radiance/Renderer/API/GraphicsContext.h"
 
 struct GLFWwindow;
 namespace Radiance
