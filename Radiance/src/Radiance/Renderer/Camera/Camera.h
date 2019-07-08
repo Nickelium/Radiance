@@ -7,20 +7,18 @@ namespace Radiance
 	class Camera
 	{
 	public:
-		virtual const glm::vec3& GetPosition() const = 0;
-		virtual const glm::vec3& GetRotations() const = 0;
-		virtual float GetRotationX() const = 0;
-		virtual float GetRotationY() const = 0;
-		virtual float GetRotationZ() const = 0;
+		Camera() : position(0, 0, 0), rotation(0, 0, 0), m_ViewMatrix(glm::mat4(1.0f)), m_ProjectionMatrix(glm::mat4(1.0)) {}
+		inline const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+		inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
+		inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
 
-		virtual void SetPosition(glm::vec3 _position) = 0;
-		virtual void SetRotations(const glm::vec3& _rotations) = 0;
-		virtual void SetRotationX(float _rotationX) = 0;
-		virtual void SetRotationY(float _rotationY) = 0;
-		virtual void SetRotationZ(float _rotationZ) = 0;
+		virtual void Update(DataTime _time) = 0;
 
-		virtual const glm::mat4& GetViewProjectionMatrix() const = 0;
-		virtual const glm::mat4& GetProjectionMatrix() const = 0;
-		virtual const glm::mat4& GetViewMatrix() const = 0;
+		glm::vec3 position = {0, 0, 0};
+		glm::vec3 rotation = {0, 0, 0};
+	protected:
+		glm::mat4 m_ViewProjectionMatrix; //VP for caching
+		glm::mat4 m_ProjectionMatrix;
+		glm::mat4 m_ViewMatrix;
 	};
 }
