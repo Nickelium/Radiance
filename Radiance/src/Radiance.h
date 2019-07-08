@@ -5,6 +5,7 @@
 
 #include "Radiance/Core.h"
 #include "Radiance/Logger.h"
+#include "Radiance/Time.h"
 
 #include "Radiance/Application.h"
 
@@ -24,12 +25,15 @@
 #include "Radiance/Renderer/Renderer.h"
 #include "Radiance/Renderer/Mesh.h"
 #include "Radiance/Renderer/Camera/Orthographic.h"
-
+#include "Radiance/Renderer/Camera/Perspective.h"
+#include "Radiance/Renderer/Camera/FreeCamera.h"
 
 #include "Radiance/Components/Actor.h"
 #include "Radiance/Components/Component.h"
 #include "Radiance/Components/TransformComponent.h"
 #include "Radiance/Components/MeshComponent.h"
+
+#include "Radiance/Prefab/Prefab.h"
 
 #include "Radiance/Utility/Utility.h"
 

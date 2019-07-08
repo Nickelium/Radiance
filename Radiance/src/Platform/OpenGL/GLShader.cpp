@@ -32,8 +32,8 @@ namespace Radiance
 	void GLShader::SetUniformFloat(const std::string& _name, float _val)
 	{
 		Location location = GetLocation(_name);
-		if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);
+		//if (location == s_InvalidLocation)
+		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		//Bind();
 		//glUniform1f(location, _val);
@@ -48,8 +48,8 @@ namespace Radiance
 	void GLShader::SetUniformFloats(const std::string& _name, const std::vector<float>& _val)
 	{
 		Location location = GetLocation(_name);
-		if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);
+		//if (location == s_InvalidLocation)
+		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		glProgramUniform1fv(m_Handle, location, (int)_val.size(), _val.data());
 	}
@@ -57,8 +57,8 @@ namespace Radiance
 	void GLShader::SetUniformInt(const std::string& _name, int _value)
 	{
 		Location location = GetLocation(_name);
-		if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);
+		//if (location == s_InvalidLocation)
+		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		glProgramUniform1i(m_Handle, location, _value);
 	}
@@ -66,8 +66,8 @@ namespace Radiance
 	void GLShader::SetUniformInts(const std::string& _name, const std::vector<int>& _val)
 	{
 		Location location = GetLocation(_name);
-		if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);
+		/*if (location == s_InvalidLocation)
+			RAD_CORE_INFO("Uniform var {0} not used", _name);*/
 
 		glProgramUniform1iv(m_Handle, location, (int)_val.size(), _val.data());
 	}
@@ -75,8 +75,8 @@ namespace Radiance
 	void GLShader::SetUniformFloat2(const std::string& _name, const glm::vec2& _val)
 	{
 		Location location = GetLocation(_name);
-		if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);
+	/*	if (location == s_InvalidLocation)
+			RAD_CORE_INFO("Uniform var {0} not used", _name);*/
 
 		glProgramUniform2f(m_Handle, location, _val.x, _val.y);
 	}
@@ -84,8 +84,8 @@ namespace Radiance
 	void GLShader::SetUniformFloat3(const std::string& _name, const glm::vec3& _val)
 	{
 		Location location = GetLocation(_name);
-		if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);
+		//if (location == s_InvalidLocation)
+		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		glProgramUniform3f(m_Handle, location, _val.x, _val.y, _val.z);
 	}
@@ -93,8 +93,8 @@ namespace Radiance
 	void GLShader::SetUniformFloat4(const std::string& _name, const glm::vec4& _val)
 	{
 		Location location = GetLocation(_name);
-		if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);
+	/*	if (location == s_InvalidLocation)
+			RAD_CORE_INFO("Uniform var {0} not used", _name);*/
 
 		glProgramUniform4f(m_Handle, location, _val.x, _val.y, _val.z, _val.w);
 	}
@@ -102,8 +102,8 @@ namespace Radiance
 	void GLShader::SetUniformMat(const std::string& _name, const glm::mat4& _val)
 	{
 		Location location = GetLocation(_name);
-		if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);
+		//if (location == s_InvalidLocation)
+		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		glProgramUniformMatrix4fv(m_Handle, location, 1, false, &_val[0][0]);
 	}
@@ -118,7 +118,6 @@ namespace Radiance
 			case ShaderType::FRAGMENT: shaderHandle = glCreateShader(GL_FRAGMENT_SHADER); break;
 			default: break;
 		}
-
 
 		// Send the shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.

@@ -12,80 +12,34 @@ class ExampleLayer : public Radiance::Layer
 
 	Radiance::Texture2D* m_Texture;
 
-	Radiance::Orthographic m_Camera;
+	Radiance::Camera* m_Camera;
 public:
 	ExampleLayer(Radiance::Application* _application)
-		: Layer(_application, new Radiance::Scene), m_Camera(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)
+		: Layer(_application, new Radiance::Scene), 
+		m_Camera(new Radiance::FreeCamera)
 	{
 		using namespace Radiance;
 		RenderDevice* renderDevice = m_Application->GetRenderDevice();
-
-		VertexArray* vertexArray1 = renderDevice->CreateVertexArray();
-
-		std::vector<float> vertices =
-		{
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-			+0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, +0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-		};
-		VertexBuffer* vertexBuffer = renderDevice->CreateVertexBuffer(vertices);
-		BufferLayout layout =
-		{
-			{DataType::Float3, "a_Position"},
-			{DataType::Float4, "a_Color"}
-		};
-		vertexBuffer->SetLayout(layout);
-		vertexArray1->AddVertexBuffer(vertexBuffer);
-
-		std::vector<unsigned int> indices =
-		{
-			0, 1, 2
-		};
-		IndexBuffer* indexBuffer = renderDevice->CreateIndexBuffer(indices);
-		vertexArray1->SetIndexBuffer(indexBuffer);
-
-		VertexArray* vertexArray2 = renderDevice->CreateVertexArray();
-		std::vector<float> vertices2 =
-		{
-			-0.75f, -0.75f, -0.75f, 0.0f, 0.0f,
-			+0.75f, -0.75f, -0.75f, 1.0f, 0.0f,
-			+0.75f, +0.75f, -0.75f, 1.0f, 1.0f,
-			-0.75f, +0.75f, -0.75f, 0.0f, 1.0f
-		};
-		vertexBuffer = renderDevice->CreateVertexBuffer(vertices2);
-		vertexBuffer->SetLayout
-		({
-			{DataType::Float3,"a_Pos"},
-			{DataType::Float2, "a_Tex"}
-		});
-		vertexArray2->AddVertexBuffer(vertexBuffer);
-
-		std::vector<uint32_t> indices2 =
-		{
-			0, 1, 2,
-			2, 3, 0
-		};
-		indexBuffer = renderDevice->CreateIndexBuffer(indices2);
-		vertexArray2->SetIndexBuffer(indexBuffer);
 
 		std::string vertexShader = ReadFile("res/shaders/Basic.vs");
 		std::string fragmentShader = ReadFile("res/shaders/Basic.fs");
 		Shader* shader1 = renderDevice->CreateShader(vertexShader, fragmentShader);
 
-		m_Mesh1 = new Mesh(vertexArray1, shader1);
+		m_Mesh1 = CreateTriangle(renderDevice, shader1);
 		m_Actor1 = new Actor();
+		m_Actor1->GetComponent<TransformComponent>()->m_Transform.position 
+			= glm::vec3(-4.0f, 0.0f, -10.0f);
 		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_Mesh1));
 		m_Scene->Add(m_Actor1);
 		
 		std::string vertexShader2 = ReadFile("res/shaders/Basic2.vs");
 		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
-
 		Shader* shader2 = renderDevice->CreateShader(vertexShader2, fragmentShader2);
 
-		shader2->SetUniformFloat("u_Float", 0.5f);
-
-		m_Mesh2 = new Mesh(vertexArray2, shader2);
+		m_Mesh2 = CreateCube(renderDevice, shader2);
 		m_Actor2 = new Actor();
+		m_Actor2->GetComponent<TransformComponent>()->m_Transform.position
+			= glm::vec3(4.0f, 0.0f, -10.0f);
 		m_Actor2->AddComponent(new MeshComponent(m_Actor2, m_Mesh2));
 		m_Scene->Add(m_Actor2);
 
@@ -95,6 +49,13 @@ public:
 	virtual ~ExampleLayer()
 	{
 		delete m_Texture;
+		delete m_Camera;
+	}
+
+	virtual void Update(Radiance::DataTime _time)
+	{
+		using namespace Radiance;
+		m_Camera->Update(_time);
 	}
 
 	virtual void Render() override
@@ -106,7 +67,7 @@ public:
 		if (!m_Scene)
 			return;
 
-		Renderer::Begin(m_Camera);
+		Renderer::Begin(*m_Camera);
 		{
 			RenderCommand::Clear();
 			int i = 0;
@@ -121,8 +82,8 @@ public:
 						m_Texture->Bind(slot);
 						meshComp->GetMesh()->GetShader()->SetUniformInt("u_Texture", slot);
 					}
-	
-					Renderer::Submit(meshComp->GetMesh());
+					TransformComponent* transformComp = actor->GetComponent<TransformComponent>();
+					Renderer::Submit(meshComp->GetMesh(), transformComp->GetMatrix());
 				}
 				++i;
 			}
@@ -132,14 +93,26 @@ public:
 
 	virtual void RenderGUI() override
 	{
+		using namespace Radiance;
 		ImGui::Begin("Test");
-		ImGui::Text("Hello World");
-		glm::vec3 camPos = m_Camera.GetPosition();
-		ImGui::SliderFloat3("Camera Position", &camPos[0], -1.0f, 1.0f);
-		m_Camera.SetPosition(camPos);
-		glm::vec3 camRot = m_Camera.GetRotations();
-		ImGui::SliderFloat3("Camera Rotation", &camRot[0], -180.0f, 180.0f);
-		m_Camera.SetRotations(camRot);
+		ImGui::Text("Camera Transform");
+		ImGui::SliderFloat3("Camera Position", &m_Camera->position.x, -1.0f, 1.0f);
+		ImGui::SliderFloat3("Camera Rotation", &m_Camera->rotation.x , -90.0f, 90.0f);
+
+		int i = 0;
+		ImGui::Text("Scene Objects");
+		for (Actor* actor : m_Scene->GetActors())
+		{
+			TransformComponent* comp = actor->GetComponent<TransformComponent>();
+			Transform& trans = comp->m_Transform;
+			ImGui::SliderFloat3(std::string("Pos " + std::to_string(i)).c_str(), 
+				&trans.position.x, -10.0f, 10.0f);
+			ImGui::SliderFloat3(std::string("Rot " + std::to_string(i)).c_str(), 
+				&trans.rotation.x, -180, 180);
+			ImGui::SliderFloat3(std::string("Scale " + std::to_string(i)).c_str(), 
+				&trans.scale.x, -10.0f, 10.0f);
+			++i;
+		}
 		ImGui::End();
 	}
 
@@ -147,10 +120,8 @@ public:
 	{
 		if (event.GetEventType() == Radiance::EventType::KeyPressed)
 		{
-			Radiance::KeyPressedEvent& e = (Radiance::KeyPressedEvent&)event;
-			if (e.GetKeyCode() == RAD_KEY_TAB)
-				RAD_TRACE("Tab key is pressed (event)!");
-			RAD_TRACE("{0}", (char)e.GetKeyCode());
+			/*Radiance::KeyPressedEvent& e = (Radiance::KeyPressedEvent&)event;*/
+		
 		}
 	}
 

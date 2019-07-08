@@ -48,10 +48,13 @@
     <ClInclude Include="src\Radiance\Application.h" />
     <ClInclude Include="src\Radiance\Core.h" />
     <ClInclude Include="src\Radiance\MouseButtonCodes.h" />
+    <ClInclude Include="src\Radiance\Prefab\Prefab.h" />
     <ClInclude Include="src\Radiance\Renderer\API\Buffer.h" />
     <ClInclude Include="src\Radiance\Renderer\API\GraphicsContext.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Camera.h" />
+    <ClInclude Include="src\Radiance\Renderer\Camera\FreeCamera.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Orthographic.h" />
+    <ClInclude Include="src\Radiance\Renderer\Camera\Perspective.h" />
     <ClInclude Include="src\Radiance\Renderer\Mesh.h" />
     <ClInclude Include="src\Radiance\Renderer\API\RenderAPI.h" />
     <ClInclude Include="src\Radiance\Renderer\API\RenderCommand.h" />
@@ -62,6 +65,7 @@
     <ClInclude Include="src\Radiance\Renderer\API\VertexArray.h" />
     <ClInclude Include="src\Radiance\Renderer\Scene.h" />
     <ClInclude Include="src\Radiance\Singleton.h" />
+    <ClInclude Include="src\Radiance\Time.h" />
     <ClInclude Include="src\Radiance\Utility\Utility.h" />
     <ClInclude Include="src\Radiance\Window.h" />
   </ItemGroup>
@@ -89,8 +93,11 @@
     <ClCompile Include="src\Radiance\LayerStack.cpp" />
     <ClCompile Include="src\Radiance\Logger.cpp" />
     <ClCompile Include="src\Radiance\Application.cpp" />
+    <ClCompile Include="src\Radiance\Prefab\Prefab.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\Buffer.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Camera\FreeCamera.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\Orthographic.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Camera\Perspective.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\RenderAPI.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\RenderCommand.cpp" />
@@ -98,6 +105,7 @@
     <ClCompile Include="src\Radiance\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLShader.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Scene.cpp" />
+    <ClCompile Include="src\Radiance\Time.cpp" />
     <ClCompile Include="src\Radiance\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,7 +190,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>RAD_DEBUG;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RAD_DEBUG;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;GLM_FORCE_SILENT_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -199,7 +207,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>RAD_DEBUG;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RAD_DEBUG;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;GLM_FORCE_SILENT_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -217,7 +225,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;GLM_FORCE_SILENT_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -239,7 +247,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;GLM_FORCE_SILENT_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>

@@ -9,7 +9,7 @@ namespace Radiance
 		: m_Running(true)
 	{
 		RAD_CORE_INFO("Creating Engine Application");
-		m_Window = Window::Create();
+		m_Window = Window::Create({"Radiance Engine", 1600, 900});
 		m_Window->SetEventCallback(BIND_FN(Application::RootOnEvent));
 		m_RenderDevice = RenderDevice::Create();
 		m_ImGuiLayer = new ImGuiLayer(this);
@@ -29,17 +29,22 @@ namespace Radiance
 
 	void Application::Run()
 	{
+		Timer timer;
 		while (m_Running)
 		{
-			Update();
+			timer.Update();
+			DataTime ts = timer.GetTimeStep();
+
+			Update(ts);
 			Render();
 			m_Window->Update();
 		}
 	}
 
-	void Application::Update()
+	void Application::Update(DataTime _time)
 	{
-
+		for (Layer* layer : m_LayerStack)
+			layer->Update(_time);
 	}
 
 	void Application::Render()
