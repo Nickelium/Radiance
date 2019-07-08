@@ -22,7 +22,14 @@ namespace Radiance
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
-	std::pair<float, float> WindowsInput::GetMousePositionImpl()
+	bool WindowsInput::IsMousePressedImpl(int _button)
+	{
+		auto pGLFWindow = static_cast<GLFWwindow*>(m_Window->GetNativeWindow());
+		auto state = glfwGetMouseButton(pGLFWindow, _button);
+		return state == GLFW_PRESS;
+	}
+
+	glm::vec2 WindowsInput::GetMousePositionImpl()
 	{
 		auto pGLFWWindow = static_cast<GLFWwindow*>(m_Window->GetNativeWindow());
 		double x, y;

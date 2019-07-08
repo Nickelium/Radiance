@@ -28,6 +28,9 @@ namespace Radiance
 	private:
 		virtual void Init(const WindowDesc& _desc);
 		virtual void Destroy();
+
+		bool CenterWindow();
+
 	private:
 		GLFWwindow* m_Window;
 		GraphicsContext* m_Context;
@@ -35,7 +38,7 @@ namespace Radiance
 		struct WindowData
 		{
 			std::string Title;
-			unsigned int Width, Height;
+			int Width, Height;
 			bool VSync;
 
 			EventCallbackFn EventCallback;
