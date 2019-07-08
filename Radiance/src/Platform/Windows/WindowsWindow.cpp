@@ -62,6 +62,8 @@ namespace Radiance
 		m_Window = glfwCreateWindow((int)_desc.Width, (int)_desc.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		RAD_CORE_ASSERT(m_Window, "Window is nullptr");
 
+		CenterWindow();
+
 		m_Context = new GLContext(m_Window);
 		m_Context->Init();
 		
@@ -179,6 +181,28 @@ namespace Radiance
 		//TEMP
 		delete m_Context;
 		//s_GLFWInitialized = false;
+	}
+
+	bool WindowsWindow::CenterWindow()
+	{
+		GLFWwindow *window = m_Window;
+		GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+
+		if (!monitor)
+			return false;
+
+		const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+		if (!mode)
+			return false;
+
+		int monitorX, monitorY;
+		glfwGetMonitorPos(monitor, &monitorX, &monitorY);
+
+		glfwSetWindowPos(window,
+			monitorX + (mode->width - m_Data.Width) / 2,
+			monitorY + (mode->height - m_Data.Height) / 2);
+
+		return true;
 	}
 
 	void WindowsWindow::Update()

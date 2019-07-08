@@ -11,7 +11,8 @@ namespace Radiance
 		WindowsInput(Window* _window);
 	protected:
 		virtual bool IsKeyPressedImpl(int _keyCode) override;
-		virtual std::pair<float, float> GetMousePositionImpl() override;
+		virtual bool IsMousePressedImpl(int _button) override;
+		virtual glm::vec2 GetMousePositionImpl() override;
 
 		Window* m_Window;
 
