@@ -18,10 +18,12 @@ namespace Radiance
 	{
 	}
 
-	void Renderer::Submit(Mesh* _mesh)
+	void Renderer::Submit(Mesh* _mesh, const glm::mat4& _transform)
 	{
 		_mesh->Bind();
-		CommonUniformBinding(_mesh->GetShader());
+		Shader* shader = _mesh->GetShader();
+		CommonUniformBinding(shader);
+		shader->SetUniformMat("M", _transform);
 		RenderCommand::DrawIndexed(_mesh->GetVertexArray());
 	}
 

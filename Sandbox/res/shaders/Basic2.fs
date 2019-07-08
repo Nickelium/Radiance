@@ -20,4 +20,5 @@ void main()
 	vec4 col = texture(u_Texture, v_TexCoords);
 	o_Color = vec4(u_Float, 0.0f, 0.0f, 1.0f);
 	o_Color = col;
+	o_Color = vec4(0.75f, 0.2f, 0.15f, 1.0f);
 }

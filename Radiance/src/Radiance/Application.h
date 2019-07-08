@@ -17,13 +17,12 @@ namespace Radiance
 		
 		void Run();
 
-		void Update();
+		void Update(DataTime _time);
 		void Render();
 
 		virtual void OnEvent(Event& /*_event*/) {};
 		
 		void RootOnEvent(Event& _event);
-		bool OnWindowClose(Event& _event);
 		void CloseWindow();
 
 		void PushLayer(Layer* _layer);
@@ -35,6 +34,8 @@ namespace Radiance
 		RenderDevice* m_RenderDevice;
 
 	private:
+		bool OnWindowClose(Event& _event);
+
 		Window* m_Window;
 		bool m_Running;
 

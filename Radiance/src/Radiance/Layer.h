@@ -18,7 +18,7 @@ namespace Radiance
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 
-		virtual void Update() {}
+		virtual void Update(DataTime /*_time*/) {}
 		virtual void Render() {}
 		virtual void RenderGUI() {}
 

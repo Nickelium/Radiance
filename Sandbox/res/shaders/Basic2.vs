@@ -6,14 +6,15 @@ layout(location = 1) in vec2 a_TexCoords;
 out vec3 v_Position;
 out vec2 v_TexCoords;
 
+uniform mat4 M;
 uniform mat4 V;
 uniform mat4 P;
-uniform mat4 VP;
+//uniform mat4 VP;
 
 
 void main()
 {
-	gl_Position = VP * vec4(a_Position, 1.0f);
+	gl_Position = P * V * M * vec4(a_Position, 1.0f);
 	v_Position = a_Position;
 	v_TexCoords = a_TexCoords;
 }
