@@ -7,8 +7,8 @@ class ExampleLayer : public Radiance::Layer
 	Radiance::Actor* m_Actor1;
 	Radiance::Actor* m_Actor2;
 
-	Radiance::Mesh* m_Mesh1;
-	Radiance::Mesh* m_Mesh2;
+	Radiance::MeshRender* m_MeshRender1;
+	Radiance::MeshRender* m_MeshRender2;
 
 	Radiance::Texture2D* m_Texture;
 
@@ -25,22 +25,22 @@ public:
 		std::string fragmentShader = ReadFile("res/shaders/Basic.fs");
 		Shader* shader1 = renderDevice->CreateShader(vertexShader, fragmentShader);
 
-		m_Mesh1 = CreateTriangle(renderDevice, shader1);
+		m_MeshRender1 = new MeshRender(CreateTriangle(), shader1);
 		m_Actor1 = new Actor();
 		m_Actor1->GetComponent<TransformComponent>()->m_Transform.position 
 			= glm::vec3(-4.0f, 0.0f, -10.0f);
-		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_Mesh1));
+		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_MeshRender1));
 		m_Scene->Add(m_Actor1);
 		
 		std::string vertexShader2 = ReadFile("res/shaders/Basic2.vs");
 		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
 		Shader* shader2 = renderDevice->CreateShader(vertexShader2, fragmentShader2);
 
-		m_Mesh2 = CreateCube(renderDevice, shader2);
+		m_MeshRender2 = new MeshRender(CreateCube(), shader2);
 		m_Actor2 = new Actor();
 		m_Actor2->GetComponent<TransformComponent>()->m_Transform.position
 			= glm::vec3(4.0f, 0.0f, -10.0f);
-		m_Actor2->AddComponent(new MeshComponent(m_Actor2, m_Mesh2));
+		m_Actor2->AddComponent(new MeshComponent(m_Actor2, m_MeshRender2));
 		m_Scene->Add(m_Actor2);
 
 		m_Texture = renderDevice->CreateTexture2D("res/textures/user.png");

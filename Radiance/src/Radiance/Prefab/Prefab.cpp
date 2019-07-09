@@ -5,60 +5,62 @@
 
 namespace Radiance
 {
-	Mesh* CreateCube(RenderDevice* _renderDevice, Shader* _shader)
+	Mesh* CreateCube()
 	{
-		VertexArray* vertexArray = _renderDevice->CreateVertexArray();
-		std::vector<float> vertices =
-		{
-			// front
-			-1.0f, -1.0f,  1.0f, 0.0f, 0.0f,
-			 1.0f, -1.0f,  1.0f, 1.0f, 0.0f,
-			 1.0f,  1.0f,  1.0f, 1.0f, 1.0f,
-			-1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
-			// back
-			-1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
-			 1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
-			 1.0f,  1.0f, -1.0f, 1.0f, 1.0f,
-			-1.0f,  1.0f, -1.0f, 0.0f, 1.0f
-		};
-		VertexBuffer* vertexBuffer = _renderDevice->CreateVertexBuffer(vertices);
-		vertexBuffer->SetLayout
-		({
-			{DataType::Float3,"a_Pos"},
-			{DataType::Float2, "a_Tex"}
-		});
-		vertexArray->AddVertexBuffer(vertexBuffer);
 
-		std::vector<uint32_t> indices2 =
-		{
-			// front
-			0, 1, 2,
-			2, 3, 0,
-			// right
-			1, 5, 6,
-			6, 2, 1,
-			// back
-			7, 6, 5,
-			5, 4, 7,
-			// left
-			4, 0, 3,
-			3, 7, 4,
-			// bottom
-			4, 5, 1,
-			1, 0, 4,
-			// top
-			3, 2, 6,
-			6, 7, 3
-		};
-		IndexBuffer* indexBuffer = _renderDevice->CreateIndexBuffer(indices2);
-		vertexArray->SetIndexBuffer(indexBuffer);
+		//VertexArray* vertexArray = _renderDevice->CreateVertexArray();
+		//std::vector<float> vertices =
+		//{
+		//	// front
+		//	-1.0f, -1.0f,  1.0f, 0.0f, 0.0f,
+		//	 1.0f, -1.0f,  1.0f, 1.0f, 0.0f,
+		//	 1.0f,  1.0f,  1.0f, 1.0f, 1.0f,
+		//	-1.0f,  1.0f,  1.0f, 0.0f, 1.0f,
+		//	// back
+		//	-1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
+		//	 1.0f, -1.0f, -1.0f, 1.0f, 0.0f,
+		//	 1.0f,  1.0f, -1.0f, 1.0f, 1.0f,
+		//	-1.0f,  1.0f, -1.0f, 0.0f, 1.0f
+		//};
+		//VertexBuffer* vertexBuffer = _renderDevice->CreateVertexBuffer(vertices);
+		//vertexBuffer->SetLayout
+		//({
+		//	{DataType::Float3,"a_Pos"},
+		//	{DataType::Float2, "a_Tex"}
+		//});
+		//vertexArray->AddVertexBuffer(vertexBuffer);
 
-		return new Mesh(vertexArray, _shader);
+		//std::vector<uint32_t> indices2 =
+		//{
+		//	// front
+		//	0, 1, 2,
+		//	2, 3, 0,
+		//	// right
+		//	1, 5, 6,
+		//	6, 2, 1,
+		//	// back
+		//	7, 6, 5,
+		//	5, 4, 7,
+		//	// left
+		//	4, 0, 3,
+		//	3, 7, 4,
+		//	// bottom
+		//	4, 5, 1,
+		//	1, 0, 4,
+		//	// top
+		//	3, 2, 6,
+		//	6, 7, 3
+		//};
+		//IndexBuffer* indexBuffer = _renderDevice->CreateIndexBuffer(indices2);
+		//vertexArray->SetIndexBuffer(indexBuffer);
+
+		//TODO
+		return new Mesh;
 	}
 
-	Mesh* CreateTriangle(RenderDevice* _renderDevice, Shader* _shader)
+	Mesh* CreateTriangle()
 	{
-		VertexArray* vertexArray = _renderDevice->CreateVertexArray();
+		/*VertexArray* vertexArray = _renderDevice->CreateVertexArray();
 
 		std::vector<float> vertices =
 		{
@@ -80,9 +82,10 @@ namespace Radiance
 			0, 1, 2
 		};
 		IndexBuffer* indexBuffer = _renderDevice->CreateIndexBuffer(indices);
-		vertexArray->SetIndexBuffer(indexBuffer);
+		vertexArray->SetIndexBuffer(indexBuffer);*/
 
-		return new Mesh(vertexArray, _shader);
+		//TODO
+		return new Mesh;
 	}
 
 }

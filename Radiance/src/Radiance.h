@@ -23,7 +23,7 @@
 #include "Radiance/Renderer/API/Texture2D.h"
 
 #include "Radiance/Renderer/Renderer.h"
-#include "Radiance/Renderer/Mesh.h"
+#include "Radiance/Renderer/MeshRender.h"
 #include "Radiance/Renderer/Camera/Orthographic.h"
 #include "Radiance/Renderer/Camera/Perspective.h"
 #include "Radiance/Renderer/Camera/FreeCamera.h"

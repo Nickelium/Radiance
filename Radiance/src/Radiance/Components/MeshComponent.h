@@ -4,17 +4,17 @@
 
 namespace Radiance
 {
-	class Mesh;
+	class MeshRender;
 	class MeshComponent : public Component
 	{
 	public:
-		MeshComponent(Actor* _actor, Mesh* _mesh);
+		MeshComponent(Actor* _actor, MeshRender* _mesh);
 		virtual ~MeshComponent();
 
-		inline Mesh* GetMesh() const { return m_Mesh; }
+		inline MeshRender* GetMesh() const { return m_Mesh; }
 
 		COMPONENT_CLASS(MeshComponent)
 	private:
-		Mesh* m_Mesh;
+		MeshRender* m_Mesh;
 	};
 }

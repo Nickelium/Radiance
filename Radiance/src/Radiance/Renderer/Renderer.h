@@ -2,7 +2,7 @@
 
 #include "API/RenderCommand.h"
 #include "Camera/Camera.h"
-#include "Mesh.h"
+#include "MeshRender.h"
 
 namespace Radiance
 {
@@ -12,7 +12,7 @@ namespace Radiance
 		static void Begin(const Camera& _camera);
 		static void End();
 
-		static void Submit(Mesh* _mesh, const glm::mat4& _transform);
+		static void Submit(MeshRender* _mesh, const glm::mat4& _transform);
 
 		inline static RenderAPI::API GetAPI() { return RenderAPI::GetAPI(); };
 	private:

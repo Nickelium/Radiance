@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Radiance\Locator.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Platform\OpenGL\GLRenderAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\GLRenderDevice.h" />
@@ -55,10 +56,11 @@
     <ClInclude Include="src\Radiance\Renderer\Camera\FreeCamera.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Orthographic.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Perspective.h" />
-    <ClInclude Include="src\Radiance\Renderer\Mesh.h" />
+    <ClInclude Include="src\Radiance\Renderer\MeshRender.h" />
     <ClInclude Include="src\Radiance\Renderer\API\RenderAPI.h" />
     <ClInclude Include="src\Radiance\Renderer\API\RenderCommand.h" />
     <ClInclude Include="src\Radiance\Renderer\API\RenderDevice.h" />
+    <ClInclude Include="src\Radiance\Renderer\Mesh.h" />
     <ClInclude Include="src\Radiance\Renderer\Renderer.h" />
     <ClInclude Include="src\Radiance\Renderer\API\Shader.h" />
     <ClInclude Include="src\Radiance\Renderer\API\Texture2D.h" />
@@ -91,6 +93,7 @@
     <ClCompile Include="src\Radiance\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Radiance\Layer.cpp" />
     <ClCompile Include="src\Radiance\LayerStack.cpp" />
+    <ClCompile Include="src\Radiance\Locator.cpp" />
     <ClCompile Include="src\Radiance\Logger.cpp" />
     <ClCompile Include="src\Radiance\Application.cpp" />
     <ClCompile Include="src\Radiance\Prefab\Prefab.cpp" />
@@ -99,6 +102,7 @@
     <ClCompile Include="src\Radiance\Renderer\Camera\Orthographic.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\Perspective.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Mesh.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\MeshRender.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\RenderAPI.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\RenderCommand.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\RenderDevice.cpp" />
