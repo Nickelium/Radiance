@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Radiance/Locator.h"
+
 /**
  * Responsible through resources creation (Abstract factory)
    Each API as an implementation of the RenderDevice
@@ -10,7 +13,7 @@ namespace Radiance
 	class IndexBuffer;
 	class Shader;
 	class Texture2D;
-	class RenderDevice
+	class RenderDevice : public Service
 	{
 	public:
 		virtual ~RenderDevice() = default;
@@ -24,5 +27,7 @@ namespace Radiance
 		virtual Texture2D* CreateTexture2D(const std::string& _filePath) const = 0;
 
 		static RenderDevice* Create();
+
+		SERVICE_CLASS("RenderDevice")
 	};
 }

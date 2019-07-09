@@ -32,3 +32,4 @@
 #include "Radiance/Input.h"
 #include "Radiance/KeyCodes.h"
 #include "Radiance/MouseButtonCodes.h"
+#include "Radiance/Locator.h"

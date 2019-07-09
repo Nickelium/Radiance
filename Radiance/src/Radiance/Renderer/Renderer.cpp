@@ -18,7 +18,7 @@ namespace Radiance
 	{
 	}
 
-	void Renderer::Submit(Mesh* _mesh, const glm::mat4& _transform)
+	void Renderer::Submit(MeshRender* _mesh, const glm::mat4& _transform)
 	{
 		_mesh->Bind();
 		Shader* shader = _mesh->GetShader();

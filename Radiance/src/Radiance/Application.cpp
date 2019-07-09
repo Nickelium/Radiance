@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "Renderer/API/RenderCommand.h"
+#include "Renderer/API/RenderDevice.h"
 
 namespace Radiance
 {
@@ -11,7 +12,7 @@ namespace Radiance
 		RAD_CORE_INFO("Creating Engine Application");
 		m_Window = Window::Create({"Radiance Engine", 1600, 900});
 		m_Window->SetEventCallback(BIND_FN(Application::RootOnEvent));
-		m_RenderDevice = RenderDevice::Create();
+		Locator::Set(RenderDevice::Create());
 		m_ImGuiLayer = new ImGuiLayer(this);
 		PushOverlay(m_ImGuiLayer);
 

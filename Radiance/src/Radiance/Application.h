@@ -30,6 +30,7 @@ namespace Radiance
 
 		inline Window* GetWindow() const { return m_Window; }
 		inline RenderDevice* GetRenderDevice() const { return m_RenderDevice; }
+
 	protected: 
 		RenderDevice* m_RenderDevice;
 

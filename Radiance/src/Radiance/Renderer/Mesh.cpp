@@ -1,33 +1,31 @@
 #include "pch.h"
 #include "Mesh.h"
 
-#include "API/VertexArray.h"
-#include "API/Shader.h"
-
 namespace Radiance
 {
-	
-	Mesh::Mesh(VertexArray* _vertexArray, Shader* _shader)
-		: m_VertexArray(_vertexArray), m_Shader(_shader)
+	Mesh::Mesh()
 	{
+
 	}
 
-	Mesh::~Mesh()
+	void Mesh::SetPositions(std::vector<glm::vec3> _positions)
 	{
-		delete m_VertexArray;
-		delete m_Shader;
+		m_Positions = _positions;
 	}
 
-	void Mesh::Bind()
+	void Mesh::SetIndices(std::vector<uint32_t> _indices)
 	{
-		m_VertexArray->Bind();
-		m_Shader->Bind();
+		m_Indices = _indices;
 	}
 
-	void Mesh::UnBind()
+	const std::vector<glm::vec3>& Mesh::GetPositions()
 	{
-		m_VertexArray->UnBind();
-		m_Shader->UnBind();
+		return m_Positions;
+	}
+
+	const std::vector<glm::uint32_t>& Mesh::GetIndices()
+	{
+		return m_Indices;
 	}
 
 }
