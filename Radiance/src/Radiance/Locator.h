@@ -16,6 +16,8 @@ namespace Radiance
 	class Locator 
 	{
 	public:
+		static void Destroy();
+
 		static void Set(Service* _service);
 
 		template <typename TypeService>

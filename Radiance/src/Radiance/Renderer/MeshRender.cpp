@@ -38,12 +38,7 @@ namespace Radiance
 	void MeshRender::BuildVertexArray()
 	{
 		//TODO pack/tight
-		std::vector<float> vertices =
-		{
-			-0.5f, -0.5f, -0.75f, 1.0f, 0.0f, 1.0f, 1.0f,
-			+0.5f, -0.5f, -0.75f, 0.0f, 0.0f, 1.0f, 1.0f,
-			+0.0f, +0.5f, -0.75f, 1.0f, 1.0f, 0.0f, 1.0f,
-		};
+		std::vector<float> vertices;
 
 		std::vector<glm::vec3> positions = m_Mesh->GetPositions();
 		std::vector<uint32_t> indices = m_Mesh->GetIndices();

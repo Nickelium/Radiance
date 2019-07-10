@@ -23,9 +23,8 @@ namespace Radiance
 	Application::~Application()
 	{
 		RAD_CORE_INFO("Destroying Engine Application");
-
+		Locator::Destroy();
 		delete m_Window;
-		delete m_RenderDevice;
 	}
 
 	void Application::Run()
