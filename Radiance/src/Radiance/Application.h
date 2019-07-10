@@ -29,10 +29,6 @@ namespace Radiance
 		void PushOverlay(Layer* _layer);
 
 		inline Window* GetWindow() const { return m_Window; }
-		inline RenderDevice* GetRenderDevice() const { return m_RenderDevice; }
-
-	protected: 
-		RenderDevice* m_RenderDevice;
 
 	private:
 		bool OnWindowClose(Event& _event);

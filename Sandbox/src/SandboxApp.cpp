@@ -13,13 +13,15 @@ class ExampleLayer : public Radiance::Layer
 	Radiance::Texture2D* m_Texture;
 
 	Radiance::Camera* m_Camera;
+
+	Radiance::DataTime m_Time;
 public:
 	ExampleLayer(Radiance::Application* _application)
 		: Layer(_application, new Radiance::Scene), 
 		m_Camera(new Radiance::FreeCamera)
 	{
 		using namespace Radiance;
-		RenderDevice* renderDevice = m_Application->GetRenderDevice();
+		RenderDevice* renderDevice = Locator::Get<RenderDevice>();
 
 		std::string vertexShader = ReadFile("res/shaders/Basic.vs");
 		std::string fragmentShader = ReadFile("res/shaders/Basic.fs");
@@ -55,6 +57,7 @@ public:
 	virtual void Update(Radiance::DataTime _time)
 	{
 		using namespace Radiance;
+		m_Time = _time;
 		m_Camera->Update(_time);
 	}
 
@@ -94,6 +97,11 @@ public:
 	virtual void RenderGUI() override
 	{
 		using namespace Radiance;
+		ImGui::Begin("FPS");
+		std::string fps = std::to_string(1.0f / m_Time.dt);
+		ImGui::Text(fps.c_str());
+		ImGui::End();
+
 		ImGui::Begin("Test");
 		ImGui::Text("Camera Transform");
 		ImGui::SliderFloat3("Camera Position", &m_Camera->position.x, -1.0f, 1.0f);
