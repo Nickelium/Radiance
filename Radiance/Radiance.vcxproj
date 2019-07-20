@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Radiance\Locator.h" />
+    <ClInclude Include="src\Radiance\Core\Locator.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Platform\OpenGL\GLRenderAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\GLRenderDevice.h" />
@@ -41,13 +41,13 @@
     <ClInclude Include="src\Radiance\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Radiance\Input.h" />
     <ClInclude Include="src\Radiance\KeyCodes.h" />
-    <ClInclude Include="src\Radiance\Layer.h" />
-    <ClInclude Include="src\Radiance\LayerStack.h" />
-    <ClInclude Include="src\Radiance\Logger.h" />
+    <ClInclude Include="src\Radiance\Core\Layer.h" />
+    <ClInclude Include="src\Radiance\Core\LayerStack.h" />
+    <ClInclude Include="src\Radiance\Core\Logger.h" />
     <ClInclude Include="src\Radiance\EntryPoint.h" />
     <ClInclude Include="src\Radiance.h" />
-    <ClInclude Include="src\Radiance\Application.h" />
-    <ClInclude Include="src\Radiance\Core.h" />
+    <ClInclude Include="src\Radiance\Core\Application.h" />
+    <ClInclude Include="src\Radiance\Base.h" />
     <ClInclude Include="src\Radiance\MouseButtonCodes.h" />
     <ClInclude Include="src\Radiance\Prefab\Prefab.h" />
     <ClInclude Include="src\Radiance\Renderer\API\Buffer.h" />
@@ -66,10 +66,10 @@
     <ClInclude Include="src\Radiance\Renderer\API\Texture2D.h" />
     <ClInclude Include="src\Radiance\Renderer\API\VertexArray.h" />
     <ClInclude Include="src\Radiance\Renderer\Scene.h" />
-    <ClInclude Include="src\Radiance\Singleton.h" />
-    <ClInclude Include="src\Radiance\Time.h" />
+    <ClInclude Include="src\Radiance\Core\Singleton.h" />
+    <ClInclude Include="src\Radiance\Core\Time.h" />
     <ClInclude Include="src\Radiance\Utility\Utility.h" />
-    <ClInclude Include="src\Radiance\Window.h" />
+    <ClInclude Include="src\Radiance\Core\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -91,11 +91,11 @@
     <ClCompile Include="src\Radiance\Components\TransformComponent.cpp" />
     <ClCompile Include="src\Radiance\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Radiance\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Radiance\Layer.cpp" />
-    <ClCompile Include="src\Radiance\LayerStack.cpp" />
-    <ClCompile Include="src\Radiance\Locator.cpp" />
-    <ClCompile Include="src\Radiance\Logger.cpp" />
-    <ClCompile Include="src\Radiance\Application.cpp" />
+    <ClCompile Include="src\Radiance\Core\Layer.cpp" />
+    <ClCompile Include="src\Radiance\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Radiance\Core\Locator.cpp" />
+    <ClCompile Include="src\Radiance\Core\Logger.cpp" />
+    <ClCompile Include="src\Radiance\Core\Application.cpp" />
     <ClCompile Include="src\Radiance\Prefab\Prefab.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\Buffer.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\FreeCamera.cpp" />
@@ -109,7 +109,7 @@
     <ClCompile Include="src\Radiance\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLShader.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Scene.cpp" />
-    <ClCompile Include="src\Radiance\Time.cpp" />
+    <ClCompile Include="src\Radiance\Core\Time.cpp" />
     <ClCompile Include="src\Radiance\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>

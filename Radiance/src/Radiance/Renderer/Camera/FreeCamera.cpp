@@ -50,8 +50,8 @@ namespace Radiance
 			glm::vec2 deltaPos = mousePos - m_PrevMousePos;
 			deltaPos *= m_MouseSensitivity;
 
-			rotation.y += deltaPos.x;
-			rotation.x += deltaPos.y;
+			rotation.y -= deltaPos.x;
+			rotation.x -= deltaPos.y;
 		}
 		m_PrevMousePos = mousePos;
 		

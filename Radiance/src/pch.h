@@ -26,10 +26,10 @@
 #include <imgui.h>
 #include <glm/glm.hpp>
 
-#include "Radiance/Core.h"
-#include "Radiance/Logger.h"
-#include "Radiance/Time.h"
+#include "Radiance/Base.h"
+#include "Radiance/Core/Logger.h"
+#include "Radiance/Core/Time.h"
 #include "Radiance/Input.h"
 #include "Radiance/KeyCodes.h"
 #include "Radiance/MouseButtonCodes.h"
-#include "Radiance/Locator.h"
+#include "Radiance/Core/Locator.h"

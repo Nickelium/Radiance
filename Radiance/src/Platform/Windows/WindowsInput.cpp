@@ -3,8 +3,8 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Radiance/Application.h"
-#include "Radiance/Window.h"
+#include "Radiance/Core/Application.h"
+#include "Radiance/Core/Window.h"
 
 namespace Radiance
 {

@@ -8,6 +8,8 @@ namespace Radiance
 	{
 		float dt;
 		float total;
+
+		//operator float() const { return dt; }
 	};
 
 	class Timer

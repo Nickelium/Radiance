@@ -7,7 +7,7 @@
 #include "examples/imgui_impl_opengl3.h"
 
 
-#include "Radiance/Application.h"
+#include "Radiance/Core/Application.h"
 
 //TEMPorary
 #include <GLFW/glfw3.h>
