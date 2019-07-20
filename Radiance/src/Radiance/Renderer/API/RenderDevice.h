@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Radiance/Locator.h"
+#include "Radiance/Core/Locator.h"
 
 /**
  * Responsible through resources creation (Abstract factory)

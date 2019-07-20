@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Radiance/Layer.h"
+#include "Radiance/Core/Layer.h"
 
 #include "Radiance/Events/ApplicationEvent.h"
 #include "Radiance/Events/MouseEvent.h"

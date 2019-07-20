@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "Application.h"
 
-#include "Renderer/API/RenderCommand.h"
-#include "Renderer/API/RenderDevice.h"
+#include "Radiance/Renderer/API/RenderCommand.h"
+#include "Radiance/Renderer/API/RenderDevice.h"
 
 namespace Radiance
 {

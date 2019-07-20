@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Window.h"
-#include "Events/ApplicationEvent.h"
+#include "Radiance/Events/ApplicationEvent.h"
 #include "LayerStack.h"
-#include "ImGui/ImGuiLayer.h"
+#include "Radiance/ImGui/ImGuiLayer.h"
 
-#include "Renderer/API/RenderDevice.h"
+#include "Radiance/Renderer/API/RenderDevice.h"
 
 namespace Radiance
 {

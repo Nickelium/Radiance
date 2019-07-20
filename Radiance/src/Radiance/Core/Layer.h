@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Events/Event.h"
-#include "Renderer/Scene.h"
+#include "Radiance/Events/Event.h"
+#include "Radiance/Renderer/Scene.h"
 
 namespace Radiance
 {

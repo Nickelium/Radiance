@@ -3,13 +3,13 @@
 // Intended for client application usage
 // Include once
 
-#include "Radiance/Core.h"
-#include "Radiance/Logger.h"
-#include "Radiance/Time.h"
+#include "Radiance/Base.h"
+#include "Radiance/Core/Logger.h"
+#include "Radiance/Core/Time.h"
 
-#include "Radiance/Application.h"
+#include "Radiance/Core/Application.h"
 
-#include "Radiance/Layer.h"
+#include "Radiance/Core/Layer.h"
 #include "Radiance/ImGui/ImGuiLayer.h"
 
 #include "Radiance/Input.h"
