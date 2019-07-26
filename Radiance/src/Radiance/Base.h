@@ -10,7 +10,6 @@
 //	#error Radiance currently only support Windows
 //#endif
 
-
 #ifdef RAD_DEBUG
 	#define RAD_ENABLE_ASSERTS
 #endif

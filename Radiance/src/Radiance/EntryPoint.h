@@ -1,8 +1,9 @@
 #pragma once
 
-#ifdef RAD_PLATFORM_WINDOWS
+#define GPU_NVIDIA
+#include "Radiance/Settings.h"
 
-#include <vld.h>
+#ifdef RAD_PLATFORM_WINDOWS
 
 int main(int argc, char** argv)
 {
