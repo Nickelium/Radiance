@@ -21,6 +21,8 @@ static void ImGuiShowHelpMarker(const char* desc)
 
 class ExampleLayer : public Radiance::Layer
 {
+	Radiance::FrameBuffer* m_FrameBuffer;
+
 	Radiance::Actor* m_Actor1;
 	Radiance::Actor* m_Actor2;
 
@@ -116,6 +118,8 @@ public:
 		using namespace Radiance;
 		RenderDevice* renderDevice = Locator::Get<RenderDevice>();
 
+		m_FrameBuffer = renderDevice->CreateFrameBuffer(1000, 1000);
+
 		std::string vertexShader = ReadFile("res/shaders/Basic.vs");
 		std::string fragmentShader = ReadFile("res/shaders/Basic.fs");
 		Shader* shader1 = renderDevice->CreateShader(vertexShader, fragmentShader);
@@ -163,6 +167,7 @@ public:
 		if (!m_Scene)
 			return;
 
+		m_FrameBuffer->Bind();
 		Renderer::Begin(*m_Camera);
 		{
 			RenderCommand::Clear();
@@ -185,6 +190,7 @@ public:
 			}
 		}
 		Renderer::End();
+		m_FrameBuffer->UnBind();
 	}
 
 	virtual void RenderGUI() override
@@ -377,7 +383,8 @@ public:
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
 		auto viewportSize = ImGui::GetContentRegionAvail();
-		
+		m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+		ImGui::Image((void*)m_FrameBuffer->GetColorAttachment()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 

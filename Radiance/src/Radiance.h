@@ -21,6 +21,7 @@
 #include "Radiance/Renderer/API/VertexArray.h"
 #include "Radiance/Renderer/API/Buffer.h"
 #include "Radiance/Renderer/API/Texture2D.h"
+#include "Radiance/Renderer/API/FrameBuffer.h"
 
 #include "Radiance/Renderer/Renderer.h"
 #include "Radiance/Renderer/MeshRender.h"
