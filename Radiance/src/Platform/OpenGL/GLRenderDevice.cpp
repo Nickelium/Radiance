@@ -5,6 +5,7 @@
 #include "GLBuffer.h"
 #include "GLShader.h"
 #include "GLTexture2D.h"
+#include "GLFrameBuffer.h"
 
 #include "Radiance/Renderer/API/RenderCommand.h"
 #include "GLRenderAPI.h"
@@ -38,6 +39,16 @@ namespace Radiance
 	Texture2D* GLRenderDevice::CreateTexture2D(const std::string& _filePath) const
 	{
 		return new GLTexture2D(_filePath);
+	}
+
+	Texture2D* GLRenderDevice::CreateTexture2D(int _width, int _height, FormatUsage _usage) const
+	{
+		return new GLTexture2D(_width, _height, _usage);
+	}
+
+	FrameBuffer* GLRenderDevice::CreateFrameBuffer(int _width, int _height) const
+	{
+		return new GLFrameBuffer(_width, _height);
 	}
 
 }

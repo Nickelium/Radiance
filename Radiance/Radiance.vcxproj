@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\GLFrameBuffer.h" />
     <ClInclude Include="src\Radiance\Core\Locator.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\Platform\OpenGL\GLRenderAPI.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="src\Radiance\MouseButtonCodes.h" />
     <ClInclude Include="src\Radiance\Prefab\Prefab.h" />
     <ClInclude Include="src\Radiance\Renderer\API\Buffer.h" />
+    <ClInclude Include="src\Radiance\Renderer\API\FrameBuffer.h" />
     <ClInclude Include="src\Radiance\Renderer\API\GraphicsContext.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Camera.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\FreeCamera.h" />
@@ -79,6 +81,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\GLFrameBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLRenderAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLRenderDevice.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLTexture2D.cpp" />
