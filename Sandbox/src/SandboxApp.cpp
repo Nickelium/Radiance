@@ -181,7 +181,7 @@ public:
 					if (i == 1)
 					{
 						m_Texture->Bind(slot);
-						meshComp->GetMesh()->GetShader()->SetUniformInt("u_Texture", slot);
+						meshComp->GetMesh()->GetShader()->SetUniform("u_Texture", slot);
 					}
 					TransformComponent* transformComp = actor->GetComponent<TransformComponent>();
 					Renderer::Submit(meshComp->GetMesh(), transformComp->GetMatrix());

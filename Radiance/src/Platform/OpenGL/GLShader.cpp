@@ -29,81 +29,71 @@ namespace Radiance
 		glUseProgram(0);
 	}
 
-	void GLShader::SetUniformFloat(const std::string& _name, float _val)
+	void GLShader::SetUniform(const std::string& _name, float _val)
 	{
 		Location location = GetLocation(_name);
-		//if (location == s_InvalidLocation)
-		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		//Bind();
 		//glUniform1f(location, _val);
 		
-		/*glProgram doesn't require binding the shader, and according to 
+		/*
+		glProgram doesn't require binding the shader, and according to 
 		https://stackoverflow.com/questions/51648238/what-the-difference-between-glprogramuniform-and-gluniform
 		can be efficienter than glUniform but require GL4.1+
 		*/
 		glProgramUniform1f(m_Handle, location, _val);
 	}
 
-	void GLShader::SetUniformFloats(const std::string& _name, const std::vector<float>& _val)
+	void GLShader::SetUniform(const std::string& _name, bool _val)
 	{
-		Location location = GetLocation(_name);
-		//if (location == s_InvalidLocation)
-		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
-
-		glProgramUniform1fv(m_Handle, location, (int)_val.size(), _val.data());
+		SetUniform(_name, (int)_val);
 	}
 
-	void GLShader::SetUniformInt(const std::string& _name, int _value)
+	void GLShader::SetUniform(const std::string& _name, int _value)
 	{
 		Location location = GetLocation(_name);
-		//if (location == s_InvalidLocation)
-		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		glProgramUniform1i(m_Handle, location, _value);
 	}
 
-	void GLShader::SetUniformInts(const std::string& _name, const std::vector<int>& _val)
+	void GLShader::SetUniform(const std::string& _name, const std::vector<float>& _val)
 	{
 		Location location = GetLocation(_name);
-		/*if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);*/
+
+		glProgramUniform1fv(m_Handle, location, (int)_val.size(), _val.data());
+	}
+
+	void GLShader::SetUniform(const std::string& _name, const std::vector<int>& _val)
+	{
+		Location location = GetLocation(_name);
 
 		glProgramUniform1iv(m_Handle, location, (int)_val.size(), _val.data());
 	}
 
-	void GLShader::SetUniformFloat2(const std::string& _name, const glm::vec2& _val)
+	void GLShader::SetUniform(const std::string& _name, const glm::vec2& _val)
 	{
 		Location location = GetLocation(_name);
-	/*	if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);*/
 
 		glProgramUniform2f(m_Handle, location, _val.x, _val.y);
 	}
 
-	void GLShader::SetUniformFloat3(const std::string& _name, const glm::vec3& _val)
+	void GLShader::SetUniform(const std::string& _name, const glm::vec3& _val)
 	{
 		Location location = GetLocation(_name);
-		//if (location == s_InvalidLocation)
-		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		glProgramUniform3f(m_Handle, location, _val.x, _val.y, _val.z);
 	}
 
-	void GLShader::SetUniformFloat4(const std::string& _name, const glm::vec4& _val)
+	void GLShader::SetUniform(const std::string& _name, const glm::vec4& _val)
 	{
 		Location location = GetLocation(_name);
-	/*	if (location == s_InvalidLocation)
-			RAD_CORE_INFO("Uniform var {0} not used", _name);*/
 
 		glProgramUniform4f(m_Handle, location, _val.x, _val.y, _val.z, _val.w);
 	}
 
-	void GLShader::SetUniformMat(const std::string& _name, const glm::mat4& _val)
+	void GLShader::SetUniform(const std::string& _name, const glm::mat4& _val)
 	{
 		Location location = GetLocation(_name);
-		//if (location == s_InvalidLocation)
-		//	RAD_CORE_INFO("Uniform var {0} not used", _name);
 
 		glProgramUniformMatrix4fv(m_Handle, location, 1, false, &_val[0][0]);
 	}
@@ -206,13 +196,17 @@ namespace Radiance
 		return programHandle;
 	}
 
-	GLShader::Location GLShader::GetLocation(const std::string& _name)
+	GLShader::Location GLShader::GetLocation(const std::string& _name) const
 	{
 		auto result = m_MapLocation.find(_name);
-		int location = -1;
 		if (result != m_MapLocation.end())
-			return location = result->second;
-		return m_MapLocation[_name] = glGetUniformLocation(m_Handle, _name.c_str());
+			return result->second;
+		int location = glGetUniformLocation(m_Handle, _name.c_str());
+		if (location == s_InvalidLocation) 
+		{
+			//RAD_CORE_WARN("Uniform var {0} not found/used", _name);
+			return location;
+		}
+		return m_MapLocation[_name] = location;
 	}
-
 }
