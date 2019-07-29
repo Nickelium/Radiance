@@ -125,7 +125,7 @@ public:
 		Shader* shader1 = renderDevice->CreateShader(vertexShader, fragmentShader);
 
 		m_MeshRender1 = new MeshRender(CreateTriangle(), shader1);
-		m_Actor1 = new Actor();
+		m_Actor1 = new Actor("Triangle");
 		m_Actor1->GetComponent<TransformComponent>()->m_Transform.position 
 			= glm::vec3(-4.0f, 0.0f, -10.0f);
 		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_MeshRender1));
@@ -136,7 +136,7 @@ public:
 		Shader* shader2 = renderDevice->CreateShader(vertexShader2, fragmentShader2);
 
 		m_MeshRender2 = new MeshRender(CreateCube(), shader2);
-		m_Actor2 = new Actor();
+		m_Actor2 = new Actor("Cube");
 		m_Actor2->GetComponent<TransformComponent>()->m_Transform.position
 			= glm::vec3(4.0f, 0.0f, -10.0f);
 		m_Actor2->AddComponent(new MeshComponent(m_Actor2, m_MeshRender2));
@@ -195,32 +195,13 @@ public:
 
 	virtual void RenderGUI() override
 	{
-		/*using namespace Radiance;
-		ImGui::Begin("FPS");
+		using namespace Radiance;
+		/*ImGui::Begin("FPS");
 		std::string fps = std::to_string(1.0f / m_Time.dt);
 		ImGui::Text(fps.c_str());
 		ImGui::End();
-
-		ImGui::Begin("Test");
-		ImGui::Text("Camera Transform");
-		ImGui::SliderFloat3("Camera Position", &m_Camera->position.x, -1.0f, 1.0f);
-		ImGui::SliderFloat3("Camera Rotation", &m_Camera->rotation.x , -90.0f, 90.0f);
-
-		int i = 0;
-		ImGui::Text("Scene Objects");
-		for (Actor* actor : m_Scene->GetActors())
-		{
-			TransformComponent* comp = actor->GetComponent<TransformComponent>();
-			Transform& trans = comp->m_Transform;
-			ImGui::SliderFloat3(std::string("Pos " + std::to_string(i)).c_str(), 
-				&trans.position.x, -10.0f, 10.0f);
-			ImGui::SliderFloat3(std::string("Rot " + std::to_string(i)).c_str(), 
-				&trans.rotation.x, -180, 180);
-			ImGui::SliderFloat3(std::string("Scale " + std::to_string(i)).c_str(), 
-				&trans.scale.x, -10.0f, 10.0f);
-			++i;
-		}
-		ImGui::End();*/
+		*/
+	
 
 		static bool p_open = true;
 
@@ -265,120 +246,71 @@ public:
 		}
 
 		// Editor Panel ------------------------------------------------------------------------------
-		ImGui::Begin("Model");
-		int i;
-		ImGui::RadioButton("Spheres", &i, 0);
-		ImGui::SameLine();
-		ImGui::RadioButton("Model", &i, 1);
+		//ImGui Displays reversed order
+		ImGui::Begin("Properties");
+		{
+			ImGui::Columns(2);
+			ImGui::AlignTextToFramePadding();
 
-		ImGui::Begin("Environment");
+			glm::vec3 v3;
+			Property("Light Direction", v3);
 
-		ImGui::Columns(2);
-		ImGui::AlignTextToFramePadding();
-
-		glm::vec3 v3;
-		float f;
-		bool b;
-		Property("Light Direction", v3);
-		Property("Light Radiance", v3, PropertyFlag::ColorProperty);
-		Property("Light Multiplier", f, 0.0f, 5.0f);
-		Property("Exposure", f, 0.0f, 5.0f);
-
-		Property("Radiance Prefiltering", b);
-		Property("Env Map Rotation", f, -360.0f, 360.0f);
-
-		ImGui::Columns(1);
-
+			ImGui::Columns(1);
+		}
 		ImGui::End();
 
-		ImGui::Separator();
+
+		const char* format = "%.2f";
+		ImGui::Begin("Scene##");
 		{
-			ImGui::Text("Mesh");
-			std::string fullpath = "None";
-			ImGui::Text(fullpath.c_str());
-			ImGui::SameLine();
-			if (ImGui::Button("...##Mesh"))
+			////////// ACTORS
+			if (ImGui::TreeNodeEx("Actors##", ImGuiTreeNodeFlags_DefaultOpen))
 			{
+				int i = 0;
+				for (Actor* actor : m_Scene->GetActors())
+				{
+					if (ImGui::TreeNodeEx(
+						(actor->GetName() + "##" + std::to_string(i)).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+					{
+						TransformComponent* comp = actor->GetComponent<TransformComponent>();
+
+						if (ImGui::TreeNodeEx(
+							(comp->GetName() + "##" + std::to_string(i)).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+						{
+							Transform& trans = comp->m_Transform;
+							ImGui::Text("Position");
+							ImGui::NextColumn();
+							ImGui::PushItemWidth(-1);
+							ImGui::SliderFloat3(std::string("##Position" + std::to_string(i)).c_str(), 
+								&trans.position.x, -10.0f, 10.0f, format);
+							ImGui::PopItemWidth();
+							ImGui::NextColumn();
+
+							ImGui::SliderFloat3(std::string("Rotation##" + std::to_string(i)).c_str(),
+								&trans.rotation.x, -180, 180, format);
+							ImGui::SliderFloat3(std::string("Scale##" + std::to_string(i)).c_str(),
+								&trans.scale.x, -10.0f, 10.0f, format);
+							ImGui::TreePop();
+						}
+						ImGui::TreePop();
+					}
+					++i;
+
+				}
+				ImGui::TreePop();
+			}
+			ImGui::Separator();
+
+			/////// CAMERA
+			if(ImGui::TreeNodeEx("Camera##", ImGuiTreeNodeFlags_DefaultOpen))
+			{
+				ImGui::SliderFloat3("Position##Camera", &m_Camera->position.x, -10.0f, 10.0f, format);
+				ImGui::SliderFloat3("Rotation##Camera", &m_Camera->rotation.x, -180, 180, format);
+				ImGui::TreePop();
 			}
 		}
-		ImGui::Separator();
-
-		// Textures ------------------------------------------------------------------------------
-		{
-			// Albedo
-			if (ImGui::CollapsingHeader("Albedo", nullptr, ImGuiTreeNodeFlags_DefaultOpen))
-			{
-				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 10));
-				ImGui::PopStyleVar();
-				if (ImGui::IsItemHovered())
-				{
-				
-				}
-				ImGui::SameLine();
-				ImGui::BeginGroup();
-				ImGui::Checkbox("Use##AlbedoMap", &b);
-				if (ImGui::Checkbox("sRGB##AlbedoMap", &b))
-				{
-					
-				}
-				ImGui::EndGroup();
-				ImGui::SameLine();
-				ImGui::ColorEdit3("Color##Albedo", glm::value_ptr(v3), ImGuiColorEditFlags_NoInputs);
-			}
-		}
-		{
-			// Normals
-			if (ImGui::CollapsingHeader("Normals", nullptr, ImGuiTreeNodeFlags_DefaultOpen))
-			{
-				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 10));
-				ImGui::PopStyleVar();
-				if (ImGui::IsItemHovered())
-				{
-				}
-				ImGui::SameLine();
-				ImGui::Checkbox("Use##NormalMap", &b);
-			}
-		}
-		{
-			// Metalness
-			if (ImGui::CollapsingHeader("Metalness", nullptr, ImGuiTreeNodeFlags_DefaultOpen))
-			{
-				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 10));
-				ImGui::PopStyleVar();
-				if (ImGui::IsItemHovered())
-				{
-				}
-				ImGui::SameLine();
-				ImGui::Checkbox("Use##MetalnessMap", &b);
-				ImGui::SameLine();
-				ImGui::SliderFloat("Value##MetalnessInput", &f, 0.0f, 1.0f);
-			}
-		}
-		{
-			// Roughness
-			if (ImGui::CollapsingHeader("Roughness", nullptr, ImGuiTreeNodeFlags_DefaultOpen))
-			{
-				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(10, 10));
-				ImGui::PopStyleVar();
-				if (ImGui::IsItemHovered())
-				{
-				}
-				ImGui::SameLine();
-				ImGui::Checkbox("Use##RoughnessMap", &b);
-				ImGui::SameLine();
-				ImGui::SliderFloat("Value##RoughnessInput", &f, 0.0f, 1.0f);
-			}
-		}
-
-		ImGui::Separator();
-
-		if (ImGui::TreeNode("Shaders"))
-		{
-			ImGui::TreePop();
-		}
-
-
 		ImGui::End();
+
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
@@ -406,14 +338,7 @@ public:
 					p_open = false;
 				ImGui::EndMenu();
 			}
-			ImGuiShowHelpMarker(
-				"You can _always_ dock _any_ window into another by holding the SHIFT key while moving a window. Try it now!" "\n"
-				"This demo app has nothing to do with it!" "\n\n"
-				"This demo app only demonstrate the use of ImGui::DockSpace() which allows you to manually create a docking node _within_ another window. This is useful so you can decorate your main application window (e.g. with a menu bar)." "\n\n"
-				"ImGui::DockSpace() comes with one hard constraint: it needs to be submitted _before_ any window which may be docked into it. Therefore, if you use a dock spot as the central point of your application, you'll probably want it to be part of the very first window you are submitting to imgui every frame." "\n\n"
-				"(NB: because of this constraint, the implicit \"Debug\" window can not be docked into an explicit DockSpace() node, because that window is submitted as part of the NewFrame() call. An easy workaround is that you can create your own implicit \"Debug##2\" window after calling DockSpace() and leave it in the window stack for anyone to use.)"
-			);
-
+			ImGuiShowHelpMarker("Help Marker");
 			ImGui::EndMenuBar();
 		}
 

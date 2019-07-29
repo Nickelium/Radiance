@@ -9,9 +9,11 @@ namespace Radiance
 	{
 		using ComponentMap = std::unordered_map<ComponentType, Component*>;
 	public:
-		Actor();
+		Actor(const std::string& _name = "NoActorName");
 		~Actor();
-		
+
+		const std::string& GetName() const { return m_Name; }
+
 		void AddComponent(Component* _component);
 
 		template <typename TypeComponent>
@@ -30,6 +32,8 @@ namespace Radiance
 		}
 
 	private:
+		std::string m_Name;
+
 		ComponentMap m_Components;
 		TransformComponent m_TransformComponent;
 	};

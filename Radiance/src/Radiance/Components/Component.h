@@ -16,6 +16,7 @@ namespace Radiance
 
 		inline Actor* GetActor() const { return m_Actor; }
 		virtual ComponentType GetType() const = 0;
+		virtual std::string GetName() const = 0;
 		
 	protected:
 		Actor* m_Actor;
@@ -23,5 +24,6 @@ namespace Radiance
 
 	#define COMPONENT_CLASS(type)\
 		inline static ComponentType GetStaticType() { return #type; }\
-		virtual ComponentType GetType() const override { return GetStaticType(); }
+		virtual ComponentType GetType() const override { return GetStaticType(); }\
+		virtual std::string GetName() const override { return #type; }
 }
