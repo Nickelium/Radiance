@@ -3,9 +3,9 @@
 
 namespace Radiance
 {
-
-	Actor::Actor()
-		: m_TransformComponent(this)
+	Actor::Actor(const std::string& _name)
+		: m_Name(_name),
+		m_TransformComponent(this)
 	{
 
 	}
