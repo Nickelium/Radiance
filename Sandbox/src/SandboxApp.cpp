@@ -30,7 +30,7 @@ class ExampleLayer : public Radiance::Layer
 
 	Radiance::Texture2D* m_Texture;
 
-	Radiance::Camera* m_Camera;
+	Radiance::Perspective* m_Camera;
 
 	Radiance::DataTime m_Time;
 
@@ -361,7 +361,8 @@ public:
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
 		auto viewportSize = ImGui::GetContentRegionAvail();
-		m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+		//m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+		m_Camera->SetAspectRatio(viewportSize.x / (float)viewportSize.y);
 		ImGui::Image((void*)(uintptr_t)m_FrameBuffer->GetColorAttachment()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();

@@ -55,8 +55,7 @@ namespace Radiance
 		}
 		m_PrevMousePos = mousePos;
 		
-
-		UpdateMatrices();
+		UpdateView();
 	}
 
 }

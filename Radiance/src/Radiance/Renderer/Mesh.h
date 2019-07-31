@@ -22,5 +22,12 @@ namespace Radiance
 		std::vector<glm::vec3> m_Normals;
 		std::vector<uint32_t> m_Indices;
 
+		struct Vertex
+		{
+			glm::vec3 position;
+			glm::vec3 normal;
+			glm::vec2 texCoord;
+		};
+
 	};
 }
