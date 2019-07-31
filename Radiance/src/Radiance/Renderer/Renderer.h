@@ -14,7 +14,7 @@ namespace Radiance
 
 		static void Submit(MeshRender* _mesh, const glm::mat4& _transform);
 
-		inline static RenderAPI::API GetAPI() { return RenderAPI::GetAPI(); };
+		inline static RenderAPI::API& GetAPI() { return RenderAPI::GetAPI(); };
 	private:
 		static void CommonUniformBinding(Shader* _shader);
 

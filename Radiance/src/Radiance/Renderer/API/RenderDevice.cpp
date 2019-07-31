@@ -8,10 +8,10 @@ namespace Radiance
 {
 	RenderDevice* RenderDevice::Create()
 	{
-		switch (Renderer::GetAPI())
+		switch (Renderer::GetAPI().type)
 		{
-			case RenderAPI::API::OPENGL: return new GLRenderDevice;
-			case RenderAPI::API::D3D11: RAD_CORE_ASSERT(false, "RenderAPI:D3D11 not supported"); return nullptr;
+		case RenderAPI::API::Type::OPENGL: return new GLRenderDevice;
+		case RenderAPI::API::Type::D3D11: RAD_CORE_ASSERT(false, "RenderAPI:D3D11 not supported"); return nullptr;
 		}
 
 		RAD_CORE_ASSERT(false, "Invalid RenderAPI");

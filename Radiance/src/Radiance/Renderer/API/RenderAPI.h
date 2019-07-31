@@ -17,11 +17,25 @@ namespace Radiance
 	class RenderAPI
 	{
 	public:
-		enum class API
+		struct API
 		{
-			OPENGL = 0,
-			D3D11,
-			NONE
+			enum class Type
+			{
+				OPENGL = 0,
+				D3D11,
+				NONE
+			};
+			struct Data
+			{
+				std::string vendor;
+				std::string renderer;
+				std::string version;
+			};
+
+			API(Type _type) : type(_type) {}
+			Type type;
+			Data data;
+
 		};
 
 		virtual void SetClearColor(const glm::vec4& _color) = 0;
@@ -31,7 +45,7 @@ namespace Radiance
 
 		virtual void DrawIndexed(VertexArray* _vertexArray) = 0;
 	
-		inline static API GetAPI() { return s_API; }
+		inline static API& GetAPI() { return s_API; }
 	private:
 		static API s_API;
 	};

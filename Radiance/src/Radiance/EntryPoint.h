@@ -1,6 +1,6 @@
 #pragma once
 
-#define GPU_NVIDIA
+#include "Radiance/Defines.h"
 #include "Radiance/Settings.h"
 
 #ifdef RAD_PLATFORM_WINDOWS

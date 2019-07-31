@@ -36,6 +36,65 @@ class ExampleLayer : public Radiance::Layer
 	Radiance::DataTime m_Time;
 public:
 
+	ImGuiTextBuffer     Buf;
+	ImGuiTextFilter     Filter;
+	ImVector<int>       LineOffsets;        // Index to lines offset
+	bool                ScrollToBottom = true;
+
+	void Clear() { Buf.clear(); }
+
+	void AddLog(const char* fmt, ...)
+	{
+		int old_size = Buf.size();
+		va_list args;
+		va_start(args, fmt);
+		Buf.appendfv(fmt, args);
+		va_end(args);
+		for (int new_size = Buf.size(); old_size < new_size; old_size++)
+			if (Buf[old_size] == '\n')
+				LineOffsets.push_back(old_size);
+		ScrollToBottom = true;
+	}
+
+	void DrawLog(const char* title, bool* p_opened = NULL)
+	{
+		ImGui::SetNextWindowSize(ImVec2(500, 400), 0);
+		ImGui::Begin(title, p_opened);
+		if (ImGui::Button("Clear")) Clear();
+		ImGui::SameLine();
+		bool copy = ImGui::Button("Copy");
+		ImGui::SameLine();
+		Filter.Draw("Filter", -100.0f);
+		ImGui::Separator();
+		ImGui::BeginChild("scrolling");
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
+		if (copy) ImGui::LogToClipboard();
+
+		if (Filter.IsActive())
+		{
+			const char* buf_begin = Buf.begin();
+			const char* line = buf_begin;
+			for (int line_no = 0; line != NULL; line_no++)
+			{
+				const char* line_end = (line_no < LineOffsets.Size) ? buf_begin + LineOffsets[line_no] : NULL;
+				if (Filter.PassFilter(line, line_end))
+					ImGui::TextUnformatted(line, line_end);
+				line = line_end && line_end[1] ? line_end + 1 : NULL;
+			}
+		}
+		else
+		{
+			ImGui::TextUnformatted(Buf.begin());
+		}
+
+		if (ScrollToBottom)
+			ImGui::SetScrollHere(1.0f);
+		ScrollToBottom = false;
+		ImGui::PopStyleVar();
+		ImGui::EndChild();
+		ImGui::End();
+	}
+
 	enum class PropertyFlag
 	{
 		None = 0, ColorProperty = 1
@@ -61,7 +120,7 @@ public:
 		ImGui::PushItemWidth(-1);
 
 		std::string id = "##" + name;
-		ImGui::SliderFloat(id.c_str(), &value, min, max);
+		ImGui::SliderFloat(id.c_str(), &value, min, max, "%.2f");
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
@@ -82,7 +141,7 @@ public:
 		if ((int)flags & (int)PropertyFlag::ColorProperty)
 			ImGui::ColorEdit3(id.c_str(), glm::value_ptr(value), ImGuiColorEditFlags_NoInputs);
 		else
-			ImGui::SliderFloat3(id.c_str(), glm::value_ptr(value), min, max);
+			ImGui::SliderFloat3(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
@@ -103,7 +162,7 @@ public:
 		if ((int)flags & (int)PropertyFlag::ColorProperty)
 			ImGui::ColorEdit4(id.c_str(), glm::value_ptr(value), ImGuiColorEditFlags_NoInputs);
 		else
-			ImGui::SliderFloat4(id.c_str(), glm::value_ptr(value), min, max);
+			ImGui::SliderFloat4(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
@@ -197,8 +256,7 @@ public:
 	{
 		using namespace Radiance;
 		/*ImGui::Begin("FPS");
-		std::string fps = std::to_string(1.0f / m_Time.dt);
-		ImGui::Text(fps.c_str());
+		
 		ImGui::End();
 		*/
 	
@@ -247,20 +305,33 @@ public:
 
 		// Editor Panel ------------------------------------------------------------------------------
 		//ImGui Displays reversed order
-		ImGui::Begin("Properties");
+		ImGui::Begin("GPU Manufacturer Info");
 		{
-			ImGui::Columns(2);
-			ImGui::AlignTextToFramePadding();
-
-			glm::vec3 v3;
-			Property("Light Direction", v3);
-
-			ImGui::Columns(1);
+			auto apiData = RenderAPI::GetAPI().data;
+			ImGui::Text("Vendor: %s", apiData.vendor.c_str());
+			ImGui::Text("Renderer: %s", apiData.renderer.c_str());
+			ImGui::Text("Version: %s", apiData.version.c_str());
+			static float currentFps;
+			if (abs(currentFps - (1.0f / m_Time.dt)) > 2.0f)
+				currentFps = 1.0f / m_Time.dt;
+			ImGui::Text("Performance: %.1f fps", currentFps);
 		}
 		ImGui::End();
 
+		AddLog("%s", "test");
+		DrawLog("Engine Logger");
 
-		const char* format = "%.2f";
+		ImGui::Begin("Properties");
+		{
+			ImGui::Columns(2);
+
+			bool b;
+			Property("Test Property", b);
+
+			ImGui::Columns();
+		}
+		ImGui::End();
+
 		ImGui::Begin("Scene##");
 		{
 			////////// ACTORS
@@ -278,18 +349,14 @@ public:
 							(comp->GetName() + "##" + std::to_string(i)).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 						{
 							Transform& trans = comp->m_Transform;
-							ImGui::Text("Position");
-							ImGui::NextColumn();
-							ImGui::PushItemWidth(-1);
-							ImGui::SliderFloat3(std::string("##Position" + std::to_string(i)).c_str(), 
-								&trans.position.x, -10.0f, 10.0f, format);
-							ImGui::PopItemWidth();
-							ImGui::NextColumn();
 
-							ImGui::SliderFloat3(std::string("Rotation##" + std::to_string(i)).c_str(),
-								&trans.rotation.x, -180, 180, format);
-							ImGui::SliderFloat3(std::string("Scale##" + std::to_string(i)).c_str(),
-								&trans.scale.x, -10.0f, 10.0f, format);
+							ImGui::Columns(2);
+						
+							Property("Position", trans.position, -10, 10);
+							Property("Rotation", trans.rotation, -180, 180);
+							Property("Scale", trans.scale, -10, 10);
+
+							ImGui::Columns();
 							ImGui::TreePop();
 						}
 						ImGui::TreePop();
@@ -304,13 +371,15 @@ public:
 			/////// CAMERA
 			if(ImGui::TreeNodeEx("Camera##", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::SliderFloat3("Position##Camera", &m_Camera->position.x, -10.0f, 10.0f, format);
-				ImGui::SliderFloat3("Rotation##Camera", &m_Camera->rotation.x, -180, 180, format);
+				ImGui::Columns(2);
+				Property("Position", m_Camera->position, -10, 10);
+				Property("Rotation", m_Camera->rotation, -180, 180);
+				ImGui::Columns();
+
 				ImGui::TreePop();
 			}
 		}
 		ImGui::End();
-
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");

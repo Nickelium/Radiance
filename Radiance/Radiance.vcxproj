@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Radiance\Defines.h" />
     <ClInclude Include="src\Platform\OpenGL\GLFrameBuffer.h" />
     <ClInclude Include="src\Radiance\Core\Locator.h" />
     <ClInclude Include="src\pch.h" />

@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+#include "Radiance/Renderer/API/RenderAPI.h"
+
 namespace Radiance
 {
 	void GLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei /*length*/, const GLchar *message,
@@ -63,10 +65,17 @@ namespace Radiance
 		RAD_CORE_ASSERT(status, "Failed to initialize Glad");
 		RAD_CORE_TRACE("{0}", "Glad Initialized");
 
-		RAD_CORE_INFO("OpenGL GPU:");
-		RAD_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
-		RAD_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
-		RAD_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
+		std::string vendor = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
+		std::string renderer = reinterpret_cast<const char*>(glGetString(GL_RENDERER));
+		std::string version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
+
+		auto& api = RenderAPI::GetAPI();
+		api.data = { vendor, renderer, version };
+
+		RAD_CORE_INFO("Manufacturer GPU Info:");
+		RAD_CORE_INFO("  Vendor: {0}", vendor);
+		RAD_CORE_INFO("  Renderer: {0}", renderer);
+		RAD_CORE_INFO("  Version: {0}", version);
 
 		#if defined(DEBUG) || defined(_DEBUG)
 		int flags;
