@@ -12,3 +12,12 @@ extern "C"
 	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
 #endif
+
+
+#ifdef MEMORYLEAK_CHECK
+
+#if defined(DEBUG) || defined(_DEBUG)
+#include <vld.h>
+#endif
+
+#endif

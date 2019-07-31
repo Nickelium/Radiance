@@ -10,5 +10,5 @@ uniform mat4 VP;
 
 void main()
 {
-	o_Color = vec4((v_Position * 0.5f + 0.5f).rgb, 1.0f);
+	o_Color = vec4((v_Position * 2.0f + 1.0f).rgb, 1.0f);
 }

@@ -4,7 +4,6 @@
 
 #include <GLFW/glfw3.h>
 
-
 static void ImGuiShowHelpMarker(const char* desc)
 {
 	ImGui::TextDisabled("(?)");
@@ -34,62 +33,40 @@ class ExampleLayer : public Radiance::Layer
 	Radiance::Camera* m_Camera;
 
 	Radiance::DataTime m_Time;
+
+	ImGuiTextFilter m_Filter;
 public:
-
-	ImGuiTextBuffer     Buf;
-	ImGuiTextFilter     Filter;
-	ImVector<int>       LineOffsets;        // Index to lines offset
-	bool                ScrollToBottom = true;
-
-	void Clear() { Buf.clear(); }
-
-	void AddLog(const char* fmt, ...)
-	{
-		int old_size = Buf.size();
-		va_list args;
-		va_start(args, fmt);
-		Buf.appendfv(fmt, args);
-		va_end(args);
-		for (int new_size = Buf.size(); old_size < new_size; old_size++)
-			if (Buf[old_size] == '\n')
-				LineOffsets.push_back(old_size);
-		ScrollToBottom = true;
-	}
-
 	void DrawLog(const char* title, bool* p_opened = NULL)
 	{
-		ImGui::SetNextWindowSize(ImVec2(500, 400), 0);
 		ImGui::Begin(title, p_opened);
-		if (ImGui::Button("Clear")) Clear();
+		if (ImGui::Button("Clear")) IMGUILOGGER->Clear();
 		ImGui::SameLine();
 		bool copy = ImGui::Button("Copy");
 		ImGui::SameLine();
-		Filter.Draw("Filter", -100.0f);
+		m_Filter.Draw("Filter", -100.0f);
 		ImGui::Separator();
 		ImGui::BeginChild("scrolling");
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 1));
+
 		if (copy) ImGui::LogToClipboard();
 
-		if (Filter.IsActive())
+		if (m_Filter.IsActive())
 		{
-			const char* buf_begin = Buf.begin();
+			const char* buf_begin = IMGUILOGGER->GetBuffer().begin();
 			const char* line = buf_begin;
 			for (int line_no = 0; line != NULL; line_no++)
 			{
-				const char* line_end = (line_no < LineOffsets.Size) ? buf_begin + LineOffsets[line_no] : NULL;
-				if (Filter.PassFilter(line, line_end))
+				const char* line_end = (line_no < IMGUILOGGER->GetLineIndices().size()) ? buf_begin + IMGUILOGGER->GetLineIndices()[line_no] : NULL;
+				if (m_Filter.PassFilter(line, line_end))
 					ImGui::TextUnformatted(line, line_end);
 				line = line_end && line_end[1] ? line_end + 1 : NULL;
 			}
 		}
 		else
-		{
-			ImGui::TextUnformatted(Buf.begin());
-		}
+			ImGui::TextUnformatted(IMGUILOGGER->GetBuffer().begin());
 
-		if (ScrollToBottom)
-			ImGui::SetScrollHere(1.0f);
-		ScrollToBottom = false;
+		ImGui::LogFinish();
+
 		ImGui::PopStyleVar();
 		ImGui::EndChild();
 		ImGui::End();
@@ -208,6 +185,8 @@ public:
 	{
 		delete m_Texture;
 		delete m_Camera;
+
+		delete m_FrameBuffer;
 	}
 
 	virtual void Update(Radiance::DataTime _time)
@@ -255,12 +234,7 @@ public:
 	virtual void RenderGUI() override
 	{
 		using namespace Radiance;
-		/*ImGui::Begin("FPS");
-		
-		ImGui::End();
-		*/
 	
-
 		static bool p_open = true;
 
 		int ImGuiDockNodeFlags_PassthruDockspace = 0;
@@ -311,14 +285,17 @@ public:
 			ImGui::Text("Vendor: %s", apiData.vendor.c_str());
 			ImGui::Text("Renderer: %s", apiData.renderer.c_str());
 			ImGui::Text("Version: %s", apiData.version.c_str());
+			static float currentTime;
 			static float currentFps;
-			if (abs(currentFps - (1.0f / m_Time.dt)) > 2.0f)
+			if (abs(currentTime - m_Time.total) > 1.0f)
+			{
+				currentTime = m_Time.total;
 				currentFps = 1.0f / m_Time.dt;
+			}
 			ImGui::Text("Performance: %.1f fps", currentFps);
 		}
 		ImGui::End();
 
-		AddLog("%s", "test");
 		DrawLog("Engine Logger");
 
 		ImGui::Begin("Properties");
@@ -385,7 +362,7 @@ public:
 		ImGui::Begin("Viewport");
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-		ImGui::Image((void*)m_FrameBuffer->GetColorAttachment()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
+		ImGui::Image((void*)(uintptr_t)m_FrameBuffer->GetColorAttachment()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 

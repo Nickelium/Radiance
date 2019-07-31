@@ -5,3 +5,5 @@
 
 #define GPU_NVIDIA
 //#define GPU_AMD
+
+#define MEMORYLEAK_CHECK
