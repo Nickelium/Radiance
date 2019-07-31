@@ -41,6 +41,7 @@
     <ClInclude Include="src\Radiance\Events\KeyEvent.h" />
     <ClInclude Include="src\Radiance\Events\MouseEvent.h" />
     <ClInclude Include="src\Radiance\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Radiance\ImGui\ImGuiSink.h" />
     <ClInclude Include="src\Radiance\Input.h" />
     <ClInclude Include="src\Radiance\KeyCodes.h" />
     <ClInclude Include="src\Radiance\Core\Layer.h" />

@@ -2,6 +2,8 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
 
+#include "Radiance/ImGui/ImGuiSink.h"
+
 #include "Singleton.h"
 
 namespace Radiance
@@ -14,12 +16,22 @@ namespace Radiance
 		{ return m_CoreLogger; }
 		inline std::shared_ptr<spdlog::logger>& GetClientLogger() 
 		{ return m_ClientLogger; } 
+		inline std::shared_ptr<ImGuiSink_mt>& GetSink()
+		{ return m_ImGuiSink; }
+
 	private:
 		void Init();
 		std::shared_ptr<spdlog::logger> m_CoreLogger;
+		std::vector<spdlog::sink_ptr> m_CoreSinks;
+		
 		std::shared_ptr<spdlog::logger> m_ClientLogger;
+		std::vector<spdlog::sink_ptr> m_ClientSinks;
+
+		std::shared_ptr<ImGuiSink_mt> m_ImGuiSink;
 	};
 }
+
+#define IMGUILOGGER ::Radiance::Logger::GetInstance().GetSink()
 
 #if defined(DEBUG) || defined(_DEBUG)
 // Core log macros

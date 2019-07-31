@@ -12,6 +12,7 @@
 #include <memory>
 #include <functional>
 #include <fstream>
+#include <mutex>
 
 // STL Datastructure & Algorithms
 #include <vector>
