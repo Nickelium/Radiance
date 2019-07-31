@@ -16,11 +16,33 @@ namespace Radiance
 		: m_AspectRatio(_aspectRatio), m_FovV(_fovV),
 		m_Near(_near), m_Far(_far)
 	{
-		m_ProjectionMatrix = glm::perspective(glm::radians(m_FovV), m_AspectRatio, m_Near, m_Far);
 		UpdateMatrices();
 	}
 
+	void Perspective::SetAspectRatio(float _aspectRatio)
+	{
+		m_AspectRatio = _aspectRatio;
+		UpdateProjection();
+	}
+
+	void Perspective::SetFovV(float _fovV)
+	{
+		m_FovV = _fovV;
+		UpdateProjection();
+	}
+
 	void Perspective::UpdateMatrices()
+	{
+		UpdateView();
+		UpdateProjection();
+	}
+
+	void Perspective::UpdateCombined()
+	{
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+	}
+
+	void Perspective::UpdateView()
 	{
 		glm::mat4 R = glm::eulerAngleXYZ(
 			glm::radians(rotation.x),
@@ -29,11 +51,15 @@ namespace Radiance
 		glm::vec3 forward = R * glm::vec4(0, 0, -1, 0);
 		glm::vec3 up = R * glm::vec4(0, 1, 0, 0);
 		m_ViewMatrix = glm::lookAt(position, position + forward, up);
-		//m_ViewMatrix = glm::mat4(1.0f);
-		//glm::mat4 T = glm::translate(glm::mat4(1.0f), m_Position);
-		//glm::mat4 R = glm::rotate()
 
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		UpdateCombined();
+	}
+
+	void Perspective::UpdateProjection()
+	{
+		m_ProjectionMatrix = glm::perspective(glm::radians(m_FovV), m_AspectRatio, m_Near, m_Far);
+
+		UpdateCombined();
 	}
 
 }
