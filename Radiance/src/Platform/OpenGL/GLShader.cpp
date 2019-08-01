@@ -204,7 +204,7 @@ namespace Radiance
 		int location = glGetUniformLocation(m_Handle, _name.c_str());
 		if (location == s_InvalidLocation) 
 		{
-			//RAD_CORE_WARN("Uniform var {0} not found/used", _name);
+			RAD_CORE_WARN("Uniform var {0} not found/used", _name);
 			return location;
 		}
 		return m_MapLocation[_name] = location;

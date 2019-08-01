@@ -93,6 +93,13 @@ namespace Radiance
 			{0.0f, 0.0f, 1.0f}
 		};
 		mesh->SetNormals(normals);
+		std::vector<glm::vec2> texCoords =
+		{
+			{0.0f, 0.0f},
+			{1.0f, 0.0f},
+			{0.5f, 1.0f}
+		};
+		mesh->SetTexCoords(texCoords);
 		std::vector<unsigned int> indices =
 		{
 			0, 1, 2

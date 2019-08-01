@@ -18,6 +18,11 @@ namespace Radiance
 		m_Normals = _normals;
 	}
 
+	void Mesh::SetTexCoords(std::vector<glm::vec2> _texCoords)
+	{
+		m_TexCoords = _texCoords;
+	}
+
 	void Mesh::SetIndices(std::vector<uint32_t> _indices)
 	{
 		m_Indices = _indices;

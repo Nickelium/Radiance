@@ -4,12 +4,12 @@ namespace Radiance
 {
 	class VertexArray;
 	class Mesh;
-	class Shader;
+	class Material;
 
 	class MeshRender
 	{
 	public:
-		MeshRender(Mesh* _mesh, Shader* _shader);
+		MeshRender(Mesh* _mesh, Material* _material);
 		~MeshRender();
 
 		void Bind();
@@ -17,7 +17,7 @@ namespace Radiance
 
 		inline VertexArray* GetVertexArray() const { return m_VertexArray; }
 		inline Mesh* GetMesh() const { return m_Mesh; }
-		inline Shader* GetShader() const { return m_Shader; }
+		inline Material* GetMaterial() const { return m_Material; }
 
 	private:
 		void BuildVertexArray();
@@ -25,6 +25,6 @@ namespace Radiance
 		VertexArray* m_VertexArray;
 
 		Mesh* m_Mesh;
-		Shader* m_Shader;
+		Material* m_Material;
 	};
 }

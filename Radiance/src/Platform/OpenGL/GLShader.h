@@ -25,7 +25,7 @@ namespace Radiance
 		virtual void SetUniform(const std::string& _name, bool _val);
 		virtual void SetUniform(const std::string& _name, float _val) override;
 		virtual void SetUniform(const std::string& _name, const std::vector<float>& _val) override;
-		virtual void SetUniform(const std::string& _namee, int _value) override;
+		virtual void SetUniform(const std::string& _name, int _value) override;
 		virtual void SetUniform(const std::string& _name, const std::vector<int>& _val) override;
 		virtual void SetUniform(const std::string& _name, const glm::vec2& _val) override;
 		virtual void SetUniform(const std::string& _name, const glm::vec3& _val) override;
