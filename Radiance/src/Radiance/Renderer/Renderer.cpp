@@ -21,7 +21,7 @@ namespace Radiance
 	void Renderer::Submit(MeshRender* _mesh, const glm::mat4& _transform)
 	{
 		_mesh->Bind();
-		Shader* shader = _mesh->GetShader();
+		Shader* shader = _mesh->GetMaterial()->GetShader();
 		CommonUniformBinding(shader);
 		shader->SetUniform("M", _transform);
 		RenderCommand::DrawIndexed(_mesh->GetVertexArray());
@@ -31,6 +31,6 @@ namespace Radiance
 	{
 		_shader->SetUniform("V", s_SceneData.View);
 		_shader->SetUniform("P", s_SceneData.Projection);
-		_shader->SetUniform("VP", s_SceneData.ViewProjection);
+		//_shader->SetUniform("VP", s_SceneData.ViewProjection);
 	}
 }

@@ -60,6 +60,7 @@
     <ClInclude Include="src\Radiance\Renderer\Camera\FreeCamera.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Orthographic.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Perspective.h" />
+    <ClInclude Include="src\Radiance\Renderer\Material.h" />
     <ClInclude Include="src\Radiance\Renderer\MeshRender.h" />
     <ClInclude Include="src\Radiance\Renderer\API\RenderAPI.h" />
     <ClInclude Include="src\Radiance\Renderer\API\RenderCommand.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="src\Platform\OpenGL\GLShader.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Scene.cpp" />
     <ClCompile Include="src\Radiance\Core\Time.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Material.cpp" />
     <ClCompile Include="src\Radiance\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>

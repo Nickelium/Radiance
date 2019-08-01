@@ -30,7 +30,7 @@ class ExampleLayer : public Radiance::Layer
 
 	Radiance::Texture2D* m_Texture;
 
-	Radiance::Perspective* m_Camera;
+	Radiance::Camera* m_Camera;
 
 	Radiance::DataTime m_Time;
 
@@ -160,25 +160,33 @@ public:
 		std::string fragmentShader = ReadFile("res/shaders/Basic.fs");
 		Shader* shader1 = renderDevice->CreateShader(vertexShader, fragmentShader);
 
-		m_MeshRender1 = new MeshRender(CreateTriangle(), shader1);
+		Material* material1 = new Material(shader1);
+
+		m_MeshRender1 = new MeshRender(CreateTriangle(), material1);
 		m_Actor1 = new Actor("Triangle");
 		m_Actor1->GetComponent<TransformComponent>()->m_Transform.position 
 			= glm::vec3(-4.0f, 0.0f, -10.0f);
 		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_MeshRender1));
 		m_Scene->Add(m_Actor1);
 		
+		m_Texture = renderDevice->CreateTexture2D("res/textures/user.png");
+		
 		std::string vertexShader2 = ReadFile("res/shaders/Basic2.vs");
 		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
 		Shader* shader2 = renderDevice->CreateShader(vertexShader2, fragmentShader2);
 
-		m_MeshRender2 = new MeshRender(CreateCube(), shader2);
+		Material* material2 = new Material(shader2);
+		int slot = 0;
+		material2->SetUniform("u_Texture", m_Texture, slot);
+		//material2->SetUniform("test", 1.0f);
+
+		m_MeshRender2 = new MeshRender(CreateTriangle(), material2);
 		m_Actor2 = new Actor("Cube");
 		m_Actor2->GetComponent<TransformComponent>()->m_Transform.position
 			= glm::vec3(4.0f, 0.0f, -10.0f);
 		m_Actor2->AddComponent(new MeshComponent(m_Actor2, m_MeshRender2));
 		m_Scene->Add(m_Actor2);
 
-		m_Texture = renderDevice->CreateTexture2D("res/textures/user.png");
 	}
 
 	virtual ~ExampleLayer()
@@ -218,9 +226,11 @@ public:
 					int slot = 0;
 					if (i == 1)
 					{
+						meshComp->GetMesh()->GetMaterial()->GetShader()->Bind();
 						m_Texture->Bind(slot);
-						meshComp->GetMesh()->GetShader()->SetUniform("u_Texture", slot);
+						meshComp->GetMesh()->GetMaterial()->GetShader()->SetUniform("u_Texture", slot);
 					}
+
 					TransformComponent* transformComp = actor->GetComponent<TransformComponent>();
 					Renderer::Submit(meshComp->GetMesh(), transformComp->GetMatrix());
 				}
@@ -361,8 +371,7 @@ public:
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
 		auto viewportSize = ImGui::GetContentRegionAvail();
-		//m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-		m_Camera->SetAspectRatio(viewportSize.x / (float)viewportSize.y);
+		m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
 		ImGui::Image((void*)(uintptr_t)m_FrameBuffer->GetColorAttachment()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();

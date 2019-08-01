@@ -36,7 +36,8 @@ namespace Radiance
 
 	void GLFrameBuffer::Resize(int _width, int _height)
 	{
-		if (m_Width == _width && m_Height == _height)
+		if (m_Width == _width && m_Height == _height
+			|| (_width <= 0 || _height <= 0))
 			return;
 
 		m_Width = _width;

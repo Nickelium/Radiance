@@ -1,6 +1,8 @@
 #pragma once
 
 #include "API/RenderCommand.h"
+#include "API/Shader.h"
+#include "Material.h"
 #include "Camera/Camera.h"
 #include "MeshRender.h"
 
