@@ -7,7 +7,7 @@ namespace Radiance
 
 	void Locator::Destroy()
 	{
-		for (auto pair : s_Services)
+		for (auto& pair : s_Services)
 			delete pair.second;
 	}
 

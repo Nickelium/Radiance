@@ -6,6 +6,7 @@ namespace Radiance
 	class Service
 	{
 	public:
+		virtual	~Service() = default;
 		virtual ServiceType GetType() const = 0;
 	};
 

@@ -13,7 +13,6 @@ namespace Radiance
 
 	Material::~Material()
 	{
-		delete m_Shader;
 	}
 
 	void Material::Bind() const

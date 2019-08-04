@@ -33,6 +33,6 @@ namespace Radiance
 
 		static RenderDevice* Create();
 
-		SERVICE_CLASS("RenderDevice")
+		SERVICE_CLASS(RenderDevice)
 	};
 }
