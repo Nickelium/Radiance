@@ -12,6 +12,8 @@ namespace Radiance
 		Handle fragmentShader = CreateShader(_fragmentSource, ShaderType::FRAGMENT);
 
 		m_Handle = CreateProgram(vertexShader, fragmentShader);
+
+		QueryUniforms();
 	}
 
 	GLShader::~GLShader()
@@ -196,17 +198,30 @@ namespace Radiance
 		return programHandle;
 	}
 
+	void GLShader::QueryUniforms()
+	{
+		int nbUniforms;
+		glGetProgramiv(m_Handle, GL_ACTIVE_UNIFORMS, &nbUniforms);
+
+		constexpr int size = 128;
+		char name[size];
+		for (int i = 0; i < nbUniforms; ++i)
+		{
+			int length;
+			glGetActiveUniformName(m_Handle, i, size, &length, name);
+			m_MapLocation[name] = glGetUniformLocation(m_Handle, name);
+		}
+	}
+
 	GLShader::Location GLShader::GetLocation(const std::string& _name) const
 	{
-		auto result = m_MapLocation.find(_name);
-		if (result != m_MapLocation.end())
-			return result->second;
-		int location = glGetUniformLocation(m_Handle, _name.c_str());
-		if (location == s_InvalidLocation) 
+		auto res = m_MapLocation.find(_name);
+		if (res == m_MapLocation.end())
 		{
 			RAD_CORE_WARN("Uniform var {0} not found/used", _name);
-			return location;
+			return s_InvalidLocation;
 		}
-		return m_MapLocation[_name] = location;
+
+		return res->second;
 	}
 }

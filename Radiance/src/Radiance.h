@@ -12,6 +12,8 @@
 #include "Radiance/Core/Layer.h"
 #include "Radiance/ImGui/ImGuiLayer.h"
 
+#include "Radiance/ImGui/ImGuiUtilities.h"
+
 #include "Radiance/Input.h"
 #include "Radiance/KeyCodes.h"
 #include "Radiance/MouseButtonCodes.h"
