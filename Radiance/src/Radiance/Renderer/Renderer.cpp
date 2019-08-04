@@ -21,7 +21,6 @@ namespace Radiance
 	void Renderer::Submit(MeshRender* _mesh, const glm::mat4& _transform)
 	{
 		_mesh->Bind();
-		_mesh->GetMaterial()->GetShader()->Bind();
 		Shader* shader = _mesh->GetMaterial()->GetShader();
 		CommonUniformBinding(shader);
 		shader->SetUniform("M", _transform);

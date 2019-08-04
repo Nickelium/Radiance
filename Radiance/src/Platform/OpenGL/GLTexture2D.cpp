@@ -19,6 +19,8 @@ namespace Radiance
 		//assuming rgba8
 		m_Buffer = stbi_load(m_FilePath.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 
+		RAD_ASSERT(m_Buffer, "Failed to load Texture2D from {0}", m_FilePath);
+
 		glGenTextures(1, &m_Handle);
 		glBindTexture(GL_TEXTURE_2D, m_Handle);
 
@@ -28,6 +30,8 @@ namespace Radiance
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_Buffer);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		if (m_Buffer)
@@ -60,6 +64,7 @@ namespace Radiance
 		m_Width = _width;
 		m_Height = _height;
 
+		glBindTexture(GL_TEXTURE_2D, m_Handle);
 		if (m_FormatUsage == FormatUsage::COLOR_BUFFER)
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
@@ -84,6 +89,5 @@ namespace Radiance
 	void GLTexture2D::UnBind()
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
-
 	}
 }

@@ -26,7 +26,7 @@ namespace Radiance
 	void MeshRender::Bind()
 	{
 		m_VertexArray->Bind();
-		//m_Material->Bind();
+		m_Material->Bind();
 	}
 
 	void MeshRender::UnBind()
@@ -41,7 +41,7 @@ namespace Radiance
 		std::vector<float> vertices;
 
 		std::vector<glm::vec3> positions = m_Mesh->GetPositions();
-		std::vector<glm::vec2> texCoords = m_Mesh->GetTexCoords();
+		//std::vector<glm::vec2> texCoords = m_Mesh->GetTexCoords();
 		std::vector<uint32_t> indices = m_Mesh->GetIndices();
 		int nbVertices = m_Mesh->GetNbVertices();
 		for (int i = 0; i < nbVertices; ++i)
@@ -49,8 +49,8 @@ namespace Radiance
 			vertices.push_back(positions[i].x);
 			vertices.push_back(positions[i].y);
 			vertices.push_back(positions[i].z);
-			vertices.push_back(texCoords[i].x);
-			vertices.push_back(texCoords[i].y);
+			//vertices.push_back(texCoords[i].x);
+			//vertices.push_back(texCoords[i].y);
 		}
 
 		auto rd = Locator::Get<RenderDevice>();
@@ -58,8 +58,7 @@ namespace Radiance
 		VertexBuffer* vertexBuffer = rd->CreateVertexBuffer(vertices);
 		BufferLayout layout =
 		{
-			{DataType::Float3, "a_Position"},
-			{DataType::Float2, "a_TexCoords"}
+			{DataType::Float3, "a_Position"}
 		};
 		vertexBuffer->SetLayout(layout);
 		vertexArray->AddVertexBuffer(vertexBuffer);

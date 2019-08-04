@@ -19,7 +19,7 @@ namespace Radiance
 	void Material::Bind() const
 	{
 		m_Shader->Bind();
-		/*for (auto& uniform : m_UniformMap)
+		for (auto& uniform : m_UniformMap)
 		{
 			switch (uniform.second.Type)
 			{
@@ -64,7 +64,7 @@ namespace Radiance
 				break;
 		
 			}
-		}*/
+		}
 	}
 
 	void Material::UnBind() const
