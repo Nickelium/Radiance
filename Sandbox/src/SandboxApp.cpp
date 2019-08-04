@@ -169,15 +169,11 @@ public:
 		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_MeshRender1));
 		m_Scene->Add(m_Actor1);
 		
-		
 		std::string vertexShader2 = ReadFile("res/shaders/Basic2.vs");
 		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
 		Shader* shader2 = renderDevice->CreateShader(vertexShader2, fragmentShader2);
 
 		Material* material2 = new Material(shader2);
-		//int slot = 1;
-		//material2->SetUniform("u_Texture", m_Texture, slot);
-		//material2->SetUniform("test", 1.0f);
 
 		m_MeshRender2 = new MeshRender(CreateTriangle(), material2);
 		m_Actor2 = new Actor("Cube");
@@ -187,6 +183,7 @@ public:
 		m_Scene->Add(m_Actor2);
 
 		m_Texture = renderDevice->CreateTexture2D("res/textures/user.png");
+		material2->SetUniform("u_Texture", m_Texture, 0);
 	}
 
 	virtual ~ExampleLayer()
@@ -217,23 +214,14 @@ public:
 		Renderer::Begin(*m_Camera);
 		{
 			RenderCommand::Clear();
-			int i = 0;
 			for (auto actor : m_Scene->GetActors())
 			{
 				auto meshComp = actor->GetComponent<MeshComponent>();
 				if (meshComp)
 				{
-					int slot = 0;
-					if (i == 1)
-					{
-						m_Texture->Bind(slot);
-						meshComp->GetMesh()->GetMaterial()->GetShader()->SetUniform("u_Texture", slot);
-					}
-
 					TransformComponent* transformComp = actor->GetComponent<TransformComponent>();
 					Renderer::Submit(meshComp->GetMesh(), transformComp->GetMatrix());
 				}
-				++i;
 			}
 		}
 		Renderer::End();
