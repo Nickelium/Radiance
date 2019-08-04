@@ -8,7 +8,6 @@ out vec3 v_Position;
 uniform mat4 M;
 uniform mat4 V;
 uniform mat4 P;
-//uniform mat4 VP;
 
 
 void main()

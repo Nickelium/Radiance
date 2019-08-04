@@ -36,6 +36,8 @@ namespace Radiance
 		Handle CreateShader(const std::string& _source, ShaderType _type);
 		Handle CreateProgram(unsigned int _vertexID, unsigned int _fragmentID);
 
+		void QueryUniforms();
+
 		Location GetLocation(const std::string& _name) const;
 		
 		mutable MapLocation m_MapLocation;

@@ -50,6 +50,7 @@ public:
 
 		if (copy) ImGui::LogToClipboard();
 
+		ImVec4 col(0, 1, 1, 1);
 		if (m_Filter.IsActive())
 		{
 			const char* buf_begin = IMGUILOGGER->GetBuffer().begin();
@@ -58,12 +59,15 @@ public:
 			{
 				const char* line_end = (line_no < IMGUILOGGER->GetLineIndices().size()) ? buf_begin + IMGUILOGGER->GetLineIndices()[line_no] : NULL;
 				if (m_Filter.PassFilter(line, line_end))
-					ImGui::TextUnformatted(line, line_end);
+				{
+					ImGui::TextColorUnformatted(col, line, line_end);
+				}
+
 				line = line_end && line_end[1] ? line_end + 1 : NULL;
 			}
 		}
 		else
-			ImGui::TextUnformatted(IMGUILOGGER->GetBuffer().begin());
+			ImGui::TextColorUnformatted(col, IMGUILOGGER->GetBuffer().begin());
 
 		ImGui::LogFinish();
 

@@ -6,7 +6,6 @@ layout(location = 0) out vec4 o_Color;
 
 uniform mat4 V;
 uniform mat4 P;
-uniform mat4 VP;
 
 void main()
 {

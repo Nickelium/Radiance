@@ -42,6 +42,7 @@
     <ClInclude Include="src\Radiance\Events\MouseEvent.h" />
     <ClInclude Include="src\Radiance\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Radiance\ImGui\ImGuiSink.h" />
+    <ClInclude Include="src\Radiance\ImGui\ImGuiUtilities.h" />
     <ClInclude Include="src\Radiance\Input.h" />
     <ClInclude Include="src\Radiance\KeyCodes.h" />
     <ClInclude Include="src\Radiance\Core\Layer.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="src\Radiance\Core\Locator.cpp" />
     <ClCompile Include="src\Radiance\Core\Logger.cpp" />
     <ClCompile Include="src\Radiance\Core\Application.cpp" />
+    <ClCompile Include="src\Radiance\ImGui\ImGuiUtilities.cpp" />
     <ClCompile Include="src\Radiance\Prefab\Prefab.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\Buffer.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\FreeCamera.cpp" />
