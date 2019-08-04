@@ -74,6 +74,7 @@
     <ClInclude Include="src\Radiance\Renderer\Scene.h" />
     <ClInclude Include="src\Radiance\Core\Singleton.h" />
     <ClInclude Include="src\Radiance\Core\Time.h" />
+    <ClInclude Include="src\Radiance\Resources\ResourceLibrary.h" />
     <ClInclude Include="src\Radiance\Settings.h" />
     <ClInclude Include="src\Radiance\Utility\Utility.h" />
     <ClInclude Include="src\Radiance\Core\Window.h" />
@@ -120,6 +121,7 @@
     <ClCompile Include="src\Radiance\Renderer\Scene.cpp" />
     <ClCompile Include="src\Radiance\Core\Time.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Material.cpp" />
+    <ClCompile Include="src\Radiance\Resources\ResourceLibrary.cpp" />
     <ClCompile Include="src\Radiance\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,8 @@
 
 #include "Radiance/Prefab/Prefab.h"
 
+#include "Radiance/Resources/ResourceLibrary.h"
+
 #include "Radiance/Utility/Utility.h"
 
 // Vendor

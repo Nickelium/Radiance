@@ -22,13 +22,12 @@ class ExampleLayer : public Radiance::Layer
 {
 	Radiance::FrameBuffer* m_FrameBuffer;
 
+	//TODO abstract this away from Sandbox
 	Radiance::Actor* m_Actor1;
 	Radiance::Actor* m_Actor2;
 
 	Radiance::MeshRender* m_MeshRender1;
 	Radiance::MeshRender* m_MeshRender2;
-
-	Radiance::Texture2D* m_Texture;
 
 	Radiance::Camera* m_Camera;
 
@@ -157,12 +156,13 @@ public:
 	{
 		using namespace Radiance;
 		RenderDevice* renderDevice = Locator::Get<RenderDevice>();
+		ResourceLibrary* resourceLib = Locator::Get<ResourceLibrary>();
 
 		m_FrameBuffer = renderDevice->CreateFrameBuffer(1000, 1000);
 
 		std::string vertexShader = ReadFile("res/shaders/Basic.vs");
 		std::string fragmentShader = ReadFile("res/shaders/Basic.fs");
-		Shader* shader1 = renderDevice->CreateShader(vertexShader, fragmentShader);
+		Shader* shader1 = resourceLib->LoadShader("Basic1", vertexShader, fragmentShader);
 
 		Material* material1 = new Material(shader1);
 
@@ -175,7 +175,7 @@ public:
 		
 		std::string vertexShader2 = ReadFile("res/shaders/Basic2.vs");
 		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
-		Shader* shader2 = renderDevice->CreateShader(vertexShader2, fragmentShader2);
+		Shader* shader2 = resourceLib->LoadShader("Basic2", vertexShader2, fragmentShader2);
 
 		Material* material2 = new Material(shader2);
 
@@ -186,13 +186,12 @@ public:
 		m_Actor2->AddComponent(new MeshComponent(m_Actor2, m_MeshRender2));
 		m_Scene->Add(m_Actor2);
 
-		m_Texture = renderDevice->CreateTexture2D("res/textures/user.png");
-		material2->SetUniform("u_Texture", m_Texture, 0);
+		Texture2D* texture = resourceLib->LoadTexture2D("User", "res/textures/user.png");
+		material2->SetUniform("u_Texture", texture, 0);
 	}
 
 	virtual ~ExampleLayer()
 	{
-		delete m_Texture;
 		delete m_Camera;
 
 		delete m_FrameBuffer;
