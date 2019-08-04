@@ -13,7 +13,7 @@ namespace Radiance
 	public:
 		virtual ~Texture2D() = default;
 
-		virtual void Bind(unsigned int _slot = 0) = 0;
+		virtual void Bind(int _slot = 0) = 0;
 		virtual void UnBind() = 0;
 
 		virtual void Resize(int _width, int _height) = 0;

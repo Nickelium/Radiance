@@ -15,7 +15,7 @@ namespace Radiance
 		//Only meant for non filetexture, ex. for framebuffers
 		virtual void Resize(int _width, int _height) override;
 
-		virtual void Bind(unsigned int _slot = 0) override;
+		virtual void Bind(int _slot = 0) override;
 		virtual void UnBind() override;
 
 		inline virtual int GetWidth() const override { return m_Width; }

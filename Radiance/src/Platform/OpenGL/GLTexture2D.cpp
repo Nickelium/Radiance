@@ -75,7 +75,7 @@ namespace Radiance
 		glDeleteTextures(1, &m_Handle);
 	}
 
-	void GLTexture2D::Bind(unsigned int _slot /*= 0*/)
+	void GLTexture2D::Bind(int _slot /*= 0*/)
 	{
 		glActiveTexture(GL_TEXTURE0 + _slot);
 		glBindTexture(GL_TEXTURE_2D, m_Handle);

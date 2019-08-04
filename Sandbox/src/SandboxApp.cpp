@@ -164,20 +164,19 @@ public:
 
 		m_MeshRender1 = new MeshRender(CreateTriangle(), material1);
 		m_Actor1 = new Actor("Triangle");
-		m_Actor1->GetComponent<TransformComponent>()->m_Transform.position 
+		m_Actor1->GetComponent<TransformComponent>()->m_Transform.position
 			= glm::vec3(-4.0f, 0.0f, -10.0f);
 		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_MeshRender1));
 		m_Scene->Add(m_Actor1);
 		
-		m_Texture = renderDevice->CreateTexture2D("res/textures/user.png");
 		
 		std::string vertexShader2 = ReadFile("res/shaders/Basic2.vs");
 		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
 		Shader* shader2 = renderDevice->CreateShader(vertexShader2, fragmentShader2);
 
 		Material* material2 = new Material(shader2);
-		int slot = 0;
-		material2->SetUniform("u_Texture", m_Texture, slot);
+		//int slot = 1;
+		//material2->SetUniform("u_Texture", m_Texture, slot);
 		//material2->SetUniform("test", 1.0f);
 
 		m_MeshRender2 = new MeshRender(CreateTriangle(), material2);
@@ -187,6 +186,7 @@ public:
 		m_Actor2->AddComponent(new MeshComponent(m_Actor2, m_MeshRender2));
 		m_Scene->Add(m_Actor2);
 
+		m_Texture = renderDevice->CreateTexture2D("res/textures/user.png");
 	}
 
 	virtual ~ExampleLayer()
@@ -226,7 +226,6 @@ public:
 					int slot = 0;
 					if (i == 1)
 					{
-						meshComp->GetMesh()->GetMaterial()->GetShader()->Bind();
 						m_Texture->Bind(slot);
 						meshComp->GetMesh()->GetMaterial()->GetShader()->SetUniform("u_Texture", slot);
 					}
