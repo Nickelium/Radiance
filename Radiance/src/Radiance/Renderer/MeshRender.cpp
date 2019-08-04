@@ -26,7 +26,7 @@ namespace Radiance
 	void MeshRender::Bind()
 	{
 		m_VertexArray->Bind();
-		m_Material->Bind();
+		//m_Material->Bind();
 	}
 
 	void MeshRender::UnBind()
