@@ -12,7 +12,6 @@ namespace Radiance
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 
-		//TODO some magic virtual + template ? although trivially combining is not allowed in C++
 		// doing via overloading, but less verbose
 		virtual void SetUniform(const std::string& _name, bool _val) = 0;
 		virtual void SetUniform(const std::string& _name, float _val) = 0;

@@ -42,7 +42,10 @@ namespace Radiance
 		BufferLayout() {}
 		BufferLayout(const std::initializer_list<BufferElement>& _elements) :
 			m_Elements(_elements) 
-		{ ComputeOffsetAndStride();}
+		{ Complete();}
+
+		inline void AddElement(const BufferElement& _elem) { m_Elements.push_back(_elem); }
+
 		inline const BufferElements& GetElements() const { return m_Elements; };
 		inline uint32_t GetStride() const { return m_Stride; }
 
@@ -50,6 +53,8 @@ namespace Radiance
 		inline BufferCIterator end() const { return m_Elements.cend(); }
 		inline BufferIterator begin() { return m_Elements.begin(); }
 		inline BufferIterator end() { return m_Elements.end(); }
+
+		inline void Complete() { ComputeOffsetAndStride(); }
 	private:
 		void ComputeOffsetAndStride()
 		{
