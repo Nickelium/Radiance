@@ -48,8 +48,6 @@ namespace Radiance
 	{
 	public:
 		Material(Shader* _shader);
-		//TEMP 
-		//TODO
 		~Material();
 
 		inline Shader* GetShader() const { return m_Shader; }

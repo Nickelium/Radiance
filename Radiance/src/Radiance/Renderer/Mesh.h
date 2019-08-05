@@ -16,14 +16,26 @@ namespace Radiance
 		inline const std::vector<glm::vec2>& GetTexCoords() const { return m_TexCoords; }
 		inline const std::vector<uint32_t>& GetIndices() const { return m_Indices; }
 
+		inline bool HasPositions() const { return m_Positions.size() > 0; }
+		inline bool HasNormals() const { return m_Normals.size() > 0; }
+		inline bool HasTexCoords() const { return m_TexCoords.size() > 0; }
+		inline bool HasIndices() const { return m_Indices.size() > 0; }
+
 		inline int GetNbVertices() const { return static_cast<int>(m_Positions.size()); }
 		inline int GetNbIndices() const { return static_cast<int>(m_Indices.size()); }
 
 	private:
+		//ORDER CONVENTION
+		//POS
+		//NORMAL
+		//TEXC
+
+		//REQUIRE
 		std::vector<glm::vec3> m_Positions;
 		std::vector<glm::vec3> m_Normals;
+		
 		std::vector<glm::vec2> m_TexCoords;
-		std::vector<uint32_t> m_Indices;
 
+		std::vector<uint32_t> m_Indices;
 	};
 }

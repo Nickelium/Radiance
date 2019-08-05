@@ -47,7 +47,6 @@ namespace Radiance
 		//Initialize once, system might have multiple windows
 		if (!s_GLFWInitialized)
 		{
-			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
 			RAD_CORE_ASSERT(success, "Failed to intialize GLFW");
 			RAD_CORE_TRACE("{0}", "GLFW Initialized");
@@ -182,10 +181,8 @@ namespace Radiance
 	void WindowsWindow::Destroy()
 	{
 		glfwDestroyWindow(m_Window); 
-		glfwTerminate(); //Cause glfw error
-		//TEMP
+		glfwTerminate(); 
 		delete m_Context;
-		//s_GLFWInitialized = false;
 	}
 
 	bool WindowsWindow::CenterWindow()
