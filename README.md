@@ -7,14 +7,14 @@ One of the main focus in the development process is building a clear architectur
 The Radiance API allows the user to build their graphics application quickly, while the engine handles all the other low-level necessities. 
 
 <p float="left">                                                   
-    <img width="99%" src="https://raw.githubusercontent.com/Nickelium/Radiance/Main/Output/1.png">
+    <img width="80%" src="https://raw.githubusercontent.com/Nickelium/Radiance/Main/Output/1.png">
 </p> 
 
 ## Graphics Features
 * Material System
 * Support Custom Shaders
 
-## General Engine Features:
+## General Engine Features
 * Multiple Loggers
 * Component System
 * Event System
@@ -31,8 +31,8 @@ The Radiance API allows the user to build their graphics application quickly, wh
 * assimp : Asset Loader
 
 ## Render Samples         
-      
+ 
 ## Inspiration
-* [IRadiance Engine](https://github.com/Nickelium/IRadiance)
 * [Cell Engine](https://github.com/JoeyDeVries/Cell)
 * [Sparky Engine](https://github.com/TheCherno/Sparky)
+* [IRadiance Engine](https://github.com/Nickelium/IRadiance)
