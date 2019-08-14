@@ -208,7 +208,7 @@ public:
 	{
 		using namespace Radiance;
 
-		RenderCommand::SetClearColor({ 1.0f, 1.0f, 0.0f, 1.0f });
+		RenderCommand::SetClearColor({ 192 / 255.0f, 216 / 255.0f, 235 / 255.0f, 1.0f });
 
 		if (!m_Scene)
 			return;

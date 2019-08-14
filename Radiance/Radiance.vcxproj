@@ -207,13 +207,13 @@
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>RAD_DEBUG;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;GLM_FORCE_SILENT_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)vendor\assimp\include\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;%(AdditionalLibraryDirectories);$(SolutionDir)vendor\assimp\lib\Debug\</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -224,13 +224,13 @@
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>RAD_DEBUG;RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;GLM_FORCE_SILENT_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)vendor\assimp\include\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;%(AdditionalLibraryDirectories);$(SolutionDir)vendor\assimp\lib\Debug\</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -242,7 +242,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;GLM_FORCE_SILENT_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)vendor\assimp\include\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -252,7 +252,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;%(AdditionalLibraryDirectories);$(SolutionDir)vendor\assimp\lib\Release\</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -264,7 +264,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>RAD_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;GLM_FORCE_SILENT_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include\;$(SolutionDir)vendor\spdlog\include\;$(SolutionDir)vendor\Glad\include\;$(SolutionDir)vendor\ImGui\;$(SolutionDir)vendor\glm\;$(SolutionDir)vendor\stb\;$(SolutionDir)vendor\assimp\include\;$(SolutionDir)Radiance\src\;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -274,7 +274,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;%(AdditionalLibraryDirectories);$(SolutionDir)vendor\assimp\lib\Release\</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
