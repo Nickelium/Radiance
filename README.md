@@ -7,7 +7,7 @@ One of the main focus in the development process is building a clear architectur
 The Radiance API allows the user to build their graphics application quickly, while the engine handles all the other low-level necessities. 
 
 <p float="left">                                                   
-    <img width="99%" src="https://raw.githubusercontent.com/Nickelium/Rasterizer/master/Output/26.png">
+    <img width="99%" src="https://raw.githubusercontent.com/Nickelium/Radiance/master/Output/1.png">
 </p> 
 
 ## Graphics Features
