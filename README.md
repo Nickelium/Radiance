@@ -30,15 +30,7 @@ The Radiance API allows the user to build their graphics application quickly, wh
 * stbi_image : Textures loading
 * assimp : Asset Loader
 
-## Render Samples
-<p float="left">                                                   
-    <img width="49%" src="https://raw.githubusercontent.com/Nickelium/Rasterizer/master/Output/21.png">
-    <img width="49%" src="https://raw.githubusercontent.com/Nickelium/Rasterizer/master/Output/22.png">
-    <img width="49%" src="https://raw.githubusercontent.com/Nickelium/Rasterizer/master/Output/16.png">
-    <img width="49%" src="https://raw.githubusercontent.com/Nickelium/Rasterizer/master/Output/19.png">
-</p>           
-
-https://www.youtube.com/watch?v=7sPPdtgjI90
+## Render Samples         
       
 ## Inspiration
 * [IRadiance Engine](https://github.com/Nickelium/IRadiance)
