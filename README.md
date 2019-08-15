@@ -8,7 +8,7 @@ The Radiance API allows the user to build their graphics application quickly, wh
 This project is still in development, therefore the codebase tend to fluctuate a lot.
 
 <p float="left">                                                   
-    <img width="70%" src="https://raw.githubusercontent.com/Nickelium/Radiance/Main/Output/1.png">
+    <img width="85%" src="https://raw.githubusercontent.com/Nickelium/Radiance/Main/Output/1.png">
 </p> 
 
 ## Graphics Features
