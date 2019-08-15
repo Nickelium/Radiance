@@ -38,7 +38,7 @@ This project is still in development, therefore the codebase tend to fluctuate a
 
 ## Render Samples         
  
-## Inspiration
+## References
 * [Cell Engine](https://github.com/JoeyDeVries/Cell)
 * [Sparky Engine](https://github.com/TheCherno/Sparky)
 * [IRadiance Engine](https://github.com/Nickelium/IRadiance)
