@@ -21,6 +21,10 @@ The Radiance API allows the user to build their graphics application quickly, wh
 * Window Handling
 * User Interface Layer
 
+## Platform Support
+##### ![](https://img.shields.io/badge/Windows-Supported-green.svg)
+##### ![](https://img.shields.io/badge/Linux-Not%20Supported-red.svg)
+
 ## Dependencies
 * GLFW : Window Creattion and Context 
 * GLAD : OpenGL Function Binding
