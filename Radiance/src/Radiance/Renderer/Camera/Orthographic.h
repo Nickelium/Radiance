@@ -7,13 +7,12 @@ namespace Radiance
 	class Orthographic : public Camera
 	{
 	public:
-		Orthographic(float _left, float _right, float _bottom, float _top, float _near = 1, float _far = 100);
-		virtual void Update(DataTime _time) override;
-	private:
+		Orthographic(float _left, float _right, float _bottom, float _top, float _near = 1, float _far = 10000);
+	protected:
 		void UpdateMatrices();
 
-		float m_Left, m_Right;
-		float m_Bottom, m_Top;
+		float m_LeftSide, m_RightSide;
+		float m_BottomSide, m_TopSide;
 		float m_Near, m_Far;
 	};
 }

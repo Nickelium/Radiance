@@ -2535,6 +2535,18 @@ bool ImGui::SliderScalar(const char* label, ImGuiDataType data_type, void* v, co
     {
         const bool focus_requested = FocusableItemRegister(window, id);
         const bool clicked = (hovered && g.IO.MouseClicked[0]);
+
+        //MyChanges
+        const bool rightClicked = hovered && g.IO.MouseClicked[1];
+        if (rightClicked)
+        {
+            auto sz = DataTypeGetInfo(data_type)->Size;
+            char* data = reinterpret_cast<char*>(v);
+            for (char* endData = data + sz; data < endData; ++data)
+                * data = 0;
+        }
+            
+
         if (focus_requested || clicked || g.NavActivateId == id || g.NavInputId == id)
         {
             SetActiveID(id, window);

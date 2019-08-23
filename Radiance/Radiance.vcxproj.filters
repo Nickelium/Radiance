@@ -129,9 +129,6 @@
     <ClInclude Include="src\Radiance\Renderer\Camera\Perspective.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\Camera\FreeCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Radiance\Prefab\Prefab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -190,6 +187,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Radiance\Resources\ResourceLibrary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Resources\MeshLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Camera\FlyPerspective.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Camera\FlyOrthographic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -266,9 +272,6 @@
     <ClCompile Include="src\Radiance\Renderer\Camera\Perspective.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\Camera\FreeCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Radiance\Prefab\Prefab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -306,6 +309,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Radiance\Resources\ResourceLibrary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Resources\MeshLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Camera\FlyPerspective.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Camera\FlyOrthographic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

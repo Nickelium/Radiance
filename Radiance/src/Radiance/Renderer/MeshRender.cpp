@@ -89,9 +89,9 @@ namespace Radiance
 		if (m_Mesh->HasPositions())
 			layout.AddElement({ DataType::Float3, "a_Position" });
 		if (m_Mesh->HasNormals())
-			layout.AddElement({ DataType::Float3, "a_Normals" });
+			layout.AddElement({ DataType::Float3, "a_Normal" });
 		if (m_Mesh->HasTexCoords())
-			layout.AddElement({ DataType::Float2, "a_TexCoords" });
+			layout.AddElement({ DataType::Float2, "a_TexCoord" });
 		
 		vertexBuffer->SetLayout(layout);
 		vertexArray->AddVertexBuffer(vertexBuffer);

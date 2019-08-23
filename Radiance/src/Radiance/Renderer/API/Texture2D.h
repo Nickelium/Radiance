@@ -8,7 +8,19 @@ namespace Radiance
 		DEPTHSTENCIL_BUFFER
 	};
 
-	class Texture2D
+	class Texture
+	{
+	public:
+		virtual ~Texture() = default;
+
+		virtual int GetWidth() const = 0;
+		virtual int GetHeight() const = 0;
+
+		virtual void Bind(int _slot = 0) = 0;
+		virtual void UnBind() = 0;
+	};
+
+	class Texture2D : public Texture
 	{
 	public:
 		virtual ~Texture2D() = default;

@@ -34,6 +34,7 @@ namespace Radiance
 		auto pGLFWWindow = static_cast<GLFWwindow*>(m_Window->GetNativeWindow());
 		double x, y;
 		glfwGetCursorPos(pGLFWWindow, &x, &y);
+		y = m_Window->GetHeight() - y;
 		return { static_cast<float>(x), static_cast<float>(y) };
 	}
 
