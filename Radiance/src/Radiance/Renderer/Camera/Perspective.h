@@ -7,7 +7,7 @@ namespace Radiance
 	class Perspective : public Camera
 	{
 	public:
-		Perspective(float _aspectRatio, float _fovV, float _near = 0.001f, float _far = 100.0f);
+		Perspective(float _aspectRatio, float _fovV, float _near = 0.1f, float _far = 10000.0f);
 	protected:
 		void UpdateMatrices();
 

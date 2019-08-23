@@ -22,17 +22,17 @@ namespace Radiance
 
 	void Perspective::UpdateMatrices()
 	{
-		glm::mat4 R = glm::eulerAngleXYZ(
-			glm::radians(rotation.x),
-			glm::radians(rotation.y),
-			glm::radians(rotation.z));
-		glm::vec3 forward = R * glm::vec4(0, 0, -1, 0);
-		glm::vec3 up = R * glm::vec4(0, 1, 0, 0);
-		m_ViewMatrix = glm::lookAt(position, position + forward, up);
-		//m_ViewMatrix = glm::mat4(1.0f);
-		//glm::mat4 T = glm::translate(glm::mat4(1.0f), m_Position);
-		//glm::mat4 R = glm::rotate()
+		//NOTE: to map with [theta,phi] = [0,0] to front vector
+		float thetaRad = glm::radians(rot.x - 90.0f);
+		float phiRad = glm::radians(rot.y + 90.0f);
 
+		m_Forward.x = sin(thetaRad) * cos(phiRad);
+		m_Forward.y = cos(thetaRad);
+		m_Forward.z = sin(thetaRad) * sin(phiRad);
+
+		m_Right = glm::normalize(glm::cross(m_Forward, m_Up));
+
+		m_ViewMatrix = glm::lookAt(position, position + m_Forward, m_Up);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 

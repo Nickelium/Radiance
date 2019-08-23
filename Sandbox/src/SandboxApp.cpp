@@ -1,8 +1,5 @@
 #include <Radiance.h>
-#include <glm/gtc/type_ptr.hpp>
 
-
-#include <GLFW/glfw3.h>
 
 static void ImGuiShowHelpMarker(const char* desc)
 {
@@ -24,10 +21,8 @@ class ExampleLayer : public Radiance::Layer
 
 	//TODO abstract this away from Sandbox
 	Radiance::Actor* m_Actor1;
-	Radiance::Actor* m_Actor2;
 
 	Radiance::MeshRender* m_MeshRender1;
-	Radiance::MeshRender* m_MeshRender2;
 
 	Radiance::Camera* m_Camera;
 
@@ -75,83 +70,9 @@ public:
 		ImGui::End();
 	}
 
-	enum class PropertyFlag
-	{
-		None = 0, ColorProperty = 1
-	};
-
-	void Property(const std::string& name, bool& value)
-	{
-		ImGui::Text(name.c_str());
-		ImGui::NextColumn();
-		ImGui::PushItemWidth(-1);
-
-		std::string id = "##" + name;
-		ImGui::Checkbox(id.c_str(), &value);
-
-		ImGui::PopItemWidth();
-		ImGui::NextColumn();
-	}
-
-	void Property(const std::string& name, float& value, float min = -1.0f, float max = 1.0f, PropertyFlag flags = PropertyFlag::None)
-	{
-		ImGui::Text(name.c_str());
-		ImGui::NextColumn();
-		ImGui::PushItemWidth(-1);
-
-		std::string id = "##" + name;
-		ImGui::SliderFloat(id.c_str(), &value, min, max, "%.2f");
-
-		ImGui::PopItemWidth();
-		ImGui::NextColumn();
-	}
-
-	void Property(const std::string& name, glm::vec3& value, PropertyFlag flags)
-	{
-		Property(name, value, -1.0f, 1.0f, flags);
-	}
-
-	void Property(const std::string& name, glm::vec3& value, float min = -1.0f, float max = 1.0f, PropertyFlag flags = PropertyFlag::None)
-	{
-		ImGui::Text(name.c_str());
-		ImGui::NextColumn();
-		ImGui::PushItemWidth(-1);
-
-		std::string id = "##" + name;
-		if ((int)flags & (int)PropertyFlag::ColorProperty)
-			ImGui::ColorEdit3(id.c_str(), glm::value_ptr(value), ImGuiColorEditFlags_NoInputs);
-		else
-			ImGui::SliderFloat3(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
-
-		ImGui::PopItemWidth();
-		ImGui::NextColumn();
-	}
-
-	void Property(const std::string& name, glm::vec4& value, PropertyFlag flags)
-	{
-		Property(name, value, -1.0f, 1.0f, flags);
-	}
-
-	void Property(const std::string& name, glm::vec4& value, float min = -1.0f, float max = 1.0f, PropertyFlag flags = PropertyFlag::None)
-	{
-		ImGui::Text(name.c_str());
-		ImGui::NextColumn();
-		ImGui::PushItemWidth(-1);
-
-		std::string id = "##" + name;
-		if ((int)flags & (int)PropertyFlag::ColorProperty)
-			ImGui::ColorEdit4(id.c_str(), glm::value_ptr(value), ImGuiColorEditFlags_NoInputs);
-		else
-			ImGui::SliderFloat4(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
-
-		ImGui::PopItemWidth();
-		ImGui::NextColumn();
-	}
-
-
 	ExampleLayer(Radiance::Application* _application)
 		: Layer(_application, new Radiance::Scene), 
-		m_Camera(new Radiance::FreeCamera),
+		m_Camera(new Radiance::FlyPerspective),
 		m_Time()
 	{
 		using namespace Radiance;
@@ -166,28 +87,18 @@ public:
 
 		Material* material1 = new Material(shader1);
 
-		m_MeshRender1 = new MeshRender(CreateTriangle(), material1);
-		m_Actor1 = new Actor("Triangle");
+		m_MeshRender1 = new MeshRender(resourceLib->LoadMesh("cerberus", "res/meshes/cerberus.fbx"), material1);
+		m_Actor1 = new Actor("Cerberus");
 		m_Actor1->GetComponent<TransformComponent>()->m_Transform.position
-			= glm::vec3(-4.0f, 0.0f, -10.0f);
+			= glm::vec3(-40.0f, 0.0f, -100.0f);
+		m_Actor1->GetComponent<TransformComponent>()->m_Transform.rotation
+			= glm::vec3(-90.0f, 0.0f, 90.0f);
 		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_MeshRender1));
 		m_Scene->Add(m_Actor1);
-		
-		std::string vertexShader2 = ReadFile("res/shaders/Basic2.vs");
-		std::string fragmentShader2 = ReadFile("res/shaders/Basic2.fs");
-		Shader* shader2 = resourceLib->LoadShader("Basic2", vertexShader2, fragmentShader2);
+		Texture2D* albedo = resourceLib->LoadTexture2D("Cerberus_Albedo", "res/textures/cerberus_A.png");
+		material1->SetUniform("u_Albedo", albedo, 0);
 
-		Material* material2 = new Material(shader2);
-
-		m_MeshRender2 = new MeshRender(CreateTriangle(), material2);
-		m_Actor2 = new Actor("Cube");
-		m_Actor2->GetComponent<TransformComponent>()->m_Transform.position
-			= glm::vec3(4.0f, 0.0f, -10.0f);
-		m_Actor2->AddComponent(new MeshComponent(m_Actor2, m_MeshRender2));
-		m_Scene->Add(m_Actor2);
-
-		Texture2D* texture = resourceLib->LoadTexture2D("User", "res/textures/user.png");
-		material2->SetUniform("u_Texture", texture, 0);
+		m_Camera->position = { 0.0f, 0.0f, 0.0f};
 	}
 
 	virtual ~ExampleLayer()
@@ -303,7 +214,7 @@ public:
 			ImGui::Columns(2);
 
 			bool b;
-			Property("Test Property", b);
+			ImGui::Property("Test ImGui::Property", b);
 
 			ImGui::Columns();
 		}
@@ -329,9 +240,9 @@ public:
 
 							ImGui::Columns(2);
 						
-							Property("Position", trans.position, -10, 10);
-							Property("Rotation", trans.rotation, -180, 180);
-							Property("Scale", trans.scale, -10, 10);
+							ImGui::Property("Position", trans.position, -50, 50);
+							ImGui::Property("Rotation", trans.rotation, -180, 180);
+							ImGui::Property("Scale", trans.scale, -1, 1);
 
 							ImGui::Columns();
 							ImGui::TreePop();
@@ -349,8 +260,8 @@ public:
 			if(ImGui::TreeNodeEx("Camera##", ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::Columns(2);
-				Property("Position", m_Camera->position, -10, 10);
-				Property("Rotation", m_Camera->rotation, -180, 180);
+				ImGui::Property("Position", m_Camera->position, -50, 50);
+				ImGui::Property("Theta/Phi", m_Camera->rot, -180, 180);
 				ImGui::Columns();
 
 				ImGui::TreePop();

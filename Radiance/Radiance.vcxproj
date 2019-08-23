@@ -58,7 +58,8 @@
     <ClInclude Include="src\Radiance\Renderer\API\FrameBuffer.h" />
     <ClInclude Include="src\Radiance\Renderer\API\GraphicsContext.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Camera.h" />
-    <ClInclude Include="src\Radiance\Renderer\Camera\FreeCamera.h" />
+    <ClInclude Include="src\Radiance\Renderer\Camera\FlyPerspective.h" />
+    <ClInclude Include="src\Radiance\Renderer\Camera\FlyOrthographic.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Orthographic.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Perspective.h" />
     <ClInclude Include="src\Radiance\Renderer\Material.h" />
@@ -74,6 +75,7 @@
     <ClInclude Include="src\Radiance\Renderer\Scene.h" />
     <ClInclude Include="src\Radiance\Core\Singleton.h" />
     <ClInclude Include="src\Radiance\Core\Time.h" />
+    <ClInclude Include="src\Radiance\Resources\MeshLoader.h" />
     <ClInclude Include="src\Radiance\Resources\ResourceLibrary.h" />
     <ClInclude Include="src\Radiance\Settings.h" />
     <ClInclude Include="src\Radiance\Utility\Utility.h" />
@@ -108,7 +110,8 @@
     <ClCompile Include="src\Radiance\ImGui\ImGuiUtilities.cpp" />
     <ClCompile Include="src\Radiance\Prefab\Prefab.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\Buffer.cpp" />
-    <ClCompile Include="src\Radiance\Renderer\Camera\FreeCamera.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Camera\FlyPerspective.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Camera\FlyOrthographic.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\Orthographic.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\Perspective.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Mesh.cpp" />
@@ -121,6 +124,7 @@
     <ClCompile Include="src\Radiance\Renderer\Scene.cpp" />
     <ClCompile Include="src\Radiance\Core\Time.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Material.cpp" />
+    <ClCompile Include="src\Radiance\Resources\MeshLoader.cpp" />
     <ClCompile Include="src\Radiance\Resources\ResourceLibrary.cpp" />
     <ClCompile Include="src\Radiance\Utility\Utility.cpp" />
   </ItemGroup>
@@ -213,7 +217,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;%(AdditionalLibraryDirectories);$(SolutionDir)vendor\assimp\lib\Debug\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;$(SolutionDir)vendor\assimp\lib\x86\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -230,7 +234,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;%(AdditionalLibraryDirectories);$(SolutionDir)vendor\assimp\lib\Debug\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;$(SolutionDir)vendor\assimp\lib\x64\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -252,7 +256,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;%(AdditionalLibraryDirectories);$(SolutionDir)vendor\assimp\lib\Release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;$(SolutionDir)vendor\assimp\lib\x86\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -274,7 +278,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;%(AdditionalLibraryDirectories);$(SolutionDir)vendor\assimp\lib\Release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;$(SolutionDir)vendor\assimp\lib\x64\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

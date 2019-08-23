@@ -29,7 +29,8 @@
 #include "Radiance/Renderer/MeshRender.h"
 #include "Radiance/Renderer/Camera/Orthographic.h"
 #include "Radiance/Renderer/Camera/Perspective.h"
-#include "Radiance/Renderer/Camera/FreeCamera.h"
+#include "Radiance/Renderer/Camera/FlyOrthographic.h"
+#include "Radiance/Renderer/Camera/FlyPerspective.h"
 
 #include "Radiance/Components/Actor.h"
 #include "Radiance/Components/Component.h"

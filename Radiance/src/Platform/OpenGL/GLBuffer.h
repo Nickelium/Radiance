@@ -8,12 +8,15 @@ namespace Radiance
 	class GLVertexBuffer : public VertexBuffer
 	{
 	public:
-		GLVertexBuffer(std::vector<float> _vertices);
+		GLVertexBuffer(const std::vector<float>& _vertices);
 		virtual ~GLVertexBuffer();
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
 
-		inline virtual void SetLayout(const BufferLayout& _layout) override { m_Layout = _layout; }
+		inline virtual void SetLayout(const BufferLayout& _layout) override
+		{
+			m_Layout = _layout; m_Layout.Complete();
+		}
 		inline virtual const BufferLayout& GetLayout() const override { return m_Layout; }
 
 	private:
@@ -25,7 +28,7 @@ namespace Radiance
 	class GLIndexBuffer : public IndexBuffer
 	{
 	public:
-		GLIndexBuffer(std::vector<uint32_t> _indices);
+		GLIndexBuffer(const std::vector<uint32_t>& _indices);
 		virtual ~GLIndexBuffer();
 		virtual void Bind() const override;
 		virtual void UnBind() const override;

@@ -6,7 +6,7 @@
 namespace Radiance
 {
 	#pragma region VERTEXBUFFER
-	GLVertexBuffer::GLVertexBuffer(std::vector<float> _vertices)
+	GLVertexBuffer::GLVertexBuffer(const std::vector<float>& _vertices)
 	{
 		//Alternative but cause crashes due to OpenGL 4.5 or so ?
 		//glCreateBuffers(1, &m_ID);
@@ -33,7 +33,7 @@ namespace Radiance
 	#pragma endregion
 
 	#pragma  region INDEXBUFFER
-	GLIndexBuffer::GLIndexBuffer(std::vector<uint32_t> _indices)
+	GLIndexBuffer::GLIndexBuffer(const std::vector<uint32_t>& _indices)
 		: m_Count((uint32_t)_indices.size())
 	{
 		glGenBuffers(1, &m_Handle);
