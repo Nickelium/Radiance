@@ -10,6 +10,11 @@
 namespace Radiance
 {
 
+	ResourceLibrary::ResourceLibrary()
+		: m_ShaderLoader(*this)
+	{
+	}
+
 	ResourceLibrary::~ResourceLibrary()
 	{
 		for (auto& elem : m_ShaderMap)
@@ -49,6 +54,11 @@ namespace Radiance
 		if (res != m_MeshMap.end())
 			return m_MeshMap[_name];
 		return m_MeshMap[_name] = m_MeshLoader.Load(_filePath);
+	}
+
+	void ResourceLibrary::Update()
+	{
+		m_ShaderLoader.Process();
 	}
 
 }

@@ -14,7 +14,7 @@ namespace Radiance
 		m_Buffer(nullptr), m_FilePath(_filePath), 
 		m_FormatUsage(FormatUsage::COLOR_BUFFER)
 	{
-		stbi_set_flip_vertically_on_load(1);
+		stbi_set_flip_vertically_on_load(false);
 
 		//assuming rgba8
 		m_Buffer = stbi_load(m_FilePath.c_str(), &m_Width, &m_Height, &m_BPP, 4);

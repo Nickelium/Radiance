@@ -77,6 +77,7 @@
     <ClInclude Include="src\Radiance\Core\Time.h" />
     <ClInclude Include="src\Radiance\Resources\MeshLoader.h" />
     <ClInclude Include="src\Radiance\Resources\ResourceLibrary.h" />
+    <ClInclude Include="src\Radiance\Resources\ShaderLoader.h" />
     <ClInclude Include="src\Radiance\Settings.h" />
     <ClInclude Include="src\Radiance\Utility\Utility.h" />
     <ClInclude Include="src\Radiance\Core\Window.h" />
@@ -126,6 +127,7 @@
     <ClCompile Include="src\Radiance\Renderer\Material.cpp" />
     <ClCompile Include="src\Radiance\Resources\MeshLoader.cpp" />
     <ClCompile Include="src\Radiance\Resources\ResourceLibrary.cpp" />
+    <ClCompile Include="src\Radiance\Resources\ShaderLoader.cpp" />
     <ClCompile Include="src\Radiance\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +217,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x86\lib-vc2017\;$(SolutionDir)vendor\assimp\lib\x86\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -232,6 +235,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\x64\lib-vc2017\;$(SolutionDir)vendor\assimp\lib\x64\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -250,6 +254,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -272,6 +277,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

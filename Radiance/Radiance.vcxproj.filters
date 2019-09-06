@@ -198,6 +198,9 @@
     <ClInclude Include="src\Radiance\Renderer\Camera\FlyOrthographic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Radiance\Resources\ShaderLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -318,6 +321,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Radiance\Renderer\Camera\FlyOrthographic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Resources\ShaderLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

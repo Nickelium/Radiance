@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "Utility.h"
 
-std::string ReadFile(const std::string& _file)
+namespace Radiance
 {
-	std::fstream stream(_file);
-	RAD_CORE_ASSERT(stream, "Invalid file : {0}", _file);
-	return std::string ((std::istreambuf_iterator<char>(stream)),
-		(std::istreambuf_iterator<char>()));
+	std::string ReadFile(const std::string& _file)
+	{
+		std::fstream stream(_file);
+		RAD_CORE_ASSERT(stream, "Invalid file : {0}", _file);
+		return std::string ((std::istreambuf_iterator<char>(stream)),
+			(std::istreambuf_iterator<char>()));
+	}
 }
