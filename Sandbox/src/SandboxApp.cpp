@@ -20,7 +20,11 @@ class ExampleLayer : public Radiance::Layer
 	Radiance::FrameBuffer* m_FrameBuffer;
 
 	//TODO abstract this away from Sandbox
+
+	bool reload = false;
 	Radiance::Actor* m_Actor1;
+
+	Radiance::Shader* m_Shader;
 
 	Radiance::MeshRender* m_MeshRender1;
 
@@ -81,9 +85,9 @@ public:
 
 		m_FrameBuffer = renderDevice->CreateFrameBuffer(1000, 1000);
 
-		std::string vertexShader = ReadFile("res/shaders/Basic.vs");
-		std::string fragmentShader = ReadFile("res/shaders/Basic.fs");
-		Shader* shader1 = resourceLib->LoadShader("Basic1", vertexShader, fragmentShader);
+		Shader* shader1 = resourceLib->LoadShader("Basic1",
+			"res/shaders/Basic.vs", "res/shaders/Basic.fs");
+		m_Shader = shader1;
 
 		Material* material1 = new Material(shader1);
 
@@ -95,7 +99,7 @@ public:
 			= glm::vec3(-90.0f, 0.0f, 90.0f);
 		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_MeshRender1));
 		m_Scene->Add(m_Actor1);
-		Texture2D* albedo = resourceLib->LoadTexture2D("Cerberus_Albedo", "res/textures/cerberus_A.png");
+		Texture2D* albedo = resourceLib->LoadTexture2D("Cerberus_Albedo", "res/textures/cerberus/cerberus_A.png");
 		material1->SetUniform("u_Albedo", albedo, 0);
 
 		m_Camera->position = { 0.0f, 0.0f, 0.0f};
@@ -123,6 +127,11 @@ public:
 
 		if (!m_Scene)
 			return;
+		if (reload)
+		{
+			reload = false;
+			m_Shader->Load();	
+		}
 
 		m_FrameBuffer->Bind();
 		Renderer::Begin(*m_Camera);
@@ -222,6 +231,8 @@ public:
 
 		ImGui::Begin("Scene##");
 		{
+			if (ImGui::Button("Reload"))
+				reload = true;
 			////////// ACTORS
 			if (ImGui::TreeNodeEx("Actors##", ImGuiTreeNodeFlags_DefaultOpen))
 			{

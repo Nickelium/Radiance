@@ -6,18 +6,15 @@ namespace Radiance
 {
 	class GLShader : public Shader
 	{
-		enum class ShaderType
-		{
-			VERTEX = 0,
-			FRAGMENT,
-			NONE
-		};
-
 		using Location = int;
 		using MapLocation = std::unordered_map<std::string, Location>;
 	public:
-		GLShader(const std::string& _vertexSource, const std::string& _fragmentSource);
+		GLShader(const std::string& _vertexFile, const std::string& _fragmentFile);
 		virtual ~GLShader();
+
+		virtual const ShaderComponents& GetShaderComponents() const override;
+
+		virtual void Load() override;
 
 		virtual void Bind() const override;
 		virtual void UnBind() const override;
@@ -33,16 +30,18 @@ namespace Radiance
 		virtual void SetUniform(const std::string& _name, const glm::mat4& _val) override;
 
 	private:
-		Handle CreateShader(const std::string& _source, ShaderType _type);
-		Handle CreateProgram(unsigned int _vertexID, unsigned int _fragmentID);
-
+		ShaderComponent CompileShader(const std::string& _source, ShaderType _type);
+		Handle LinkShaders(const ShaderComponents& _shaderComponents);
+		
 		void QueryUniforms();
 
 		Location GetLocation(const std::string& _name) const;
 		
 		mutable MapLocation m_MapLocation;
-		Handle m_Handle;
 
 		static const Location s_InvalidLocation = -1;
+
+		ShaderComponents m_ShaderComponents;
+		Handle m_Handle;
 	};
 }

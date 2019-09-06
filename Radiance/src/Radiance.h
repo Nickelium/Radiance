@@ -41,8 +41,6 @@
 
 #include "Radiance/Resources/ResourceLibrary.h"
 
-#include "Radiance/Utility/Utility.h"
-
 // Vendor
 #include <glm/glm.hpp>
 #include <imgui.h>

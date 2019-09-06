@@ -34,10 +34,15 @@ namespace Radiance
 	void Application::Run()
 	{
 		Timer timer;
+		ResourceLibrary* resLib = Locator::Get<ResourceLibrary>();
+		RAD_CORE_ASSERT(resLib, "Resource Library Service is nullptr");
+
 		while (m_Running)
 		{
 			timer.Update();
 			DataTime ts = timer.GetTimeStep();
+
+			resLib->Update();
 
 			Update(ts);
 			Render();

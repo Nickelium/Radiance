@@ -1,17 +1,20 @@
 #include "pch.h"
 
 #include "GLShader.h"
-
 #include <glad/glad.h>
+
+#include "Radiance/Utility/Utility.h"
 
 namespace Radiance
 {
-	GLShader::GLShader(const std::string& _vertexSource, const std::string& _fragmentSource)
+	GLShader::GLShader(const std::string& _vertexFile, const std::string& _fragmentFile)
 	{
-		Handle vertexShader = CreateShader(_vertexSource, ShaderType::VERTEX);
-		Handle fragmentShader = CreateShader(_fragmentSource, ShaderType::FRAGMENT);
+		ShaderComponent vertexShader = CompileShader(_vertexFile, ShaderType::VERTEX);
+		m_ShaderComponents.push_back(vertexShader);
+		ShaderComponent fragmentShader = CompileShader(_fragmentFile, ShaderType::FRAGMENT);
+		m_ShaderComponents.push_back(fragmentShader);
 
-		m_Handle = CreateProgram(vertexShader, fragmentShader);
+		m_Handle = LinkShaders(m_ShaderComponents);
 
 		QueryUniforms();
 	}
@@ -19,6 +22,25 @@ namespace Radiance
 	GLShader::~GLShader()
 	{
 		glDeleteProgram(m_Handle);
+	}
+
+	const ShaderComponents& GLShader::GetShaderComponents() const
+	{
+		return m_ShaderComponents;
+	}
+
+	void GLShader::Load()
+	{
+		glDeleteProgram(m_Handle);
+		for (ShaderComponent& shaderComp : m_ShaderComponents)
+		{
+			ShaderComponent updatesShComp = CompileShader(shaderComp.fileName, shaderComp.type);
+			if (updatesShComp.handle != 0)
+				shaderComp = updatesShComp;
+		}
+		m_Handle = LinkShaders(m_ShaderComponents);
+		QueryUniforms();
+
 	}
 
 	void GLShader::Bind() const
@@ -100,9 +122,10 @@ namespace Radiance
 		glProgramUniformMatrix4fv(m_Handle, location, 1, false, &_val[0][0]);
 	}
 
-	Handle GLShader::CreateShader(const std::string& _source, ShaderType _type)
+	ShaderComponent GLShader::CompileShader(const std::string& _source, ShaderType _type)
 	{
 		// Create an empty shader handle
+
 		Handle shaderHandle = 0;
 		switch (_type)
 		{
@@ -113,8 +136,9 @@ namespace Radiance
 
 		// Send the shader source code to GL
 		// Note that std::string's .c_str is NULL character terminated.
-		const GLchar *source = _source.c_str();
-		glShaderSource(shaderHandle, 1, &source, 0);
+		std::string source = ReadFile(_source);
+		const char* source_c = source.c_str();
+		glShaderSource(shaderHandle, 1, &source_c, 0);
 
 		// Compile the vertex shader
 		glCompileShader(shaderHandle);
@@ -141,14 +165,25 @@ namespace Radiance
 			}
 			
 			RAD_CORE_ERROR("  {0}", &infoLog[0]);
-			RAD_CORE_ASSERT(false, "Compilation Failure");
-			return 0;
+			//RAD_CORE_ASSERT(false, "Compilation Failure");
+
+			ShaderComponent shaderComponent;
+			shaderComponent.fileName = _source;
+			shaderComponent.type = _type;
+			shaderComponent.handle = 0;
+
+			return shaderComponent;
 		}
 
-		return shaderHandle;
+		ShaderComponent shaderComponent;
+		shaderComponent.fileName = _source;
+		shaderComponent.type = _type;
+		shaderComponent.handle = shaderHandle;
+
+		return shaderComponent;
 	}
 
-	Handle GLShader::CreateProgram(unsigned int _vertexID, unsigned int _fragmentID)
+	Handle GLShader::LinkShaders(const ShaderComponents& _shaderComponents)
 	{
 		// Vertex and fragment shaders are successfully compiled.
 		// Now time to link them together into a program.
@@ -156,8 +191,8 @@ namespace Radiance
 		Handle programHandle = glCreateProgram();
 
 		// Attach our shaders to our program
-		glAttachShader(programHandle, _vertexID);
-		glAttachShader(programHandle, _fragmentID);
+		for (const ShaderComponent& shaderComp : _shaderComponents)
+			glAttachShader(programHandle, shaderComp.handle);
 
 		// Link our program
 		glLinkProgram(programHandle);
@@ -178,8 +213,8 @@ namespace Radiance
 			// We don't need the program anymore.
 			glDeleteProgram(programHandle);
 			// Don't leak shaders either.
-			glDeleteShader(_vertexID);
-			glDeleteShader(_fragmentID);
+			for (const ShaderComponent& shaderComp : _shaderComponents)
+				glDeleteShader(shaderComp.handle);
 
 			RAD_CORE_ERROR("Program Linking Error:");
 			RAD_CORE_ERROR("  {0}", &infoLog[0]);
@@ -189,17 +224,17 @@ namespace Radiance
 
 		// Always detach shaders after a successful link.
 		// Might not want to detach shader to keep shader source to enable debug through nsight etc .. 
-		glDetachShader(programHandle, _vertexID);
-		glDetachShader(programHandle, _fragmentID);
 
-		glDeleteShader(_vertexID);
-		glDeleteShader(_fragmentID);
+		for (const ShaderComponent& shaderComp : _shaderComponents)
+			glDeleteShader(shaderComp.handle);
 
 		return programHandle;
 	}
 
 	void GLShader::QueryUniforms()
 	{
+		m_MapLocation.clear();
+
 		int nbUniforms;
 		glGetProgramiv(m_Handle, GL_ACTIVE_UNIFORMS, &nbUniforms);
 
