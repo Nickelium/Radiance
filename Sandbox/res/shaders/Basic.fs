@@ -19,16 +19,37 @@ void main()
 {
 	mat4 invV = inverse(V);
 	vec3 eye = invV[3].xyz;
-	vec3 viewVec = eye - v_Position;
+	vec3 viewVec = -normalize(v_Position - eye);
 
-	float ka = 0.02f;
-	vec3 ambient = ka * vec3(0.25f, 0.12f, 5.0f);
-	vec3 albedo = texture(u_Albedo, v_TexCoord).rgb;
+	float gamma = 2.2f;
+	vec3 albedo = pow(texture(u_Albedo, v_TexCoord).rgb, vec3(gamma));
+	
+	float ka = 0.25f;
+	vec3 ambient = ka * albedo;
+	
+	float radianceScalingLight = 3.25f;
+	vec3 lightRadiance = vec3(1.0f, 1.0f, 1.0f);
 	vec3 lightDir = normalize(vec3(0.0f, 0.0f, 1.0f));
-	vec3 brdf = vec3(1.0f, 1.0f, 1.0f) * invPi * 2.5f;
-	vec3 emittedRadiance = 1.0f * vec3(1.0f, 1.0f, 1.0f);
-	vec3 radiance = ambient + albedo * brdf * emittedRadiance * clamp(dot(lightDir, v_Normal), 0.5f, 1.0f);
+	
+	float kd = 0.85f;
+
+	vec3 brdfDiffuse = kd * albedo * invPi;
+	vec3 emittedRadiance = radianceScalingLight * lightRadiance;
+	
+	float nDotL = clamp(dot(lightDir, v_Normal), 0.5f, 1.0f);
+	
+	float ks = 1.0f - kd;
+	float exp = 25.0f;
+	vec3 halfVector = normalize(viewVec + lightDir);
+	vec3 brdfSpecular = ks * pow(clamp(dot(halfVector, v_Normal), 0.0f, 1.0f), exp) * lightRadiance;
+	
+	
+	vec3 radiance = ambient + 
+	brdfDiffuse * emittedRadiance * nDotL + 
+	brdfSpecular * emittedRadiance * nDotL;
 	
 	o_Color = vec4( radiance, 1.0f);
 	//o_Color = vec4(v_TexCoord, 0.0f, 1.0f);
+	//o_Color = vec4(viewVec, 1.0f);
+
 }
