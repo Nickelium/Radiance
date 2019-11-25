@@ -56,8 +56,11 @@ namespace Radiance
 						minTime = newTime;
 				}
 				long long lastTime = m_ShaderTimeMap[shaderPair.first].second;
-				if (lastTime != 0  && lastTime < minTime)
+				if (lastTime != 0 && lastTime < minTime)
+				{
+					std::lock_guard<std::mutex> lock_guard(m_Mutex);
 					m_DirtyShaders.push_back(shaderPair.second);
+				}
 				m_ShaderTimeMap[shaderPair.first].second = minTime;
 				
 			}

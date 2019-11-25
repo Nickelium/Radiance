@@ -16,6 +16,7 @@ namespace Radiance
 		virtual Texture2D* CreateTexture2D(const std::string& _filePath) const override;
 		virtual Texture2D* CreateTexture2D(int _width, int _height, FormatUsage _usage = FormatUsage::COLOR_BUFFER) const override;
 		virtual FrameBuffer* CreateFrameBuffer(int _width, int _height) const override;
+		virtual GPUTimer* CreateGPUTimer() const override;
 
 	};
 }

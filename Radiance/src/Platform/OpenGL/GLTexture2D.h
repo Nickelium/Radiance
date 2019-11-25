@@ -2,6 +2,8 @@
 
 #include "Radiance/Renderer/API/Texture2D.h"
 
+#include <glad/glad.h>
+
 namespace Radiance
 {
 	class GLTexture2D : public Texture2D
@@ -15,6 +17,8 @@ namespace Radiance
 		//Only meant for non filetexture, ex. for framebuffers
 		virtual void Resize(int _width, int _height) override;
 
+		virtual void SetData(void* _data, size_t _bytes) override;
+
 		virtual void Bind(int _slot = 0) override;
 		virtual void UnBind() override;
 
@@ -23,12 +27,19 @@ namespace Radiance
 
 		inline virtual Handle GetHandle() const { return m_Handle; }
 
-
 	private:
+		void SetInternals();
+
 		Handle m_Handle;
+
 		std::string m_FilePath;
-		unsigned char* m_Buffer;
 		int m_Width, m_Height, m_BPP;
+
+		//GPU Format
+		GLenum m_InternalFormat; 
+		//Texture format read from
+		GLenum m_DataFormat;
+		GLenum m_ElementType;
 
 		const FormatUsage m_FormatUsage;
 	};

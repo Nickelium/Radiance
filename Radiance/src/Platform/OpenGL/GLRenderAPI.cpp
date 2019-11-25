@@ -5,7 +5,6 @@
 
 namespace Radiance
 {
-
 	void GLRenderAPI::SetClearColor(const glm::vec4& _color)
 	{
 		glClearColor(_color.r, _color.g, _color.b, _color.a );
@@ -37,6 +36,11 @@ namespace Radiance
 		}
 		else
 			glDisable(GL_BLEND);
+	}
+
+	void GLRenderAPI::SetViewport(int _x, int _y, int _width, int _height)
+	{
+		glViewport(_x, _y, _width, _height);
 	}
 
 	void GLRenderAPI::DrawIndexed(VertexArray* _vertexArray)

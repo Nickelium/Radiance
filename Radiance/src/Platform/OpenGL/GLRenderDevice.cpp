@@ -6,9 +6,12 @@
 #include "GLShader.h"
 #include "GLTexture2D.h"
 #include "GLFrameBuffer.h"
+#include "GLGPUTimer.h"
+
+#include "GLRenderAPI.h"
 
 #include "Radiance/Renderer/API/RenderCommand.h"
-#include "GLRenderAPI.h"
+
 
 namespace Radiance
 {
@@ -49,6 +52,11 @@ namespace Radiance
 	FrameBuffer* GLRenderDevice::CreateFrameBuffer(int _width, int _height) const
 	{
 		return new GLFrameBuffer(_width, _height);
+	}
+
+	GPUTimer* GLRenderDevice::CreateGPUTimer() const
+	{
+		return new GLGPUTimer;
 	}
 
 }

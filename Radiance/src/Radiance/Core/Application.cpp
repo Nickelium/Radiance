@@ -5,17 +5,21 @@
 #include "Radiance/Renderer/API/RenderDevice.h"
 #include "Radiance/Resources/ResourceLibrary.h"
 
+#include "Radiance/Core/GPUTimer.h"
+
 namespace Radiance
 {
-	Application::Application()
-		: m_Running(true)
+	Application::Application(const std::string& _name, unsigned int _width, unsigned int _height)
+		: m_Running(true), m_Minimized(false)
 	{
 		RAD_CORE_INFO("Creating Engine Application");
-		m_Window = Window::Create({"Radiance Engine", 1600, 900});
+		m_Window = Window::Create({_name, _width, _height});
 		m_Window->SetEventCallback(BIND_FN(Application::RootOnEvent));
 
 		Locator::Set(RenderDevice::Create());
 		Locator::Set(new ResourceLibrary);
+
+		m_GPUTimer = Locator::Get<RenderDevice>()->CreateGPUTimer();
 
 		m_ImGuiLayer = new ImGuiLayer(this);
 		PushOverlay(m_ImGuiLayer);
@@ -29,6 +33,7 @@ namespace Radiance
 		RAD_CORE_INFO("Destroying Engine Application");
 		Locator::Destroy();
 		delete m_Window;
+		delete m_GPUTimer;
 	}
 
 	void Application::Run()
@@ -45,21 +50,28 @@ namespace Radiance
 			resLib->Update();
 
 			Update(ts);
+
 			Render();
+
+			m_GPUTimer->Update();
 			m_Window->Update();
 		}
 	}
 
 	void Application::Update(DataTime _time)
 	{
+		if (m_Minimized)
+			return;
+
 		for (Layer* layer : m_LayerStack)
 			layer->Update(_time);
 	}
 
 	void Application::Render()
 	{
-		for (Layer* layer : m_LayerStack)
-			layer->Render();
+		if(!m_Minimized)
+			for (Layer* layer : m_LayerStack)
+				layer->Render();
 
 		m_ImGuiLayer->Begin();
 		for (Layer* layer : m_LayerStack)
@@ -72,6 +84,7 @@ namespace Radiance
 		EventDispatcher dispatcher(_event);
 	
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_FN(Application::OnWindowResize));
 
 		OnEvent(_event);
 	
@@ -84,10 +97,19 @@ namespace Radiance
 		}
 	}
 
-	bool Application::OnWindowClose(Event& /*_event*/)
+	bool Application::OnWindowClose(WindowCloseEvent& /*_event*/)
 	{
 		CloseWindow();
 		return true;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& _event)
+	{
+		if (_event.GetWidth() == 0 || _event.GetHeight() == 0)
+			m_Minimized = true;
+		else m_Minimized = false;
+
+		return false;
 	}
 
 	void Application::CloseWindow()

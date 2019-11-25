@@ -7,3 +7,5 @@
 //#define GPU_AMD
 
 #define MEMORYLEAK_CHECK
+
+//#define SHOW_CONSOLE

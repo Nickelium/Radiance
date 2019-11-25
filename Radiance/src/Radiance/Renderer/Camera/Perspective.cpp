@@ -16,15 +16,21 @@ namespace Radiance
 		: m_AspectRatio(_aspectRatio), m_FovV(_fovV),
 		m_Near(_near), m_Far(_far)
 	{
-		m_ProjectionMatrix = glm::perspective(glm::radians(m_FovV), m_AspectRatio, m_Near, m_Far);
-		UpdateMatrices();
+		RebuildMatrices();
 	}
 
-	void Perspective::UpdateMatrices()
+	void Perspective::RebuildMatrices()
 	{
 		//NOTE: to map with [theta,phi] = [0,0] to front vector
-		float thetaRad = glm::radians(rot.x - 90.0f);
-		float phiRad = glm::radians(rot.y + 90.0f);
+		UpdateView();
+		UpdateProjection();
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+	}
+
+	void Perspective::UpdateView()
+	{
+		float thetaRad = glm::radians(m_Rotation.x - 90.0f);
+		float phiRad = glm::radians(m_Rotation.y + 90.0f);
 
 		m_Forward.x = sin(thetaRad) * cos(phiRad);
 		m_Forward.y = cos(thetaRad);
@@ -32,8 +38,12 @@ namespace Radiance
 
 		m_Right = glm::normalize(glm::cross(m_Forward, m_Up));
 
-		m_ViewMatrix = glm::lookAt(position, position + m_Forward, m_Up);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_ViewMatrix = glm::lookAt(m_Position, m_Position+ m_Forward, m_Up);
+	}
+
+	void Perspective::UpdateProjection()
+	{
+		m_ProjectionMatrix = glm::perspective(glm::radians(m_FovV), m_AspectRatio, m_Near, m_Far);
 	}
 
 }

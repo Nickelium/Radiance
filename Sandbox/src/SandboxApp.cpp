@@ -1,4 +1,5 @@
 #include <Radiance.h>
+#include <Radiance/EntryPoint.h>
 
 
 static void ImGuiShowHelpMarker(const char* desc)
@@ -19,20 +20,15 @@ class ExampleLayer : public Radiance::Layer
 {
 	Radiance::FrameBuffer* m_FrameBuffer;
 
-	//TODO abstract this away from Sandbox
-
-	bool reload = false;
-	Radiance::Actor* m_Actor1;
-
-	Radiance::Shader* m_Shader;
-
-	Radiance::MeshRender* m_MeshRender1;
-
-	Radiance::Camera* m_Camera;
+	Radiance::PerspectiveController m_CameraController;
 
 	Radiance::DataTime m_Time;
 
 	ImGuiTextFilter m_Filter;
+
+	std::vector<Radiance::ProfileResult> m_ProfileResults;
+	std::vector<Radiance::ProfileResult> m_ProfileDisplayResults;
+
 public:
 	void DrawLog(const char* title, bool* p_opened = NULL)
 	{
@@ -76,77 +72,81 @@ public:
 
 	ExampleLayer(Radiance::Application* _application)
 		: Layer(_application, new Radiance::Scene), 
-		m_Camera(new Radiance::FlyPerspective),
+		m_CameraController(),
 		m_Time()
 	{
 		using namespace Radiance;
 		RenderDevice* renderDevice = Locator::Get<RenderDevice>();
 		ResourceLibrary* resourceLib = Locator::Get<ResourceLibrary>();
-
-		m_FrameBuffer = renderDevice->CreateFrameBuffer(1000, 1000);
-
-		Shader* shader1 = resourceLib->LoadShader("Basic1",
+		
+		m_FrameBuffer = renderDevice->CreateFrameBuffer(1, 1);
+		
+		Shader* shader = resourceLib->LoadShader("Basic1",
 			"res/shaders/Basic.vs", "res/shaders/Basic.fs");
-		m_Shader = shader1;
 
-		Material* material1 = new Material(shader1);
+		Material* material1 = new Material(shader);
 
-		m_MeshRender1 = new MeshRender(resourceLib->LoadMesh("cerberus", "res/meshes/cerberus.fbx"), material1);
-		m_Actor1 = new Actor("Cerberus");
-		m_Actor1->GetComponent<TransformComponent>()->m_Transform.position
+		MeshRender* meshRender = new MeshRender(resourceLib->LoadMesh("cerberus", "res/meshes/cerberus.fbx"), material1);
+		Actor* actor = new Actor("Cerberus");
+
+		actor->GetComponent<TransformComponent>()->m_Transform.position
 			= glm::vec3(-40.0f, 0.0f, -100.0f);
-		m_Actor1->GetComponent<TransformComponent>()->m_Transform.rotation
+		actor->GetComponent<TransformComponent>()->m_Transform.rotation
 			= glm::vec3(-90.0f, 0.0f, 90.0f);
-		m_Actor1->AddComponent(new MeshComponent(m_Actor1, m_MeshRender1));
-		m_Scene->Add(m_Actor1);
+		actor->AddComponent(new MeshComponent(actor, meshRender));
+		m_Scene->Add(actor);
 		Texture2D* albedo = resourceLib->LoadTexture2D("Cerberus_Albedo", "res/textures/cerberus/cerberus_A.png");
 		material1->SetUniform("u_Albedo", albedo, 0);
 
-		m_Camera->position = { 0.0f, 0.0f, 0.0f};
+		m_CameraController.SetPosition({ 0.0f, 0.0f, 0.0f});
+
+		RenderCommand::SetClearColor({ 192 / 255.0f, 216 / 255.0f, 235 / 255.0f, 1.0f });
 	}
 
 	virtual ~ExampleLayer()
 	{
-		delete m_Camera;
-
 		delete m_FrameBuffer;
 	}
 
 	virtual void Update(Radiance::DataTime _time)
 	{
 		using namespace Radiance;
+		CPUPROFILE_SCOPE(Update);
 		m_Time = _time;
-		m_Camera->Update(_time);
+		m_CameraController.Update(_time);
 	}
 
 	virtual void Render() override
 	{
 		using namespace Radiance;
 
-		RenderCommand::SetClearColor({ 192 / 255.0f, 216 / 255.0f, 235 / 255.0f, 1.0f });
+		CPUPROFILE_SCOPE(Render);
 
 		if (!m_Scene)
 			return;
-		if (reload)
-		{
-			reload = false;
-			m_Shader->Load();	
-		}
-
 		m_FrameBuffer->Bind();
-		Renderer::Begin(*m_Camera);
+		
 		{
-			RenderCommand::Clear();
-			for (auto actor : m_Scene->GetActors())
+			CPUPROFILE_BEGIN(RenderFrame);
+			GPUPROFILE_BEGIN(RenderFrameGPU);
+			Renderer::Begin(m_CameraController.GetCamera());
 			{
-				auto meshComp = actor->GetComponent<MeshComponent>();
-				if (meshComp)
+				RenderCommand::Clear();
+
+				for (auto actor : m_Scene->GetActors())
 				{
-					TransformComponent* transformComp = actor->GetComponent<TransformComponent>();
-					Renderer::Submit(meshComp->GetMesh(), transformComp->GetMatrix());
+					auto meshComp = actor->GetComponent<MeshComponent>();
+					if (meshComp)
+					{
+						TransformComponent* transformComp = actor->GetComponent<TransformComponent>();
+						Renderer::Submit(meshComp->GetMesh(), transformComp->GetMatrix());
+					}
 				}
 			}
+			GPUPROFILE_END(RenderFrameGPU);
+			CPUPROFILE_END(RenderFrame);
 		}
+		
 		Renderer::End();
 		m_FrameBuffer->UnBind();
 	}
@@ -154,6 +154,8 @@ public:
 	virtual void RenderGUI() override
 	{
 		using namespace Radiance;
+
+		CPUPROFILE_SCOPE(RenderUI);
 	
 		static bool p_open = true;
 
@@ -231,8 +233,6 @@ public:
 
 		ImGui::Begin("Scene##");
 		{
-			if (ImGui::Button("Reload"))
-				reload = true;
 			////////// ACTORS
 			if (ImGui::TreeNodeEx("Actors##", ImGuiTreeNodeFlags_DefaultOpen))
 			{
@@ -271,8 +271,12 @@ public:
 			if(ImGui::TreeNodeEx("Camera##", ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::Columns(2);
-				ImGui::Property("Position", m_Camera->position, -50, 50);
-				ImGui::Property("Theta/Phi", m_Camera->rot, -180, 180);
+				glm::vec3 pos = m_CameraController.GetPosition();
+				if (ImGui::Property("Position", pos, -50, 50))
+					m_CameraController.SetPosition(pos);
+				glm::vec2 rot = m_CameraController.GetRotation();
+				if (ImGui::Property("Theta/Phi", rot, -180, 180))
+					m_CameraController.SetRotation(rot);
 				ImGui::Columns();
 
 				ImGui::TreePop();
@@ -283,6 +287,7 @@ public:
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
 		auto viewportSize = ImGui::GetContentRegionAvail();
+		m_CameraController.SetAspectRatio(viewportSize.x / viewportSize.y);
 		m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
 		ImGui::Image((void*)(uintptr_t)m_FrameBuffer->GetColorAttachment()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
@@ -310,6 +315,23 @@ public:
 			ImGui::EndMenuBar();
 		}
 
+		ImGui::Begin("Profiling");
+		static float currentTotalTime = 0.0f;
+		if (abs(currentTotalTime - m_Time.total) > 1.0f)
+		{
+			currentTotalTime = m_Time.total;
+			m_ProfileDisplayResults = m_ProfileResults;
+		}
+		for (auto& result : m_ProfileDisplayResults)
+		{
+			char label[50];
+			strcpy_s(label, "%.3f ms ");
+			strcat_s(label, result.name);
+			ImGui::Text(label, result.time * 1e3f);
+		}
+		m_ProfileResults.clear();
+		ImGui::End();
+
 		ImGui::End();
 
 	}
@@ -329,6 +351,7 @@ class SandboxApplication : public Radiance::Application
 {
 public:
 	SandboxApplication()
+		: Application("Radiance Engine", 1600, 900)
 	{
 		using namespace Radiance;
 		RAD_INFO("Creating Sandbox Application");

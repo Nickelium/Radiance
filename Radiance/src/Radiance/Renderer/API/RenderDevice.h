@@ -15,6 +15,8 @@ namespace Radiance
 	class IndexBuffer;
 	class Shader;
 	class FrameBuffer;
+	class GPUTimer;
+
 	class RenderDevice : public Service
 	{
 	public:
@@ -30,6 +32,8 @@ namespace Radiance
 		virtual Texture2D* CreateTexture2D(int _width, int _height, FormatUsage _usage = FormatUsage::COLOR_BUFFER) const = 0;
 
 		virtual FrameBuffer* CreateFrameBuffer(int _width, int _height) const = 0;
+
+		virtual GPUTimer* CreateGPUTimer() const = 0;
 
 		static RenderDevice* Create();
 

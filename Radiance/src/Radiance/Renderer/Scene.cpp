@@ -3,7 +3,6 @@
 
 namespace Radiance
 {
-
 	Scene::~Scene()
 	{
 		for (Actor* actor : m_Actors)

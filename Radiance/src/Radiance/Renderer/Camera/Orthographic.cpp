@@ -18,15 +18,21 @@ namespace Radiance
 		m_BottomSide(_bottom), m_TopSide(_top),
 		m_Near(_near), m_Far(_far)
 	{
-		m_ProjectionMatrix = glm::ortho(_left, _right, _bottom, _top, _near, _far);
-		UpdateMatrices();
+		RebuildMatrices();
 	}
 
-	void Orthographic::UpdateMatrices()
+	void Orthographic::RebuildMatrices()
+	{
+		UpdateView();
+		UpdateProjection();
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+	}
+
+	void Orthographic::UpdateView()
 	{
 		//NOTE: to map with [theta,phi] = [0,0] to front vector
-		float thetaRad = glm::radians(rot.x - 90.0f);
-		float phiRad = glm::radians(rot.y + 90.0f);
+		float thetaRad = glm::radians(m_Rotation.x - 90.0f);
+		float phiRad = glm::radians(m_Rotation.y + 90.0f);
 
 		m_Forward.x = sin(thetaRad) * cos(phiRad);
 		m_Forward.y = cos(thetaRad);
@@ -34,8 +40,11 @@ namespace Radiance
 
 		m_Right = glm::normalize(glm::cross(m_Forward, m_Up));
 
-		m_ViewMatrix = glm::lookAt(position, position + m_Forward, m_Up);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Forward, m_Up);
 	}
 
+	void Orthographic::UpdateProjection()
+	{
+		m_ProjectionMatrix = glm::ortho(m_LeftSide, m_RightSide, m_BottomSide, m_TopSide, m_Near, m_Far);
+	}
 }

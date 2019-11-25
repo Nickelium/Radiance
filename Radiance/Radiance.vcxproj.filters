@@ -78,18 +78,6 @@
     <ClInclude Include="src\Platform\OpenGL\GLTexture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Radiance\Components\Actor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Components\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Components\TransformComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Components\MeshComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Radiance\Renderer\API\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -121,9 +109,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Radiance\Renderer\Camera\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\Camera\Orthographic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Radiance\Renderer\Camera\Perspective.h">
@@ -192,13 +177,34 @@
     <ClInclude Include="src\Radiance\Resources\MeshLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\Camera\FlyPerspective.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Radiance\Renderer\Camera\FlyOrthographic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Radiance\Resources\ShaderLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Components\Actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Components\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Components\MeshComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Components\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Camera\Orthographic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Camera\PerspectiveController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Renderer\Camera\OrthographicController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Radiance\Core\GPUTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\GLGPUTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -242,15 +248,6 @@
     <ClCompile Include="src\Platform\OpenGL\GLTexture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Radiance\Components\Actor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Radiance\Components\TransformComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Radiance\Components\MeshComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Radiance\Renderer\API\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -267,9 +264,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Radiance\Renderer\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\Camera\Orthographic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Radiance\Renderer\Camera\Perspective.cpp">
@@ -317,13 +311,28 @@
     <ClCompile Include="src\Radiance\Resources\MeshLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\Camera\FlyPerspective.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Radiance\Renderer\Camera\FlyOrthographic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Radiance\Resources\ShaderLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Components\Actor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Components\MeshComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Components\TransformComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Camera\Orthographic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Camera\PerspectiveController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Radiance\Renderer\Camera\OrthographicController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\GLGPUTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
