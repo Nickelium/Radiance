@@ -26,6 +26,11 @@ namespace Radiance
 			s_RenderAPI->EnableBlend(_enable);
 		}
 
+		inline static void SetViewport(int _x, int _y, int _width, int _height)
+		{
+			s_RenderAPI->SetViewport(_x, _y, _width, _height);
+		}
+
 		inline static void DrawIndexed(VertexArray* _vertexArray)
 		{
 			s_RenderAPI->DrawIndexed(_vertexArray);

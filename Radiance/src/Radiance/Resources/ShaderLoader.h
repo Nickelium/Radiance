@@ -22,7 +22,7 @@ namespace Radiance
 		std::vector<Shader*> m_DirtyShaders;
 
 		ResourceLibrary& m_ResourceLibrary;
-		bool m_RequestScan = true;
+		std::atomic<bool> m_RequestScan = true;
 
 		std::thread m_ScanThread;
 		std::mutex m_Mutex;

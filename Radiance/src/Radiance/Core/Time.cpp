@@ -11,14 +11,14 @@ namespace Radiance
 
 	void Timer::Start()
 	{
-		m_Start = std::chrono::high_resolution_clock::now();
+		m_Start = Timer::Now();
 		m_Current = m_Start = m_Last;
 	}
 
 	void Timer::Update()
 	{
-		m_Current = Now();
-		m_Dt = std::min(m_MaxDt, Difference(m_Current, m_Last));
+		m_Current = Timer::Now();
+		m_Dt = std::min(m_MaxDt, Timer::Difference(m_Current, m_Last));
 		m_Last = m_Current;
 	}
 

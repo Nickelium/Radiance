@@ -12,74 +12,86 @@ namespace ImGui
 		PopStyleColor();
 	}
 
-	void Property(const std::string& name, bool& value)
+	bool Property(const std::string& name, bool& value)
 	{
 		ImGui::Text(name.c_str());
 		ImGui::NextColumn();
 		ImGui::PushItemWidth(-1);
 
 		std::string id = "##" + name;
-		ImGui::Checkbox(id.c_str(), &value);
+		bool ret = ImGui::Checkbox(id.c_str(), &value);
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
+
+		return ret;
 	}
 
-	void Property(const std::string& name, float& value, float min, float max, PropertyFlag /*flags*/)
+	bool Property(const std::string& name, float& value, float min, float max, PropertyFlag /*flags*/)
 	{
 		ImGui::Text(name.c_str());
 		ImGui::NextColumn();
 		ImGui::PushItemWidth(-1);
 
 		std::string id = "##" + name;
-		ImGui::SliderFloat(id.c_str(), &value, min, max, "%.2f");
+		bool ret = ImGui::SliderFloat(id.c_str(), &value, min, max, "%.2f");
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
+
+		return ret;
 	}
 
-	void Property(const std::string& name, glm::vec2& value, float min, float max, PropertyFlag /*flags*/)
+	bool Property(const std::string& name, glm::vec2& value, float min, float max, PropertyFlag /*flags*/)
 	{
 		ImGui::Text(name.c_str());
 		ImGui::NextColumn();
 		ImGui::PushItemWidth(-1);
 
 		std::string id = "##" + name;
-		ImGui::SliderFloat2(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
+		bool ret = ImGui::SliderFloat2(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
+
+		return ret;
 	}
 
-	void Property(const std::string& name, glm::vec3& value, float min, float max, PropertyFlag flags)
+	bool Property(const std::string& name, glm::vec3& value, float min, float max, PropertyFlag flags)
 	{
 		ImGui::Text(name.c_str());
 		ImGui::NextColumn();
 		ImGui::PushItemWidth(-1);
 
+		bool ret;
 		std::string id = "##" + name;
 		if ((int)flags & (int)PropertyFlag::ColorProperty)
-			ImGui::ColorEdit3(id.c_str(), glm::value_ptr(value), ImGuiColorEditFlags_NoInputs);
+			ret = ImGui::ColorEdit3(id.c_str(), glm::value_ptr(value), ImGuiColorEditFlags_NoInputs);
 		else
-			ImGui::SliderFloat3(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
+			ret = ImGui::SliderFloat3(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
+
+		return ret;
 	}
 
-	void Property(const std::string& name, glm::vec4& value, float min, float max, PropertyFlag flags)
+	bool Property(const std::string& name, glm::vec4& value, float min, float max, PropertyFlag flags)
 	{
 		ImGui::Text(name.c_str());
 		ImGui::NextColumn();
 		ImGui::PushItemWidth(-1);
 
+		bool ret;
 		std::string id = "##" + name;
 		if ((int)flags & (int)PropertyFlag::ColorProperty)
-			ImGui::ColorEdit4(id.c_str(), glm::value_ptr(value), ImGuiColorEditFlags_NoInputs);
+			ret = ImGui::ColorEdit4(id.c_str(), glm::value_ptr(value), ImGuiColorEditFlags_NoInputs);
 		else
-			ImGui::SliderFloat4(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
+			ret = ImGui::SliderFloat4(id.c_str(), glm::value_ptr(value), min, max, "%.2f");
 
 		ImGui::PopItemWidth();
 		ImGui::NextColumn();
+
+		return ret;
 	}
 }

@@ -5,8 +5,6 @@
 #include "MeshLoader.h"
 #include "ShaderLoader.h"
 
-#define RESOURCELIB ResourceLibrary
-
 namespace Radiance
 {
 	class Shader;

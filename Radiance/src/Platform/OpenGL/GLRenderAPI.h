@@ -11,6 +11,7 @@ namespace Radiance
 		virtual void Clear() override;
 		virtual void EnableDepth(bool _enable) override;
 		virtual void EnableBlend(bool _enable) override;
+		virtual void SetViewport(int _x, int _y, int _width, int _height) override;
 		virtual void DrawIndexed(VertexArray* _vertexArray) override;
 
 	private:

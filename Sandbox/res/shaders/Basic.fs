@@ -12,14 +12,14 @@ uniform mat4 M;
 uniform mat4 V;
 uniform mat4 P;
 
+uniform vec3 CameraPos;
+
 const float pi = 3.1415926535897932384626433832795f;
 const float invPi = 0.31830988618379067153776752674503f;
 
 void main()
 {
-	mat4 invV = inverse(V);
-	vec3 eye = invV[3].xyz;
-	vec3 viewVec = -normalize(v_Position - eye);
+	vec3 viewVec = normalize(CameraPos - v_Position);
 
 	float gamma = 2.2f;
 	vec3 albedo = pow(texture(u_Albedo, v_TexCoord).rgb, vec3(gamma));

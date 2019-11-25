@@ -12,6 +12,7 @@ namespace Radiance
 		s_SceneData.View = _camera.GetViewMatrix();
 		s_SceneData.Projection = _camera.GetProjectionMatrix();
 		s_SceneData.ViewProjection = _camera.GetViewProjectionMatrix();
+		s_SceneData.CameraPos = _camera.GetPosition();
 	}
 
 	void Renderer::End()
@@ -31,6 +32,7 @@ namespace Radiance
 	{
 		_shader->SetUniform("V", s_SceneData.View);
 		_shader->SetUniform("P", s_SceneData.Projection);
+		_shader->SetUniform("CameraPos", s_SceneData.CameraPos);
 		//_shader->SetUniform("VP", s_SceneData.ViewProjection);
 	}
 }

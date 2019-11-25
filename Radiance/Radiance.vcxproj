@@ -19,6 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\GLGPUTimer.h" />
+    <ClInclude Include="src\Radiance\Components\Actor.h" />
+    <ClInclude Include="src\Radiance\Components\Component.h" />
+    <ClInclude Include="src\Radiance\Components\MeshComponent.h" />
+    <ClInclude Include="src\Radiance\Components\TransformComponent.h" />
+    <ClInclude Include="src\Radiance\Core\GPUTimer.h" />
     <ClInclude Include="src\Radiance\Defines.h" />
     <ClInclude Include="src\Platform\OpenGL\GLFrameBuffer.h" />
     <ClInclude Include="src\Radiance\Core\Locator.h" />
@@ -32,10 +38,6 @@
     <ClInclude Include="src\Platform\OpenGL\GLShader.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
-    <ClInclude Include="src\Radiance\Components\Actor.h" />
-    <ClInclude Include="src\Radiance\Components\Component.h" />
-    <ClInclude Include="src\Radiance\Components\MeshComponent.h" />
-    <ClInclude Include="src\Radiance\Components\TransformComponent.h" />
     <ClInclude Include="src\Radiance\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Radiance\Events\Event.h" />
     <ClInclude Include="src\Radiance\Events\KeyEvent.h" />
@@ -58,8 +60,8 @@
     <ClInclude Include="src\Radiance\Renderer\API\FrameBuffer.h" />
     <ClInclude Include="src\Radiance\Renderer\API\GraphicsContext.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Camera.h" />
-    <ClInclude Include="src\Radiance\Renderer\Camera\FlyPerspective.h" />
-    <ClInclude Include="src\Radiance\Renderer\Camera\FlyOrthographic.h" />
+    <ClInclude Include="src\Radiance\Renderer\Camera\PerspectiveController.h" />
+    <ClInclude Include="src\Radiance\Renderer\Camera\OrthographicController.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Orthographic.h" />
     <ClInclude Include="src\Radiance\Renderer\Camera\Perspective.h" />
     <ClInclude Include="src\Radiance\Renderer\Material.h" />
@@ -101,6 +103,7 @@
     <ClCompile Include="src\Radiance\Components\Actor.cpp" />
     <ClCompile Include="src\Radiance\Components\MeshComponent.cpp" />
     <ClCompile Include="src\Radiance\Components\TransformComponent.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\GLGPUTimer.cpp" />
     <ClCompile Include="src\Radiance\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Radiance\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Radiance\Core\Layer.cpp" />
@@ -111,8 +114,8 @@
     <ClCompile Include="src\Radiance\ImGui\ImGuiUtilities.cpp" />
     <ClCompile Include="src\Radiance\Prefab\Prefab.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\Buffer.cpp" />
-    <ClCompile Include="src\Radiance\Renderer\Camera\FlyPerspective.cpp" />
-    <ClCompile Include="src\Radiance\Renderer\Camera\FlyOrthographic.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Camera\PerspectiveController.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\Camera\OrthographicController.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\Orthographic.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\Perspective.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Mesh.cpp" />

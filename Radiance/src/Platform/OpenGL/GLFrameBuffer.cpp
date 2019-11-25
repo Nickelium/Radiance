@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GLFrameBuffer.h"
 
+#include "Radiance/Renderer/API/RenderCommand.h"
+
 #include "Radiance/Renderer/API/RenderDevice.h"
 #include <glad/glad.h>
 
@@ -45,13 +47,13 @@ namespace Radiance
 
 		m_ColorAttachment->Resize(m_Width, m_Height);
 		m_DepthAttachment->Resize(m_Width, m_Height);
+
+		RenderCommand::SetViewport(0, 0, m_Width, m_Height);
 	}
 
 	void GLFrameBuffer::Bind() const
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_Handle);
-		//Currently hard coded origin
-		glViewport(0, 0, m_Width, m_Height);
 	}
 
 	void GLFrameBuffer::UnBind() const

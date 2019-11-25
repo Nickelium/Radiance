@@ -71,6 +71,9 @@ namespace Radiance
 		m_Context = new GLContext(m_Window);
 		m_Context->Init();
 		
+		// tell GLFW to show our mouse
+		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 	
