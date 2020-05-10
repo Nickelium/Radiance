@@ -345,3 +345,6 @@ ASALocalRun/
 
 !vendor/assimp/lib/x64/[Dd]ebug/
 !vendor/assimp/lib/x64/[Rr]elease/
+
+!vendor/GLFW/**
+vendor/GLFW/docs/**
