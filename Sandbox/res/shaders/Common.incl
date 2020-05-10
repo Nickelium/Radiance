@@ -1,0 +1,9 @@
+#include "res/shaders/Constant.incl"
+
+uniform mat4 M;
+uniform mat4 V;
+uniform mat4 P;
+
+uniform mat4 MVP;
+
+uniform vec3 camPos;

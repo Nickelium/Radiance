@@ -35,6 +35,8 @@ namespace Radiance
 			return m_ShaderMap[_name];
 
 		auto renderDevice = Locator::Get<RenderDevice>();
+		//Shader Parser Preprocess
+		//Then call renderdevice to create shader
 		return m_ShaderMap[_name] = renderDevice->CreateShader(_vertexSource, _fragmentSource);
 	}
 

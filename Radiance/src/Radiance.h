@@ -41,6 +41,11 @@
 
 #include "Radiance/Resources/ResourceLibrary.h"
 
+#include "Radiance/Renderer/API/RenderDevice.h"
+#include "Radiance/Renderer/API/DeviceContext.h"
+
+#include "Radiance/Renderer/API/DeviceFactory.h"
+
 // Vendor
 #include <glm/glm.hpp>
 #include <imgui.h>

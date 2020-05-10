@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "Application.h"
 
-#include "Radiance/Renderer/API/RenderCommand.h"
+#include "Radiance/Renderer/API/DeviceFactory.h"
 #include "Radiance/Renderer/API/RenderDevice.h"
+#include "Radiance/Renderer/API/DeviceContext.h"
 #include "Radiance/Resources/ResourceLibrary.h"
 
 #include "Radiance/Core/GPUTimer.h"
+
 
 namespace Radiance
 {
@@ -13,19 +15,23 @@ namespace Radiance
 		: m_Running(true), m_Minimized(false)
 	{
 		RAD_CORE_INFO("Creating Engine Application");
+
+		Locator::Set(DeviceFactory::Create());
+
 		m_Window = Window::Create({_name, _width, _height});
 		m_Window->SetEventCallback(BIND_FN(Application::RootOnEvent));
 
-		Locator::Set(RenderDevice::Create());
+		Locator::Set(Locator::Get<DeviceFactory>()->CreateRenderDevice());
+		Locator::Set(Locator::Get<DeviceFactory>()->CreateDeviceContext());
 		Locator::Set(new ResourceLibrary);
 
 		m_GPUTimer = Locator::Get<RenderDevice>()->CreateGPUTimer();
 
-		m_ImGuiLayer = new ImGuiLayer(this);
-		PushOverlay(m_ImGuiLayer);
+		/*m_ImGuiLayer = new ImGuiLayer(this);
+		PushOverlay(m_ImGuiLayer);*/
 
-		RenderCommand::EnableDepth(true);
-		RenderCommand::EnableBlend(true);
+		//Locator::Get<DeviceContext>()->EnableDepth(true);
+		//Locator::Get<DeviceContext>()->EnableBlend(true);
 	}
 
 	Application::~Application()
@@ -73,10 +79,13 @@ namespace Radiance
 			for (Layer* layer : m_LayerStack)
 				layer->Render();
 
-		m_ImGuiLayer->Begin();
-		for (Layer* layer : m_LayerStack)
-			layer->RenderGUI();
-		m_ImGuiLayer->End();
+		if (m_ImGuiLayer)
+		{
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : m_LayerStack)
+				layer->RenderGUI();
+			m_ImGuiLayer->End();
+		}
 	}
 
 	void Application::RootOnEvent(Event& _event)

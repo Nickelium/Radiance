@@ -86,7 +86,8 @@ public:
 
 		Material* material1 = new Material(shader);
 
-		MeshRender* meshRender = new MeshRender(resourceLib->LoadMesh("cerberus", "res/meshes/cerberus.fbx"), material1);
+		MeshRender* meshRender = new MeshRender(CreateSphere({20.0f, 64, 64}), material1);
+		//MeshRender* meshRender = new MeshRender(resourceLib->LoadMesh("CerberusMesh", "res/meshes/cerberus.fbx"), material1);
 		Actor* actor = new Actor("Cerberus");
 
 		actor->GetComponent<TransformComponent>()->m_Transform.position
@@ -95,12 +96,12 @@ public:
 			= glm::vec3(-90.0f, 0.0f, 90.0f);
 		actor->AddComponent(new MeshComponent(actor, meshRender));
 		m_Scene->Add(actor);
-		Texture2D* albedo = resourceLib->LoadTexture2D("Cerberus_Albedo", "res/textures/cerberus/cerberus_A.png");
+		Texture2D* albedo = resourceLib->LoadTexture2D("Cerberus_Albedo", "res/textures/user.png");
 		material1->SetUniform("u_Albedo", albedo, 0);
 
 		m_CameraController.SetPosition({ 0.0f, 0.0f, 0.0f});
 
-		RenderCommand::SetClearColor({ 192 / 255.0f, 216 / 255.0f, 235 / 255.0f, 1.0f });
+		Locator::Get<DeviceContext>()->SetClearColor({ 192 / 255.0f, 216 / 255.0f, 235 / 255.0f, 1.0f });
 	}
 
 	virtual ~ExampleLayer()
@@ -131,7 +132,7 @@ public:
 			GPUPROFILE_BEGIN(RenderFrameGPU);
 			Renderer::Begin(m_CameraController.GetCamera());
 			{
-				RenderCommand::Clear();
+				Locator::Get<DeviceContext>()->Clear();
 
 				for (auto actor : m_Scene->GetActors())
 				{
@@ -203,10 +204,10 @@ public:
 		//ImGui Displays reversed order
 		ImGui::Begin("GPU Manufacturer Info");
 		{
-			auto apiData = RenderAPI::GetAPI().data;
+			/*auto apiData = RenderContext::GetAPI().data;
 			ImGui::Text("Vendor: %s", apiData.vendor.c_str());
 			ImGui::Text("Renderer: %s", apiData.renderer.c_str());
-			ImGui::Text("Version: %s", apiData.version.c_str());
+			ImGui::Text("Version: %s", apiData.version.c_str());*/
 			static float currentTime;
 			static float currentFps;
 			if (abs(currentTime - m_Time.total) > 1.0f)
@@ -289,7 +290,7 @@ public:
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		m_CameraController.SetAspectRatio(viewportSize.x / viewportSize.y);
 		m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-		ImGui::Image((void*)(uintptr_t)m_FrameBuffer->GetColorAttachment()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
+		ImGui::Image((void*)(uintptr_t)m_FrameBuffer->GetRTBuffer()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 
@@ -356,6 +357,7 @@ public:
 		using namespace Radiance;
 		RAD_INFO("Creating Sandbox Application");
 		PushLayer(new ExampleLayer(this));
+		//GetWindow()->SetVSync(false);
 	}
 
 	virtual ~SandboxApplication()
@@ -376,7 +378,41 @@ public:
 private:
 };
 
+class WindowApplication : public Radiance::Application
+{
+public:
+	WindowApplication()
+		: Application("Radiance Engine", 1600, 900)
+	{
+		using namespace Radiance;
+		RAD_INFO("Creating Window Application");
+		//PushLayer(new ExampleLayer(this));
+		//GetWindow()->SetVSync(false);
+	}
+
+	virtual ~WindowApplication()
+	{
+		RAD_INFO("Destroying Window Application");
+	}
+
+	virtual void OnEvent(Radiance::Event& _event)
+	{
+		using namespace Radiance;
+		if (_event.GetEventType() == Radiance::EventType::KeyReleased)
+		{
+			KeyReleasedEvent& relEvent = (KeyReleasedEvent&)_event;
+			if (relEvent.GetKeyCode() == RAD_KEY_ESCAPE)
+				Application::CloseWindow();
+		}
+	}
+private:
+};
+
 Radiance::Application* CreateApplication()
 {
-	return new SandboxApplication;
+	// First set API before calling anything
+	Radiance::API = Radiance::RenderAPI::DX11;
+
+	//return new SandboxApplication;
+	return new WindowApplication;
 }

@@ -22,6 +22,7 @@
 #include <sstream>
 #include <algorithm>
 #include <map>
+#include <set>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -29,6 +30,9 @@
 #include <imgui.h>
 #include <glm/glm.hpp>
 
+#include "Radiance/Defines.h"
+
+//Engine
 #include "Radiance/Base.h"
 #include "Radiance/Core/Logger.h"
 #include "Radiance/Core/Time.h"
@@ -36,3 +40,6 @@
 #include "Radiance/KeyCodes.h"
 #include "Radiance/MouseButtonCodes.h"
 #include "Radiance/Core/Locator.h"
+
+//Maths
+#include "Radiance/Math/Constants.h"

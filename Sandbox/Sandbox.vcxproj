@@ -184,8 +184,8 @@
   <ItemGroup>
     <None Include="res\shaders\Basic.fs" />
     <None Include="res\shaders\Basic.vs" />
-    <None Include="res\shaders\Test.fs" />
-    <None Include="res\shaders\Test.vs" />
+    <None Include="res\shaders\Common.incl" />
+    <None Include="res\shaders\Constant.incl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

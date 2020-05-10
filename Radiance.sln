@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{E1260473-EED1-4BB0-8AFF-4CD5C8FA610A}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glad", "vendor\Glad\Glad.vcxproj", "{4BF0452C-4C28-471A-866B-9C6D4C269834}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "vendor\ImGui\ImGui.vcxproj", "{2A5A1A5B-3978-450F-8525-585811C22A18}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShaderInclude", "ShaderInclude\ShaderInclude.vcxproj", "{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,14 @@ Global
 		{2A5A1A5B-3978-450F-8525-585811C22A18}.Release|x64.Build.0 = Release|x64
 		{2A5A1A5B-3978-450F-8525-585811C22A18}.Release|x86.ActiveCfg = Release|Win32
 		{2A5A1A5B-3978-450F-8525-585811C22A18}.Release|x86.Build.0 = Release|Win32
+		{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}.Debug|x64.ActiveCfg = Debug|x64
+		{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}.Debug|x64.Build.0 = Debug|x64
+		{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}.Debug|x86.ActiveCfg = Debug|Win32
+		{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}.Debug|x86.Build.0 = Debug|Win32
+		{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}.Release|x64.ActiveCfg = Release|x64
+		{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}.Release|x64.Build.0 = Release|x64
+		{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}.Release|x86.ActiveCfg = Release|Win32
+		{DAAB3DC5-57C7-4EA4-860D-C915BF254EE9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,12 @@
 #pragma once
+#pragma warning(push)
+#pragma warning(disable:26495)
+#pragma warning(disable:26451)
+#pragma warning(disable:26498)
+#pragma warning(disable:6387)
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
+#pragma warning(pop)
 
 #include "Radiance/ImGui/ImGuiSink.h"
 
@@ -33,7 +39,7 @@ namespace Radiance
 
 #define IMGUILOGGER ::Radiance::Logger::GetInstance().GetSink()
 
-#if defined(DEBUG) || defined(_DEBUG)
+#ifdef RAD_DEBUG
 // Core log macros
 #define RAD_CORE_TRACE(...)    ::Radiance::Logger::GetInstance().GetCoreLogger()->trace(__VA_ARGS__)
 #define RAD_CORE_INFO(...)     ::Radiance::Logger::GetInstance().GetCoreLogger()->info(__VA_ARGS__)

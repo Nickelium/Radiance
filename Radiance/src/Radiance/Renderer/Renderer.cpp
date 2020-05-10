@@ -1,7 +1,11 @@
 #include "pch.h"
 #include "Renderer.h"
 
+#include "Radiance/Renderer/API/DeviceContext.h"
+#include "Radiance/Renderer/API/DeviceFactory.h"
 #include "API/Shader.h"
+
+Radiance::RenderAPI Radiance::API = Radiance::RenderAPI::NONE;
 
 namespace Radiance
 {
@@ -25,7 +29,7 @@ namespace Radiance
 		Shader* shader = _mesh->GetMaterial()->GetShader();
 		CommonUniformBinding(shader);
 		shader->SetUniform("M", _transform);
-		RenderCommand::DrawIndexed(_mesh->GetVertexArray());
+		Locator::Get<DeviceContext>()->DrawIndexed(_mesh->GetVertexArray());
 	}
 
 	void Renderer::CommonUniformBinding(Shader* _shader)

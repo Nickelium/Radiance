@@ -13,7 +13,7 @@ namespace Radiance
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 
-		virtual Texture2D* GetColorAttachment() const = 0;
-		virtual Texture2D* GetDepthAtttachment() const = 0;
+		virtual Texture2D* GetRTBuffer() const = 0;
+		virtual Texture2D* GetDepthBuffer() const = 0;
 	};
 }

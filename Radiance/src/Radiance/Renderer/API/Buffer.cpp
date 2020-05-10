@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Buffer.h"
 
-#include "Platform/OpenGL/GLBuffer.h"
+#include "Platform/API/OpenGL/GLBuffer.h"
 #include "Radiance/Renderer/Renderer.h"
 
 namespace Radiance

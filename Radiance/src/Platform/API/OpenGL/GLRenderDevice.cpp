@@ -1,0 +1,65 @@
+#include "pch.h"
+#include "GLRenderDevice.h"
+
+#include "GLVertexArray.h"
+#include "GLBuffer.h"
+#include "GLShader.h"
+#include "GLTexture.h"
+#include "GLFrameBuffer.h"
+#include "GLGPUTimer.h"
+
+#include "GLDeviceContext.h"
+
+namespace Radiance
+{		
+	VertexArray* GLRenderDevice::CreateVertexArray() const
+	{
+		return new GLVertexArray;
+	}
+
+	VertexBuffer* GLRenderDevice::CreateVertexBuffer(std::vector<float> _vertices) const
+	{
+		return new GLVertexBuffer(_vertices);
+	}
+
+	IndexBuffer* GLRenderDevice::CreateIndexBuffer(std::vector<uint32_t> _indices) const
+	{
+		return new GLIndexBuffer(_indices);
+	}
+
+	Shader* GLRenderDevice::CreateShader(const std::string& _vertexSource, const std::string& _fragmentSource) const
+	{
+		//Preprocess Includes
+		return new GLShader(_vertexSource, _fragmentSource);
+	}
+
+	Texture2D* GLRenderDevice::CreateTexture2D(const std::string& _filePath) const
+	{
+		return new GLTexture2D(_filePath);
+	}
+
+	Texture2D* GLRenderDevice::CreateTexture2D(int _width, int _height, FormatUsage _usage) const
+	{
+		return new GLTexture2D(_width, _height, _usage);
+	}
+
+	RenderTargetBuffer* GLRenderDevice::CreateRTBuffer(int /*_width*/, int /*_height*/) const
+	{
+		return nullptr;
+	}
+
+	DepthBuffer* GLRenderDevice::CreateDepthBuffer(int /*_width*/, int /*_height*/) const
+	{
+		return nullptr;
+	}
+
+	FrameBuffer* GLRenderDevice::CreateFrameBuffer(int _width, int _height) const
+	{
+		return new GLFrameBuffer(_width, _height);
+	}
+
+	GPUTimer* GLRenderDevice::CreateGPUTimer() const
+	{
+		return new GLGPUTimer;
+	}
+}

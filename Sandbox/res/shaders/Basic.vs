@@ -9,10 +9,7 @@ out vec3 v_Position;
 out vec3 v_Normal;
 out vec2 v_TexCoord;
 
-uniform mat4 M;
-uniform mat4 V;
-uniform mat4 P;
-
+#include "res/shaders/Common.incl"
 
 void main()
 {

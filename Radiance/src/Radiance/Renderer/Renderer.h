@@ -1,6 +1,5 @@
 #pragma once
 
-#include "API/RenderCommand.h"
 #include "API/Shader.h"
 #include "Material.h"
 #include "Camera/Camera.h"
@@ -15,8 +14,6 @@ namespace Radiance
 		static void End();
 
 		static void Submit(MeshRender* _mesh, const glm::mat4& _transform);
-
-		inline static RenderAPI::API& GetAPI() { return RenderAPI::GetAPI(); };
 	private:
 		static void CommonUniformBinding(Shader* _shader);
 

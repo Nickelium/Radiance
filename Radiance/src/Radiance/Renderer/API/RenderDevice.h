@@ -14,6 +14,8 @@ namespace Radiance
 	class VertexBuffer;
 	class IndexBuffer;
 	class Shader;
+	class RenderTargetBuffer;
+	class DepthBuffer;
 	class FrameBuffer;
 	class GPUTimer;
 
@@ -21,6 +23,8 @@ namespace Radiance
 	{
 	public:
 		virtual ~RenderDevice() = default;
+
+		virtual void Init() = 0;
 
 		virtual VertexArray* CreateVertexArray() const = 0;
 		virtual VertexBuffer* CreateVertexBuffer(std::vector<float> _vertices) const = 0;
@@ -31,11 +35,12 @@ namespace Radiance
 		virtual Texture2D* CreateTexture2D(const std::string& _filePath) const = 0;
 		virtual Texture2D* CreateTexture2D(int _width, int _height, FormatUsage _usage = FormatUsage::COLOR_BUFFER) const = 0;
 
+		virtual RenderTargetBuffer* CreateRTBuffer(int _width, int _height) const = 0;
+		virtual DepthBuffer* CreateDepthBuffer(int _width, int _height) const = 0;
+
 		virtual FrameBuffer* CreateFrameBuffer(int _width, int _height) const = 0;
 
 		virtual GPUTimer* CreateGPUTimer() const = 0;
-
-		static RenderDevice* Create();
 
 		SERVICE_CLASS(RenderDevice)
 	};

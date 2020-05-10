@@ -8,14 +8,10 @@ layout(location = 0) out vec4 o_Color;
 
 uniform sampler2D u_Albedo;
 
-uniform mat4 M;
-uniform mat4 V;
-uniform mat4 P;
+#include "res/shaders/Common.incl"
 
 uniform vec3 CameraPos;
 
-const float pi = 3.1415926535897932384626433832795f;
-const float invPi = 0.31830988618379067153776752674503f;
 
 void main()
 {
@@ -23,6 +19,7 @@ void main()
 
 	float gamma = 2.2f;
 	vec3 albedo = pow(texture(u_Albedo, v_TexCoord).rgb, vec3(gamma));
+	//albedo = vec3(1.0f, 0.0f, 0.0f);
 	
 	float ka = 0.25f;
 	vec3 ambient = ka * albedo;
