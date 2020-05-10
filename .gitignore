@@ -331,10 +331,17 @@ ASALocalRun/
 
 # Custom rules 
 # At the end overrides existing rules
+# Include assimp since no build chain support yet
 !vendor/assimp/lib/
-!vendor/assimp/lib/[Dd]ebug/*.dll
-!vendor/assimp/lib/[Dd]ebugPublic/
+
+!vendor/assimp/lib/[Dd]ebug/
 !vendor/assimp/lib/[Rr]elease/
-!vendor/assimp/lib/[Rr]eleases/
-!vendor/assimp/lib/x64/
+
 !vendor/assimp/lib/x86/
+!vendor/assimp/lib/x64/
+
+!vendor/assimp/lib/x86/[Dd]ebug/
+!vendor/assimp/lib/x86/[Rr]elease/
+
+!vendor/assimp/lib/x64/[Dd]ebug/
+!vendor/assimp/lib/x64/[Rr]elease/
