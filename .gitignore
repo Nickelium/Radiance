@@ -328,3 +328,13 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+# Custom rules 
+# At the end overrides existing rules
+!vendor/assimp/lib/
+!vendor/assimp/lib/[Dd]ebug/*.dll
+!vendor/assimp/lib/[Dd]ebugPublic/
+!vendor/assimp/lib/[Rr]elease/
+!vendor/assimp/lib/[Rr]eleases/
+!vendor/assimp/lib/x64/
+!vendor/assimp/lib/x86/
