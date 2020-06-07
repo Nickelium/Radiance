@@ -29,6 +29,8 @@
     <ClInclude Include="src\Platform\API\DX11\DXTexture.h" />
     <ClInclude Include="src\Platform\API\OpenGL\GLFactory.h" />
     <ClInclude Include="src\Platform\API\OpenGL\GLGPUTimer.h" />
+    <ClInclude Include="src\Platform\API\OpenGL\GLForwardDecl.h" />
+    <ClInclude Include="src\Platform\API\OpenGL\GLInclude.h" />
     <ClInclude Include="src\Radiance\Components\Actor.h" />
     <ClInclude Include="src\Radiance\Components\Component.h" />
     <ClInclude Include="src\Radiance\Components\MeshComponent.h" />
@@ -135,6 +137,7 @@
     <ClCompile Include="src\Radiance\Prefab\Prefab.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\Buffer.cpp" />
     <ClCompile Include="src\Radiance\Renderer\API\DeviceFactory.cpp" />
+    <ClCompile Include="src\Radiance\Renderer\API\RenderDevice.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\PerspectiveController.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\OrthographicController.cpp" />
     <ClCompile Include="src\Radiance\Renderer\Camera\Orthographic.cpp" />
@@ -163,32 +166,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{2A9DE232-212F-4FFA-8A99-DBA1FCD02589}</ProjectGuid>
     <RootNamespace>Radiance</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>

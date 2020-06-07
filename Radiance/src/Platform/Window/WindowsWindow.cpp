@@ -94,6 +94,7 @@ namespace Radiance
 		CenterWindow();
 
 		m_PlatformContext = Locator::Get<DeviceFactory>()->CreatePlatformContext(this);
+		Locator::Set(m_PlatformContext);
 
 		m_PlatformContext->Init();
 		
@@ -211,7 +212,6 @@ namespace Radiance
 	{
 		glfwDestroyWindow(m_Window); 
 		glfwTerminate(); 
-		delete m_PlatformContext;
 	}
 
 	bool WindowsWindow::CenterWindow()

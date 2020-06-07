@@ -43,3 +43,5 @@
 
 //Maths
 #include "Radiance/Math/Constants.h"
+
+using size_t = decltype(sizeof(int));

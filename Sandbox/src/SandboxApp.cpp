@@ -289,8 +289,8 @@ public:
 		ImGui::Begin("Viewport");
 		auto viewportSize = ImGui::GetContentRegionAvail();
 		m_CameraController.SetAspectRatio(viewportSize.x / viewportSize.y);
-		m_FrameBuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-		ImGui::Image((void*)(uintptr_t)m_FrameBuffer->GetRTBuffer()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
+		m_FrameBuffer->SetSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+		ImGui::Image((void*)(uintptr_t)m_FrameBuffer->GetRTBuffer()->GetTexture()->GetHandle(), viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 
@@ -378,19 +378,78 @@ public:
 private:
 };
 
-class WindowApplication : public Radiance::Application
+
+#include <cstdlib>
+#include <cmath>
+class TestLayer : public Radiance::Layer
+{
+	Radiance::FrameBuffer* m_BackBuffer;
+	Radiance::DataTime m_Time;
+public:
+
+	TestLayer(Radiance::Application* _application)
+		: Layer(_application, new Radiance::Scene)
+	{
+		using namespace Radiance;
+		RenderDevice* renderDevice = Locator::Get<RenderDevice>();
+		DeviceFactory* deviceFactory = Locator::Get<DeviceFactory>();
+		PlatformContext* platformContext = Locator::Get<PlatformContext>();
+		
+		Texture2D* backTexture = platformContext->GetBackBufferTexture();
+		RTBuffer* rtBuffer = renderDevice->CreateRTBuffer(backTexture);
+		m_BackBuffer = renderDevice->CreateFrameBuffer(rtBuffer, nullptr);
+	}
+
+	virtual ~TestLayer()
+	{
+		delete m_BackBuffer;
+	}
+
+	virtual void Update(Radiance::DataTime _time)
+	{
+		using namespace Radiance;
+		m_Time = _time;
+	}
+
+	virtual void Render() override
+	{
+		using namespace Radiance;
+		float red = sin(m_Time.total);
+		Locator::Get<DeviceContext>()->SetClearColor({ red, 216 / 255.0f, 235 / 255.0f, 1.0f });
+		Locator::Get<DeviceContext>()->SetFrameBuffer(m_BackBuffer);
+		{
+			Locator::Get<DeviceContext>()->Clear();
+		}
+	}
+
+	virtual void RenderGUI() override
+	{
+		using namespace Radiance;
+	}
+
+	void OnEvent(Radiance::Event& event) override
+	{
+		if (event.GetEventType() == Radiance::EventType::KeyPressed)
+		{
+			/*Radiance::KeyPressedEvent& e = (Radiance::KeyPressedEvent&)event;*/
+		}
+	}
+
+};
+
+class TestApplication : public Radiance::Application
 {
 public:
-	WindowApplication()
+	TestApplication()
 		: Application("Radiance Engine", 1600, 900)
 	{
 		using namespace Radiance;
 		RAD_INFO("Creating Window Application");
-		//PushLayer(new ExampleLayer(this));
+		PushLayer(new TestLayer(this));
 		//GetWindow()->SetVSync(false);
 	}
 
-	virtual ~WindowApplication()
+	virtual ~TestApplication()
 	{
 		RAD_INFO("Destroying Window Application");
 	}
@@ -412,7 +471,8 @@ Radiance::Application* CreateApplication()
 {
 	// First set API before calling anything
 	Radiance::API = Radiance::RenderAPI::DX11;
+	//Radiance::API = Radiance::RenderAPI::OPENGL;
 
 	//return new SandboxApplication;
-	return new WindowApplication;
+	return new TestApplication;
 }

@@ -17,7 +17,7 @@ extern "C"
 #ifdef MEMORYLEAK_CHECK
 
 #if RAD_DEBUG
-#include <vld.h>
+//#include <vld.h>
 #endif
 
 #endif

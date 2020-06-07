@@ -12,6 +12,9 @@ namespace Radiance
 		GLPlatformContext(GLFWwindow* _windowHandle);
 		virtual void Init() override;
 		virtual void SwapBuffers() override;
+
+		virtual Texture2D* GetBackBufferTexture() override;
+
 	private:
 		GLFWwindow* m_WindowHandle;
 	};

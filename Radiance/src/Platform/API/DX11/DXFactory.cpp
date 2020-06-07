@@ -19,10 +19,15 @@ namespace Radiance
 		ConstructInternals();
 	}
 
+	DXFactory::~DXFactory()
+	{
+		m_DXGIFactory->Release();
+	}
+
 	void DXFactory::ConstructInternals()
 	{
 		//Alternative D3D11CreateDeviceAndSwapChain with default adapters
-		auto result = CreateDXGIFactory1(__uuidof(IDXGIFactory2), reinterpret_cast<void**>(&m_InternalFactory));
+		auto result = CreateDXGIFactory1(__uuidof(IDXGIFactory2), reinterpret_cast<void**>(&m_DXGIFactory));
 		RAD_CORE_ASSERT(result == S_OK, "Failed to create DXGIFactory");
 
 		unsigned int deviceFlag = 0;
@@ -43,13 +48,25 @@ namespace Radiance
 		RAD_CORE_ASSERT(result == S_OK, "Failed to create Device and DeviceContext");
 	}
 
-	RenderDevice* DXFactory::CreateRenderDevice() 
+	// TODO abtract debug layer into class that will hold d3d11debug
+	// Then dont create debuglayer as service but destroy after services
+	void DXFactory::CreateD3D11Debug()
 	{
+#ifdef RAD_DEBUG
+		RAD_ASSERT(m_D3D11RenderDevice, "D3D11Device is nullptr");
+		m_D3D11RenderDevice->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&m_D3D11Debug));
+#endif
+	}
+
+	RenderDevice* DXFactory::CreateRenderDevice()
+	{
+		RAD_ASSERT(m_D3D11RenderDevice, "D3D11Device is nullptr");
 		return new DXRenderDevice(m_D3D11RenderDevice);
 	}
 
 	DeviceContext* DXFactory::CreateDeviceContext() 
 	{
+		RAD_ASSERT(m_D3D11RenderDevice, "D3D11DeviceContext is nullptr");
 		return new DXDeviceContext(m_D3D11DeviceContext);
 	}
 

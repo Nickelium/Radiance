@@ -7,6 +7,7 @@
 
 namespace Radiance
 {
+	class FrameBuffer;
 	class Renderer
 	{
 	public:
