@@ -29,7 +29,7 @@ namespace Radiance
 		RenderAPI type;
 		Data data;
 	};
-
+	class FrameBuffer;
 	class DeviceContext : public Service
 	{
 	public:
@@ -38,6 +38,7 @@ namespace Radiance
 		virtual void EnableDepth(bool _enable) = 0;
 		virtual void EnableBlend(bool _enable) = 0;
 		virtual void SetViewport(int _x, int _y, int _width, int _height) = 0;
+		virtual void SetFrameBuffer(FrameBuffer* _frameBuffer) = 0;
 
 		virtual void DrawIndexed(VertexArray* _vertexArray) = 0;
 

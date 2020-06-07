@@ -4,7 +4,7 @@
 #include "Radiance/Renderer/API/RenderDevice.h"
 
 #include "Radiance/Renderer/API/Shader.h"
-#include "Radiance/Renderer/API/Texture2D.h"
+#include "Radiance/Renderer/API/Texture.h"
 #include "Radiance/Renderer/Mesh.h"
 
 namespace Radiance

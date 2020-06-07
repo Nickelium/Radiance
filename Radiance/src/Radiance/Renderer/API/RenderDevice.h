@@ -2,7 +2,7 @@
 
 #include "Radiance/Core/Locator.h"
 
-#include "Texture2D.h"
+#include "Texture.h"
 
 /**
  * Responsible through resources creation (Abstract factory)
@@ -14,7 +14,7 @@ namespace Radiance
 	class VertexBuffer;
 	class IndexBuffer;
 	class Shader;
-	class RenderTargetBuffer;
+	class RTBuffer;
 	class DepthBuffer;
 	class FrameBuffer;
 	class GPUTimer;
@@ -35,13 +35,17 @@ namespace Radiance
 		virtual Texture2D* CreateTexture2D(const std::string& _filePath) const = 0;
 		virtual Texture2D* CreateTexture2D(int _width, int _height, FormatUsage _usage = FormatUsage::COLOR_BUFFER) const = 0;
 
-		virtual RenderTargetBuffer* CreateRTBuffer(int _width, int _height) const = 0;
+		virtual RTBuffer* CreateRTBuffer(Texture2D* _texture) const = 0;
+		virtual RTBuffer* CreateRTBuffer(int _width, int _height) const = 0;
 		virtual DepthBuffer* CreateDepthBuffer(int _width, int _height) const = 0;
 
 		virtual FrameBuffer* CreateFrameBuffer(int _width, int _height) const = 0;
+		virtual FrameBuffer* CreateFrameBuffer(RTBuffer* _rtBuffer, DepthBuffer* _depthBuffer) const = 0;
 
 		virtual GPUTimer* CreateGPUTimer() const = 0;
 
 		SERVICE_CLASS(RenderDevice)
 	};
+
+	//FrameBuffer* CreateBackBuffer();
 }

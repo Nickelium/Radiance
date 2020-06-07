@@ -27,7 +27,7 @@ namespace Radiance
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 			
-		glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, m_ElementType, buffer);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_GLInternalFormat, m_Width, m_Height, 0, m_GLDataFormat, m_GLElementType, buffer);
 		//Alternative glTextureStorage2D &	glTextureSubImage2D
 		//glTextureStorage2D is immutable, meaning can't resize later on
 		//glGenerateMipmap(GL_TEXTURE_2D);
@@ -53,25 +53,25 @@ namespace Radiance
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, m_ElementType, nullptr);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_GLInternalFormat, m_Width, m_Height, 0, m_GLDataFormat, m_GLElementType, nullptr);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 	}
 
-	void GLTexture2D::Resize(int _width, int _height)
+	void GLTexture2D::SetSize(int _width, int _height)
 	{
 		m_Width = _width;
 		m_Height = _height;
 
 		glBindTexture(GL_TEXTURE_2D, m_Handle);
-		glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, m_ElementType, nullptr);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_GLInternalFormat, m_Width, m_Height, 0, m_GLDataFormat, m_GLElementType, nullptr);
 	}
 
 	void GLTexture2D::SetData(void* _data, size_t /*_bytes*/)
 	{
 		//On this little endian architecture, stored as ABGR
 		glBindTexture(GL_TEXTURE_2D, m_Handle);
-		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, m_DataFormat, m_ElementType, _data);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_Width, m_Height, m_GLDataFormat, m_GLElementType, _data);
 	}
 
 	GLTexture2D::~GLTexture2D()
@@ -96,21 +96,21 @@ namespace Radiance
 		{
 			if (m_BPP == 3)
 			{
-				m_InternalFormat = GL_RGB8;
-				m_DataFormat = GL_RGB;
+				m_GLInternalFormat = GL_RGB8;
+				m_GLDataFormat = GL_RGB;
 			}
 			else if (m_BPP == 4)
 			{
-				m_InternalFormat = GL_RGBA8;
-				m_DataFormat = GL_RGBA;
+				m_GLInternalFormat = GL_RGBA8;
+				m_GLDataFormat = GL_RGBA;
 			}
-			m_ElementType = GL_UNSIGNED_BYTE;
+			m_GLElementType = GL_UNSIGNED_BYTE;
 		}
 		else if (m_FormatUsage == FormatUsage::DEPTHSTENCIL_BUFFER)
 		{
-			m_InternalFormat = GL_DEPTH24_STENCIL8;
-			m_DataFormat = GL_DEPTH_STENCIL;
-			m_ElementType = GL_UNSIGNED_INT_24_8;
+			m_GLInternalFormat = GL_DEPTH24_STENCIL8;
+			m_GLDataFormat = GL_DEPTH_STENCIL;
+			m_GLElementType = GL_UNSIGNED_INT_24_8;
 		}
 	}
 

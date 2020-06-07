@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GLDeviceContext.h"
 
+#include "Radiance/Renderer/API/FrameBuffer.h"
+
 #include <glad/glad.h>
 
 namespace Radiance
@@ -48,4 +50,10 @@ namespace Radiance
 	{
 		glDrawElements(GL_TRIANGLES, _vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
+
+	void GLDeviceContext::SetFrameBuffer(FrameBuffer* _frameBuffer)
+	{
+		_frameBuffer->Bind();
+	}
+
 }

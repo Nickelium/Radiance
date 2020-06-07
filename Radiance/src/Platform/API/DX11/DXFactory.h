@@ -6,6 +6,9 @@ struct IDXGIFactory2;
 struct ID3D11Device;
 struct ID3D11DeviceContext;
 struct IDXGISwapChain;
+#ifdef RAD_DEBUG
+	struct ID3D11Debug;
+#endif
 
 namespace Radiance
 {
@@ -13,21 +16,28 @@ namespace Radiance
 	{
 	public:
 		DXFactory();
+		virtual ~DXFactory();
 
 		virtual RenderDevice* CreateRenderDevice() override;
 		virtual DeviceContext* CreateDeviceContext() override;
 		virtual PlatformContext* CreatePlatformContext(Window* _window) override;
 
-		inline IDXGIFactory2* GetInternalFactory() const { return m_InternalFactory; }
-		inline ID3D11Device* GetInternalRenderDevice() const { return m_D3D11RenderDevice; }
-		inline ID3D11DeviceContext* GetInternalDeviceContext() const { return m_D3D11DeviceContext; }
+		inline IDXGIFactory2* GetDXGIFactory() const { return m_DXGIFactory; }
+		inline ID3D11Device* GetD3D11RenderDevice() const { return m_D3D11RenderDevice; }
+		inline ID3D11DeviceContext* GetD3D11DeviceContext() const { return m_D3D11DeviceContext; }
 	private:
 		void ConstructInternals();
 
-		IDXGIFactory2* m_InternalFactory = nullptr;
+		void CreateD3D11Debug();
 
+		IDXGIFactory2* m_DXGIFactory = nullptr;
+
+		// Manages all device ressources
 		ID3D11Device* m_D3D11RenderDevice = nullptr;
 		ID3D11DeviceContext* m_D3D11DeviceContext = nullptr;
-		IDXGISwapChain* m_DXGISwapChain = nullptr;
+
+#ifdef RAD_DEBUG
+		ID3D11Debug* m_D3D11Debug = nullptr;
+#endif
 	};
 }

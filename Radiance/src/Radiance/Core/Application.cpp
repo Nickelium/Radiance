@@ -18,25 +18,27 @@ namespace Radiance
 
 		Locator::Set(DeviceFactory::Create());
 
+		Locator::Set(Locator::Get<DeviceFactory>()->CreateRenderDevice());
+		Locator::Set(Locator::Get<DeviceFactory>()->CreateDeviceContext());
+
 		m_Window = Window::Create({_name, _width, _height});
 		m_Window->SetEventCallback(BIND_FN(Application::RootOnEvent));
 
-		Locator::Set(Locator::Get<DeviceFactory>()->CreateRenderDevice());
-		Locator::Set(Locator::Get<DeviceFactory>()->CreateDeviceContext());
 		Locator::Set(new ResourceLibrary);
 
-		m_GPUTimer = Locator::Get<RenderDevice>()->CreateGPUTimer();
+		//m_GPUTimer = Locator::Get<RenderDevice>()->CreateGPUTimer();
 
-		/*m_ImGuiLayer = new ImGuiLayer(this);
-		PushOverlay(m_ImGuiLayer);*/
+		//m_ImGuiLayer = new ImGuiLayer(this);
+		//PushOverlay(m_ImGuiLayer);
 
-		//Locator::Get<DeviceContext>()->EnableDepth(true);
-		//Locator::Get<DeviceContext>()->EnableBlend(true);
+/*		Locator::Get<DeviceContext>()->EnableDepth(true);
+		Locator::Get<DeviceContext>()->EnableBlend(true);	*/	
 	}
 
 	Application::~Application()
 	{
 		RAD_CORE_INFO("Destroying Engine Application");
+		// Destroy factory as last
 		Locator::Destroy();
 		delete m_Window;
 		delete m_GPUTimer;
@@ -59,7 +61,7 @@ namespace Radiance
 
 			Render();
 
-			m_GPUTimer->Update();
+			//m_GPUTimer->Update();
 			m_Window->Update();
 		}
 	}

@@ -98,4 +98,9 @@ namespace Radiance
 		glfwSwapBuffers(m_WindowHandle);
 	}
 
+	Texture2D* GLPlatformContext::GetBackBufferTexture()
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
 }

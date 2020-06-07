@@ -22,7 +22,8 @@
 #include "Radiance/Renderer/API/Buffer.h"
 #include "Radiance/Renderer/API/VertexArray.h"
 #include "Radiance/Renderer/API/Buffer.h"
-#include "Radiance/Renderer/API/Texture2D.h"
+#include "Radiance/Renderer/API/Texture.h"
+#include "Radiance/Renderer/API/BufferView.h"
 #include "Radiance/Renderer/API/FrameBuffer.h"
 
 #include "Radiance/Renderer/Renderer.h"
@@ -43,6 +44,7 @@
 
 #include "Radiance/Renderer/API/RenderDevice.h"
 #include "Radiance/Renderer/API/DeviceContext.h"
+#include "Radiance/Renderer/API/PlatformContext.h"
 
 #include "Radiance/Renderer/API/DeviceFactory.h"
 

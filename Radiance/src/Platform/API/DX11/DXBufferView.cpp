@@ -1,24 +1,42 @@
 #include "pch.h"
 #include "DXBufferView.h"
 
+#include "DXRenderDevice.h"
+#include "DXDeviceContext.h"
+#include "DXTexture.h"
+
+#include "DXIncludes.h"
+
 namespace Radiance
 {
 	#pragma  region DXRenderTargetBuffer
-	DXRenderTargetBuffer::DXRenderTargetBuffer(DXTexture2D* _texture)
+	DXRTBuffer::DXRTBuffer(DXTexture2D* _texture)
 		: m_Texture(_texture)
 	{
+		CreateInternals();
 	}
 
-	Texture2D* DXRenderTargetBuffer::GetTexture() const
+	DXRTBuffer::~DXRTBuffer()
+	{
+		delete m_Texture;
+		m_D3D11RenderTargetView->Release();
+	}
+
+	Texture2D* DXRTBuffer::GetTexture() const
 	{
 		return m_Texture;
 	}
 
-	DXRenderTargetBuffer::DXRenderTargetBuffer* DXRenderTargetBuffer::CreateInstance(DXRenderDevice* _renderDevice) const
+	void DXRTBuffer::SetSize(int /*_width*/, int /*_height*/)
 	{
-		ID3D11Device* renderDevice = _renderDevice->GetInternalDevice();
-		renderDevice->CreateRenderTargetView(m_Texture->GetInternalTexture(), nullptr, &m_RenderTargetView);
-		return this;
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
+	void DXRTBuffer::CreateInternals()
+	{
+		DXRenderDevice* renderDevice = GetDXRenderDevice();
+		ID3D11Device* d3d11RenderDevice = renderDevice->GetD3D11Device();
+		d3d11RenderDevice->CreateRenderTargetView(m_Texture->GetD3D11Texture(), nullptr, &m_D3D11RenderTargetView);
 	}
 	#pragma endregion
 
@@ -26,11 +44,91 @@ namespace Radiance
 	DXDepthBuffer::DXDepthBuffer(DXTexture2D* _texture)
 		: m_Texture(_texture)
 	{
+		CreateInternals();
+	}
+
+	DXDepthBuffer::~DXDepthBuffer()
+	{
+		delete m_Texture;
+		m_D3D11DepthStencilView->Release();
 	}
 
 	Texture2D* DXDepthBuffer::GetTexture() const
 	{
 		return m_Texture;
 	}
-	#pragma endregion
+
+	void DXDepthBuffer::SetSize(int /*_width*/, int /*_height*/)
+	{
+	}
+
+	void DXDepthBuffer::CreateInternals()
+	{
+		DXRenderDevice* renderDevice = GetDXRenderDevice();
+		ID3D11Device* d3d11RenderDevice = renderDevice->GetD3D11Device();
+		d3d11RenderDevice->CreateDepthStencilView(m_Texture->GetD3D11Texture(), nullptr, &m_D3D11DepthStencilView);
+	}
+
+#pragma endregion
+
+	DXFrameBuffer::DXFrameBuffer(int _width, int _height)
+		: m_Width(_width), m_Height(_height)
+	{
+
+	}
+
+	DXFrameBuffer::DXFrameBuffer(DXRTBuffer* _rtBuffer, DXDepthBuffer* _depthBuffer)
+		: m_RTBuffer(_rtBuffer), m_DepthBuffer(_depthBuffer)
+	{
+	}
+
+	DXFrameBuffer::~DXFrameBuffer()
+	{
+		delete m_RTBuffer;
+		delete m_DepthBuffer;
+	}
+
+	void DXFrameBuffer::SetSize(int _width, int _height)
+	{
+		m_Width = _width;
+		m_Height = _height;
+	}
+
+	void DXFrameBuffer::Bind() const
+	{
+		DXDeviceContext* dc = GetDXDeviceContext();
+		ID3D11DeviceContext* d3d11DC = dc->GetD3D11DeviceContext();
+		ID3D11RenderTargetView* rtArray = GetDXRTBuffer()->GetD3D11RTView();
+		// Can bind multiple rendertarget for example deferred renderer
+		d3d11DC->OMSetRenderTargets(1, &rtArray, GetDXDepthBuffer()->GetD3D11DepthStencilView());
+	}
+
+	void DXFrameBuffer::UnBind() const
+	{
+		DXDeviceContext* dc = GetDXDeviceContext();
+		ID3D11DeviceContext* d3d11DC = dc->GetD3D11DeviceContext();
+		ID3D11RenderTargetView* rtArray = nullptr;
+		d3d11DC->OMSetRenderTargets(1, &rtArray, nullptr);
+	}
+
+	RTBuffer* DXFrameBuffer::GetRTBuffer() const
+	{
+		return m_RTBuffer;
+	}
+
+	DepthBuffer* DXFrameBuffer::GetDepthBuffer() const
+	{
+		return m_DepthBuffer;
+	}
+
+	DXRTBuffer* DXFrameBuffer::GetDXRTBuffer() const
+	{
+		return m_RTBuffer;
+	}
+
+	DXDepthBuffer* DXFrameBuffer::GetDXDepthBuffer() const
+	{
+		return m_DepthBuffer;
+	}
+
 }

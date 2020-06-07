@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Material.h"
 
-#include "API/Texture2D.h"
+#include "API/Texture.h"
 
 namespace Radiance
 {
